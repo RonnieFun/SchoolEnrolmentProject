@@ -1,7 +1,7 @@
 # capsproj
 Course Application Processing System (CAPS)
 Software Development tools
-1. Java SE => JDK Version 1.8
+1. Java SE => JDK Version 11
 2. STS or any IDE with a server=> Local Tomcat Server
 3. Database => JDBC API
 4. Framework=> Spring
