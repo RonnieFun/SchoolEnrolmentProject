@@ -25,6 +25,11 @@ public class LecturerCourseDetails {
 		super();
 	}
 
+	public LecturerCourseDetails(Users lecturer) {
+		super();
+		this.lecturer = lecturer;
+	}
+
 
 
 	//Argument constructor with all fields(without id)

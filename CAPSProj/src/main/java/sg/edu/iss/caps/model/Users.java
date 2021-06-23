@@ -65,6 +65,20 @@ public class Users {
 		this.lecturerCourseDetail = lecturerCourseDetail;
 	}
 
+	public Users(String firstName, String lastName, String email, String password, Roles role, String phoneNumber,
+			String address, LocalDate birthday, String salutation) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.birthday = birthday;
+		this.salutation = salutation;
+	}
+
 	//Argument constructor for testing purpose
 	public Users(String email, String password, Roles role) {
 		super();

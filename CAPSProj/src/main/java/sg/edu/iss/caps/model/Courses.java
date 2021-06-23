@@ -43,6 +43,20 @@ public class Courses {
 	public Courses() {
 		super();
 	}
+	
+	public Courses(long courseID, String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
+			int courseCapacity, String description, CourseStatus courseStatus) {
+		super();
+		this.courseID = courseID;
+		this.courseName = courseName;
+		this.courseStartDate = courseStartDate;
+		this.courseEndDate = courseEndDate;
+		this.credits = credits;
+		this.courseCapacity = courseCapacity;
+		this.description = description;
+		this.courseStatus = courseStatus;
+	}
+
 
 	//Argument constructor with all fields(without courseID)
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,

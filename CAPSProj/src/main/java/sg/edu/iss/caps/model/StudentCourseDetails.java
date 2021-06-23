@@ -35,7 +35,7 @@ public class StudentCourseDetails {
 	public StudentCourseDetails() {
 		super();
 	}
-
+	
 	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus,
 			Users student, Collection<Courses> stuCourse) {
 		super();
