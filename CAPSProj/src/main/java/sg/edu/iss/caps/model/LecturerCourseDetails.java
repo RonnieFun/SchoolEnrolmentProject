@@ -25,6 +25,7 @@ public class LecturerCourseDetails {
 		super();
 	}
 
+	//Argument constructor
 	public LecturerCourseDetails(Users lecturer) {
 		super();
 		this.lecturer = lecturer;
