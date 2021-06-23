@@ -44,6 +44,7 @@ public class Courses {
 		super();
 	}
 	
+	//Argument constructor
 	public Courses(long courseID, String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
 			int courseCapacity, String description, CourseStatus courseStatus) {
 		super();
