@@ -67,5 +67,5 @@ public class LecturerImplementation implements LecturerInterface {
 		return usersRepository.findByRole(role);
 	}
 
-
+	
 }

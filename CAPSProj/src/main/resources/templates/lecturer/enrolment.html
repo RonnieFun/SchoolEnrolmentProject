@@ -71,7 +71,8 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Course Name</th>
+				<th hidden>Course Name</th>
+				<th>S/N</th>
 				<th>Student Id</th>
 				<th>Student Name</th>
 				<th>Student Email</th>
@@ -84,9 +85,10 @@
 				<div th:if="${enrolled.role != null}">
 				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
 					<span th:each = "enrolledthree: ${enrolledtwo.stuCourse}">
-					<td th:text = "${enrolledthree.courseName}"></td>
+					<td hidden th:text = "${enrolledthree.courseName}"></td>
 					</span>
 				</span>
+				<td></td>
 				<td th:text = "${enrolled.userID}"></td> 
 				<td th:text = "${enrolled.firstName} + ${enrolled.lastName}" ></td>
 				<td th:text = "${enrolled.email}"></td>
