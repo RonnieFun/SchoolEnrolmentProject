@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Collection;
 
@@ -85,15 +87,6 @@ public class Users {
 		this.email = email;
 		this.password = password;
 		this.role = role;
-	}
-	
-	//Argument constructor for testing coursestaught.html page (By Max)
-	
-	public Users(String firstName, String lastName, String email) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
 	}
 	
 	public long getUserID() {

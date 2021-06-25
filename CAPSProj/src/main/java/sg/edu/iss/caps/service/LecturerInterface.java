@@ -1,9 +1,13 @@
 package sg.edu.iss.caps.service;
 
+
 import java.util.List;
+import java.util.Set;
 
 import sg.edu.iss.caps.model.Courses;
+import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.Users;
+
 
 public interface LecturerInterface {
 
@@ -14,4 +18,5 @@ public interface LecturerInterface {
 	List<Users> getAllUsers();
 	
 	Users getUsersById(Long id);
+	
 }

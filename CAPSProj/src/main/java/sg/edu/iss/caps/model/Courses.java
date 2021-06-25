@@ -89,10 +89,16 @@ public class Courses {
 	}
 
 	//Argument constructor for testing coursestaught.html page (By Max)
-	public Courses(String courseName, int courseCapacity, String courseBatch) {
+	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
+			int courseCapacity, String description, String courseBatch, CourseStatus courseStatus) {
 		super();
 		this.courseName = courseName;
+		this.courseStartDate = courseStartDate;
+		this.courseEndDate = courseEndDate;
+		this.credits = credits;
 		this.courseCapacity = courseCapacity;
+		this.description = description;
+		this.courseStatus = courseStatus;
 		this.courseBatch = courseBatch;
 	}
 
