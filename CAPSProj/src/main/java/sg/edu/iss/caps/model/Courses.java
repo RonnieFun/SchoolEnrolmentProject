@@ -23,6 +23,9 @@ public class Courses {
 	@DateTimeFormat(pattern = "YYYY-MM-DD")
 	private LocalDate courseEndDate;
 	
+	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	private LocalDate examDate;
+	
 	private int credits;
 	
 	private int courseCapacity;
@@ -45,29 +48,29 @@ public class Courses {
 	}
 	
 	//Argument constructor
-	public Courses(long courseID, String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-			int courseCapacity, String description, CourseStatus courseStatus) {
+	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
+			int credits, int courseCapacity, String description, CourseStatus courseStatus) {
 		super();
-		this.courseID = courseID;
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
 		this.courseEndDate = courseEndDate;
+		this.examDate = examDate;
 		this.credits = credits;
 		this.courseCapacity = courseCapacity;
 		this.description = description;
 		this.courseStatus = courseStatus;
 	}
-
-
+	
 	//Argument constructor with all fields(without courseID)
-	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-			int courseCapacity, String description, CourseStatus courseStatus,
+	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
+			int credits, int courseCapacity, String description, CourseStatus courseStatus,
 			Collection<StudentCourseDetails> studentCourseDetails,
 			Collection<LecturerCourseDetails> lecturerCourseDetails) {
 		super();
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
 		this.courseEndDate = courseEndDate;
+		this.examDate = examDate;
 		this.credits = credits;
 		this.courseCapacity = courseCapacity;
 		this.description = description;
@@ -77,11 +80,15 @@ public class Courses {
 	}
 
 	//Argument constructor with testing purpose
-	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate) {
+	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
+			int courseCapacity, CourseStatus courseStatus) {
 		super();
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
 		this.courseEndDate = courseEndDate;
+		this.examDate = examDate;
+		this.courseCapacity = courseCapacity;
+		this.courseStatus = courseStatus;
 	}
 
 	public long getCourseID() {
@@ -162,6 +169,14 @@ public class Courses {
 
 	public void setLecturerCourseDetails(Collection<LecturerCourseDetails> lecturerCourseDetails) {
 		this.lecturerCourseDetails = lecturerCourseDetails;
+	}
+
+	public LocalDate getExamDate() {
+		return examDate;
+	}
+
+	public void setExamDate(LocalDate examDate) {
+		this.examDate = examDate;
 	}
 
 }
