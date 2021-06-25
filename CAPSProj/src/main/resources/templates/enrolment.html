@@ -81,7 +81,7 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = "enrolled: ${enrolment2}">
+			<tr th:each = "enrolled: ${enrolment}">
 				<div th:if="${enrolled.role != null}">
 				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
 					<span th:each = "enrolledthree: ${enrolledtwo.stuCourse}">
