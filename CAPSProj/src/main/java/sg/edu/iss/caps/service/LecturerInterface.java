@@ -19,4 +19,6 @@ public interface LecturerInterface {
 	
 	Users getUsersById(Long id);
 	
+	List<Users> getAllUsersByRole(Roles role);
+	
 }

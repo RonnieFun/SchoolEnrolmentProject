@@ -72,7 +72,6 @@
 		<thead>
 			<tr>
 				<th>Course Name</th>
-				<th>Course Batch</th>
 				<th>Student Id</th>
 				<th>Student Name</th>
 				<th>Student Email</th>
@@ -81,12 +80,11 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = "enrolled: ${enrolment}">
+			<tr th:each = "enrolled: ${studentEnrolment}">
 				<div th:if="${enrolled.role != null}">
 				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
 					<span th:each = "enrolledthree: ${enrolledtwo.stuCourse}">
 					<td th:text = "${enrolledthree.courseName}"></td>
-					<td th:text = "${enrolledthree.courseBatch}"></td>
 					</span>
 				</span>
 				<td th:text = "${enrolled.userID}"></td> 

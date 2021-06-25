@@ -1,9 +1,5 @@
 package sg.edu.iss.caps.controller;
 
-import java.util.Set;
-
-import javax.management.relation.Role;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.service.LecturerInterface;
 
 @Controller
@@ -36,7 +33,9 @@ public class LecturerController {
 	@GetMapping("/enrolment")
 	public String showEnrolments(Model model) {
 		
-		model.addAttribute("enrolment", lectservice.getAllUsers());
+		model.addAttribute("allEnrolment", lectservice.getAllUsers());
+		model.addAttribute("studentEnrolment", lectservice.getAllUsersByRole(Roles.STUDENT));
+		model.addAttribute("lecturerEnrolment", lectservice.getAllUsersByRole(Roles.LECTURER));
 		
 		return "enrolment";
 	}

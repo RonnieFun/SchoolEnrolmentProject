@@ -60,6 +60,12 @@ public class LecturerImplementation implements LecturerInterface {
 
 		return usersRepository.findAll();
 	}
+	
+	@Transactional
+	public List<Users> getAllUsersByRole(Roles role) {
+		
+		return usersRepository.findByRole(role);
+	}
 
 
 }
