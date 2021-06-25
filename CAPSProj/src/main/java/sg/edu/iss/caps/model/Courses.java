@@ -87,10 +87,8 @@ public class Courses {
 		this.courseStartDate = courseStartDate;
 		this.courseEndDate = courseEndDate;
 		this.examDate = examDate;
-		this.courseCapacity = courseCapacity;
-		this.courseStatus = courseStatus;
 	}
-
+	
 	public long getCourseID() {
 		return courseID;
 	}

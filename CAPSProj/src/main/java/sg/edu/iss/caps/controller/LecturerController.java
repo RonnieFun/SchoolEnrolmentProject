@@ -1,7 +1,15 @@
 package sg.edu.iss.caps.controller;
 
+import java.util.Set;
+
+import javax.management.relation.Role;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.caps.service.LecturerInterface;
@@ -18,4 +26,19 @@ public class LecturerController {
 		this.lectservice =ls;
 	}
 
+	@GetMapping("/coursestaught")
+	public String showCourses(Model model) {
+		model.addAttribute("coursestaught", lectservice.getAllCourses());
+		
+		return "coursestaught";  
+	}
+	
+	@GetMapping("/enrolment")
+	public String showStudentEnrolments(Model model) {
+		
+		model.addAttribute("enrolment", lectservice.getAllUsers());
+		
+		return "enrolment";
+	}
+	
 }
