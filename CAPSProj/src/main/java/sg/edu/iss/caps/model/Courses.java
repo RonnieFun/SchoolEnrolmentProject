@@ -87,7 +87,23 @@ public class Courses {
 		this.courseStartDate = courseStartDate;
 		this.courseEndDate = courseEndDate;
 		this.examDate = examDate;
+		this.courseCapacity = courseCapacity;
+		this.courseStatus = courseStatus;
 	}
+
+	//Argument constructor for testing coursestaught.html page (By Max)
+		public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
+				int courseCapacity, String description, CourseStatus courseStatus) {
+			super();
+			this.courseName = courseName;
+			this.courseStartDate = courseStartDate;
+			this.courseEndDate = courseEndDate;
+			this.credits = credits;
+			this.courseCapacity = courseCapacity;
+			this.description = description;
+			this.courseStatus = courseStatus;
+		}
+	
 	
 	public long getCourseID() {
 		return courseID;
