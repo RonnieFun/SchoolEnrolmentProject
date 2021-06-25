@@ -34,7 +34,7 @@ public class LecturerController {
 	}
 	
 	@GetMapping("/enrolment")
-	public String showStudentEnrolments(Model model) {
+	public String showEnrolments(Model model) {
 		
 		model.addAttribute("enrolment", lectservice.getAllUsers());
 		
