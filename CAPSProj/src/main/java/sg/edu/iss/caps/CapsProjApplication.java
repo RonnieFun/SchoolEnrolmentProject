@@ -44,8 +44,8 @@ public class CapsProjApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
-//			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
-//			urepo.save(user);
+			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
+			urepo.save(user);
 				
 			Users user1 = new Users("Max", "Chen", "max@gmail.com", "abc", Roles.STUDENT, "999", 
 					"Blk 54 #12-123, Singapore 123456", LocalDate.of(1988, 1, 30), "Mr", null, null);
@@ -72,45 +72,6 @@ public class CapsProjApplication {
 			LecturerCourseDetails lecturerCourseDetail1 = new LecturerCourseDetails(courses, user2);
 			
 			lcrepo.save(lecturerCourseDetail1);
-			
-			
-			
-			
-			
-////			
-//			Users user2 = new Users("Mark", "Zuckerberg", "mark@gmail.com", Roles.STUDENT);
-//			urepo.save(user2);
-//		
-//			
-//
-////			
-
-//			
-			
-//////			
-//			Courses course2 = new Courses("Java by Suriya", 80, "GDipSA 52");
-//			coursesRepository.save(course2);
-////			
-//			Courses course3 = new Courses("Android by Cher Wah", 90, "GDipSA 52");
-//			coursesRepository.save(course3);
-//			
-//			Courses course4 = new Courses("C# Foundations by Liu Fan", 120, "GDipSA 51");
-//			coursesRepository.save(course4);
-//			
-//			Courses course5 = new Courses("Machine Learning by Yuen Kwan", 80, "GDipSA 51");
-//			coursesRepository.save(course5);
-//			
-//			Courses course6 = new Courses("DPM by Felicitas", 60, "GDipSA 53");
-//			coursesRepository.save(course6);
-//			
-//			Courses course7 = new Courses("Software Design & Analysis by Esther", 70, "GDipSA 54");
-//			coursesRepository.save(course7);
-//			
-//			Courses course8 = new Courses("Breakdance by Kevin Goh", 55, "GDipSA 50");
-//			coursesRepository.save(course8);
-//			
-//			Courses course9 = new Courses("Trolling by Jim Ho", 45, "GDipSA 55");
-//			coursesRepository.save(course8);
 		};
 	}
 
