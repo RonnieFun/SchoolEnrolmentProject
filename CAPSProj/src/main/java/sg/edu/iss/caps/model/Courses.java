@@ -31,8 +31,6 @@ public class Courses {
 	
 	private CourseStatus courseStatus;
 	
-	private String courseBatch;
-	
 	//Many to many relationship between StudentCoursedetails and Courses
 	@ManyToMany(mappedBy = "stuCourse")
 	private Collection<StudentCourseDetails> studentCourseDetails;
@@ -48,7 +46,7 @@ public class Courses {
 	
 	//Argument constructor
 	public Courses(long courseID, String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-			int courseCapacity, String description, String courseBatch, CourseStatus courseStatus) {
+			int courseCapacity, String description, CourseStatus courseStatus) {
 		super();
 		this.courseID = courseID;
 		this.courseName = courseName;
@@ -58,13 +56,12 @@ public class Courses {
 		this.courseCapacity = courseCapacity;
 		this.description = description;
 		this.courseStatus = courseStatus;
-		this.courseBatch = courseBatch;
 	}
 
 
 	//Argument constructor with all fields(without courseID)
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-			int courseCapacity, String description, String courseBatch, CourseStatus courseStatus,
+			int courseCapacity, String description, CourseStatus courseStatus,
 			Collection<StudentCourseDetails> studentCourseDetails,
 			Collection<LecturerCourseDetails> lecturerCourseDetails) {
 		super();
@@ -75,7 +72,6 @@ public class Courses {
 		this.courseCapacity = courseCapacity;
 		this.description = description;
 		this.courseStatus = courseStatus;
-		this.courseBatch = courseBatch;
 		this.studentCourseDetails = studentCourseDetails;
 		this.lecturerCourseDetails = lecturerCourseDetails;
 	}
@@ -88,24 +84,8 @@ public class Courses {
 		this.courseEndDate = courseEndDate;
 	}
 
-	//Argument constructor for testing coursestaught.html page (By Max)
-	public Courses(String courseName, int courseCapacity, String courseBatch) {
-		super();
-		this.courseName = courseName;
-		this.courseCapacity = courseCapacity;
-		this.courseBatch = courseBatch;
-	}
-
 	public long getCourseID() {
 		return courseID;
-	}
-
-	public String getCourseBatch() {
-		return courseBatch;
-	}
-
-	public void setCourseBatch(String courseBatch) {
-		this.courseBatch = courseBatch;
 	}
 
 	public void setCourseID(long courseID) {
