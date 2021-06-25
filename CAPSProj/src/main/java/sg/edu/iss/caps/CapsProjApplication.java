@@ -46,8 +46,8 @@ public class CapsProjApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
-//			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
-//			urepo.save(user);
+			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
+			urepo.save(user);
 				
 			Users user1 = new Users("Max", "Chen", "max@gmail.com", "abc", Roles.STUDENT, "999", 
 					"Blk 54 #12-123, Singapore 123456", LocalDate.of(1988, 1, 30), "Mr", null, null);
@@ -75,7 +75,6 @@ public class CapsProjApplication {
 			LecturerCourseDetails lecturerCourseDetail1 = new LecturerCourseDetails(courses, user2);
 			
 			lcrepo.save(lecturerCourseDetail1);
-			
 		};
 	}
 
