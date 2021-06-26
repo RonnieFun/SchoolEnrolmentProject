@@ -81,16 +81,16 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = "enrolled: ${studentEnrolment}">
+			<tr th:each = "enrolled,iterator: ${studentEnrolment}">
 				<div th:if="${enrolled.role != null}">
 				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
 					<span th:each = "enrolledthree: ${enrolledtwo.stuCourse}">
 					<td hidden th:text = "${enrolledthree.courseName}"></td>
 					</span>
 				</span>
-				<td></td>
+				<td th:text = "${iterator.index + 1}"></td>
 				<td th:text = "${enrolled.userID}"></td> 
-				<td th:text = "${enrolled.firstName} + ${enrolled.lastName}" ></td>
+				<td th:text = "${enrolled.firstName} + ' ' + ${enrolled.lastName}" ></td>
 				<td th:text = "${enrolled.email}"></td>
 				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
 					<td th:text = "${enrolledtwo.dateOfEnrollment}"></td>

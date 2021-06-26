@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.service.LecturerInterface;
 
@@ -22,12 +24,13 @@ public class LecturerController {
 	public void setLecturerInterface(LecturerInterface ls) {
 		this.lectservice =ls;
 	}
-
-	@GetMapping("/coursestaught")
-	public String showCourses(Model model) {
-		model.addAttribute("coursestaught", lectservice.getAllCourses());
+	
+	@GetMapping("/coursestaught/{id}")
+	public String showCoursesById(@PathVariable Long id, Model model) {
 		
-		return "coursestaught";  
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(id));
+		
+		return "coursestaught";
 	}
 	
 	@GetMapping("/enrolment")

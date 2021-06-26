@@ -33,8 +33,8 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
+				<th>S/N</th>
 				<th>Course Id</th>
-				<th>Course Batch</th>
 				<th>Course Name</th>
 				<th>Maximum Intake</th>
 				<th>Current Enrollment</th>
@@ -42,12 +42,14 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = "coursetaught: ${coursestaught}">
+			<tr th:each = "coursetaught,iterator: ${coursestaught}">
+				<td th:text = "${iterator.index + 1}"></td>
 				<td th:text = "${coursetaught.courseID}"></td>
-				<td th:text = "${coursetaught.courseBatch}"></td>
 				<td th:text = "${coursetaught.courseName}"></td>
 				<td th:text = "${coursetaught.courseCapacity}"></td>
-				<td> 15 Students </td>
+				<span th:each = "studentCourseDetail: ${coursetaught.studentCourseDetails}">
+					<td th:text = "${studentCourseDetail.enrolmentStatus}"></td>
+				</span>
 			</tr>
 		</tbody>
 	</table>

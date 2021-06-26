@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.caps.model.Courses;
+import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
@@ -65,6 +66,12 @@ public class LecturerImplementation implements LecturerInterface {
 	public List<Users> getAllUsersByRole(Roles role) {
 		
 		return usersRepository.findByRole(role);
+	}
+
+	@Transactional
+	public List<Courses> getAllCoursesByLecturerId(Long id) {
+
+		return coursesRepository.findByLecturerId(id);
 	}
 
 	
