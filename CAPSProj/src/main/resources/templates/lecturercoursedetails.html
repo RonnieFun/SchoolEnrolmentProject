@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta charset="ISO-8859-1">
+<title>Available Course List</title>
+</head>
+<body>
+
+<h1>Available Course List</h1>
+
+<table>
+
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>NAME</th>
+			<th>DESCRIPTION</th>
+			<th>BRAND</th>
+			<th>PRICE</th>
+			<th>DOM</th>
+			<th>EDIT</th>
+			<th>DELETE</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr th:each="lc,iterator: ${lecturercourses}">	
+		
+			<td th:text = "${iterator.index + 1}"></td>	
+
+			<td th:text="${lc.courseID}">Course ID</td>
+			<td th:text="${lc.courseName}">Course Name</td>
+			<td th:text="${lc.credits}">Credits</td>
+			
+			<span th:each="lecturer: ${lc.users}">	
+				<td th:text="${lecturer.firstName} + ' ' + {lecturer.lastName}">Lecturer Name</td>
+			</span>
+			
+			<td th:text="${lc.courseCapacity}">Course Capacity</td>
+			
+			<!-- <td th:text="${lcd.lectCourse.}">currentEnrolment</td> -->
+			
+			<!-- <td th:text="${lcd.lectCourse.}">currentEnrolment</td> -->
+				<!-- <td th:text="${lcd.lectCourse.}">availableEnrolment</td> -->
+
+
+			<td th:text="${#temporals.format(lcd.lectcourse.courseStartDate, 'yyyy-MM-dd')}">courseStartDate</td>
+			<td th:text="${#temporals.format(lcd.lectcourse.courseEndDate, 'yyyy-MM-dd')}">courseEndDate</td>
+			
+			
+			<!-- <td> <button th:href="@{/course/enroll/add} + ${course.courseID}"> Enroll Now</button> </td>-->	
+										
+			
+		</tr>	
+	</tbody>
+	
+</table>
+
+
+</body>
+</html>

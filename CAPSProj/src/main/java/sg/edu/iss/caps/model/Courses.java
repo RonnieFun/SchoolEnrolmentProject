@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -35,12 +37,18 @@ public class Courses {
 	private CourseStatus courseStatus;
 	
 	//Many to many relationship between StudentCoursedetails and Courses
-	@ManyToMany(mappedBy = "stuCourse")
+	@OneToMany(mappedBy = "course")
 	private Collection<StudentCourseDetails> studentCourseDetails;
 	
 	//Many to many relationship between LecturerCourseDetails and Courses
-	@ManyToMany(mappedBy = "lectCourse")
-	private Collection<LecturerCourseDetails> lecturerCourseDetails;
+//	@ManyToMany(mappedBy = "lectCourse")
+//	private Collection<LecturerCourseDetails> lecturerCourseDetails;
+	
+	
+	//By ZQ
+	// Many to many relation between Courses and Users
+	@ManyToMany(mappedBy = "courses")
+	private Collection<Users> users;
 
 	//No argument constructor
 	public Courses() {
@@ -65,7 +73,7 @@ public class Courses {
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int credits, int courseCapacity, String description, CourseStatus courseStatus,
 			Collection<StudentCourseDetails> studentCourseDetails,
-			Collection<LecturerCourseDetails> lecturerCourseDetails) {
+			Collection<Users> users) {
 		super();
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
@@ -76,7 +84,7 @@ public class Courses {
 		this.description = description;
 		this.courseStatus = courseStatus;
 		this.studentCourseDetails = studentCourseDetails;
-		this.lecturerCourseDetails = lecturerCourseDetails;
+		this.users = users;
 	}
 
 	//Argument constructor with testing purpose
@@ -163,12 +171,23 @@ public class Courses {
 		this.studentCourseDetails = studentCourseDetails;
 	}
 
-	public Collection<LecturerCourseDetails> getLecturerCourseDetails() {
-		return lecturerCourseDetails;
+//	public Collection<LecturerCourseDetails> getLecturerCourseDetails() {
+//		return lecturerCourseDetails;
+//	}
+//
+//	public void setLecturerCourseDetails(Collection<LecturerCourseDetails> lecturerCourseDetails) {
+//		this.lecturerCourseDetails = lecturerCourseDetails;
+//	}
+	
+	
+	
+
+	public Collection<Users> getUsers() {
+		return users;
 	}
 
-	public void setLecturerCourseDetails(Collection<LecturerCourseDetails> lecturerCourseDetails) {
-		this.lecturerCourseDetails = lecturerCourseDetails;
+	public void setUsers(Collection<Users> users) {
+		this.users = users;
 	}
 
 	public LocalDate getExamDate() {
