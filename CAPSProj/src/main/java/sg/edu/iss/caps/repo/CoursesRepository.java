@@ -10,7 +10,7 @@ import sg.edu.iss.caps.model.Courses;
 
 public interface CoursesRepository extends JpaRepository<Courses, Long> {
 
-	@Query("SELECT c FROM Courses c JOIN c.lecturerCourseDetails lc WHERE lc.id = :id")
+	@Query("SELECT c FROM Courses c JOIN c.lecturerCourseDetails lc JOIN lc.lecturer l WHERE l.id = :id")
 	List<Courses> findByLecturerId(@Param("id") Long id); 
 	
 }
