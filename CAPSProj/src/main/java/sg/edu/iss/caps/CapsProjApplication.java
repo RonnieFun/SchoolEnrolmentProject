@@ -39,8 +39,8 @@ public class CapsProjApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
-//			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
-//			urepo.save(user);
+			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
+			urepo.save(user);
 			
 			Courses course1 = new Courses("C# Programming", LocalDate.of(2021, 6, 30), 
 					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 15, 30, "Nice Course", CourseStatus.ONGOING);

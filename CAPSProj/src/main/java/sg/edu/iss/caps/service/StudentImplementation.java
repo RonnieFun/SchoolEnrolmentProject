@@ -18,8 +18,6 @@ public class StudentImplementation implements StudentInterface {
 	@Autowired
 	UsersRepository urepo;
 	
-
-
 	@Transactional
 	public List<Users> findAllUsersByRole(Roles role) {
 		
@@ -28,7 +26,10 @@ public class StudentImplementation implements StudentInterface {
 
 
 
-
-	
+	@Transactional
+	public List<Courses> findCoursesByRole(Roles role){
+		
+		return urepo.findCoursesByRole(role);
+	}
 
 }
