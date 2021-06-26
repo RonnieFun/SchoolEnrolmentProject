@@ -1,7 +1,7 @@
 package sg.edu.iss.caps.Admin;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -47,7 +47,12 @@ public class AdminImplementation implements AdminInterface{
 		// TODO Auto-generated method stub
 		urepo.delete(user);		
 	}
-
+	
+	@Transactional
+	public Users findById(Long ID) {
+		return urepo.findById(ID).get();
+	}
+	
 	@Transactional
 	public Users findByName(String name) {
 		// TODO Auto-generated method stub

@@ -1,6 +1,7 @@
 package sg.edu.iss.caps.Admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -16,5 +17,6 @@ public interface AdminInterface {
 	public List<Users> listUsers();
 	public void deleteUser(Users user);
 	public Users findByName(String name);
+	public Users findById(Long ID);
 
 }
