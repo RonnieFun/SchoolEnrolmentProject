@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Collection;
 
@@ -30,7 +32,7 @@ public class Users {
 	
 	private String address;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	
 	private String salutation;
@@ -91,6 +93,7 @@ public class Users {
 		this.role = role;
 	}
 
+	
 	public long getUserID() {
 		return userID;
 	}

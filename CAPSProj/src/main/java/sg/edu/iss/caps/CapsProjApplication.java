@@ -1,15 +1,12 @@
 package sg.edu.iss.caps;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
 import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.CourseStatus;
@@ -31,7 +28,7 @@ public class CapsProjApplication {
 	
 	@Autowired
 	StudentCourseDetailsRepository screpo;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(CapsProjApplication.class, args);
 	}
@@ -98,21 +95,16 @@ public class CapsProjApplication {
 			
 			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 07, 19), "D", 
 					EnrolmentStatus.ACCEPTED, user4, course2);
-			
-			
 
 			screpo.save(studentCourseDetail1);
 			screpo.save(studentCourseDetail2);
 			screpo.save(studentCourseDetail3);
-			
+
 			user2.setCourses(javaCourse);
 			user5.setCourses(cSharpCourse);
 			
 			urepo.save(user2);
 			urepo.save(user5);
-			
-			
-			
 		};
 	}
 

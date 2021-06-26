@@ -16,7 +16,7 @@ public class StudentCourseDetails {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfEnrollment;
 	
 	private String grades;
@@ -46,11 +46,12 @@ public class StudentCourseDetails {
 		this.course = course;
 	}
 
-	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus) {
+	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus, Users student) {
 		super();
 		this.dateOfEnrollment = dateOfEnrollment;
 		this.grades = grades;
 		this.enrolmentStatus = enrolmentStatus;
+		this.student = student;
 	}
 
 	public long getId() {
