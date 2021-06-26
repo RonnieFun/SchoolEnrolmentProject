@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>List of Courses</title>
+</head>
+<body>
+	<h2>List of Courses</h2>
+	<table class="w3-container" th:if="${not #lists.isEmpty(courses)}">
+		<tr>
+			<th>Course Id</th>
+			<th>Course Name</th>
+			<th>Course Start Date</th>
+			<th>Course End Date</th>
+			<th>Course Capacity</th>
+			<th>Course Status</th>
+			<th>Credits</th>
+			<th>Course Description</th>
+			<th>Action</th>
+		</tr>
+		<tr>
+		<tr th:each="course:${courses}">
+			<td th:text=${course.courseID}></td>
+			<td th:text=${course.courseName}></td>
+			<td th:text=${course.courseStartDate}></td>
+			<td th:text=${course.courseEndDate}></td>
+			<td th:text=${course.courseCapacity}></td>
+			<td th:text=${course.courseStatus}></td>
+			<td th:text=${course.credits}></td>
+			<td th:text=${course.description}></td>
+			<td><a href="admin-editcourse.html"
+				th:href="@{/admin/editcourse/}+${course.courseID}">Edit Course</a></td>
+			<td><a
+				th:href="@{/admin/deletecourse/}+${course.courseID}"> Delete
+					Course </a></td>
+		</tr>
+	</table>
+</body>
+</html>
