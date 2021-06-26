@@ -15,12 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
-import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.repo.CoursesRepository;
-import sg.edu.iss.caps.repo.LecturerCourseDetailsRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 import sg.edu.iss.caps.repo.UsersRepository;
 
@@ -32,9 +30,6 @@ public class LecturerImplementation implements LecturerInterface {
 	
 	@Autowired
 	UsersRepository usersRepository;
-	
-	@Autowired
-	LecturerCourseDetailsRepository lecturerCourseDetailsRepository;
 	
 	@Autowired
 	StudentCourseDetailsRepository studentCourseDetailsRepository;
@@ -54,7 +49,8 @@ public class LecturerImplementation implements LecturerInterface {
 	@Transactional
 	public List<Courses> getAllCoursesByLecturerId(Long id) {
 
-		return coursesRepository.findByLecturerId(id);
+		//return coursesRepository.findByLecturerId(id);
+		return null;
 	}
 
 	@Transactional

@@ -36,7 +36,7 @@ public class Courses {
 	
 	private CourseStatus courseStatus;
 	
-	//Many to many relationship between StudentCoursedetails and Courses
+	//One to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy = "course")
 	private Collection<StudentCourseDetails> studentCourseDetails;
 	
@@ -178,16 +178,6 @@ public class Courses {
 	public void setStudentCourseDetails(Collection<StudentCourseDetails> studentCourseDetails) {
 		this.studentCourseDetails = studentCourseDetails;
 	}
-
-//	public Collection<LecturerCourseDetails> getLecturerCourseDetails() {
-//		return lecturerCourseDetails;
-//	}
-//
-//	public void setLecturerCourseDetails(Collection<LecturerCourseDetails> lecturerCourseDetails) {
-//		this.lecturerCourseDetails = lecturerCourseDetails;
-//	}
-	
-	
 	
 
 	public Collection<Users> getUsers() {

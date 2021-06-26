@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin Enrolment Page</title>
+</head>
+<body>
+<h1>Enrolment Lists</h1>
+<h2>Add a Enrolment</h2>
+<a href="productform.html"
+		th:href="@{/admin/addenrolment}"> Add </a>
+<table>
+	<tr>
+		<th>No</th>
+		<th>Student Id</th>
+		<th>Student Name</th>
+		<th>Student Email</th>
+		<th>Date of Enrollment</th>
+		<th>Grades</th>
+		<th>Enrolment Status</th>
+		<th>Courses</th>
+	</tr>
+	<tr th:each = "enrolment,iterator: ${enrolmentlist}">
+		<td th:text = "${iterator.index + 1}"></td>
+		<td th:text = "${enrolment.id}"></td> 
+		<td th:text = "${enrolment.student.firstName} + ' ' + ${enrolment.student.lastName}" ></td>
+		<td th:text = "${enrolment.student.email}"></td>
+		<td th:text = "${enrolment.dateOfEnrollment}"></td>
+		<td th:text = "${enrolment.grades}"></td>
+		<td th:text = "${enrolment.enrolmentStatus}"></td>
+		<span th:each = "course: ${enrolment.stuCourse}">
+			<td th:text = "${course.courseName}"></td>
+		</span>
+		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED}">
+		<td>
+			<a th:href="@{/enrolment/edit/}+${enrolment.id}" > Edit </a></td>
+	    <td>
+	    <a th:href="@{/enrolment/delete/}+${enrolment.id}" > Delete </a>
+	    </td>
+	    </a>
+	</tr>
+</table>
+</body>
+</html>
