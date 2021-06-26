@@ -64,7 +64,7 @@ public class CapsProjApplication {
 			cSharpCourse.add(course1);
 			
 			List<Courses> javaCourse = new ArrayList<Courses>();
-			cSharpCourse.add(course2);
+			javaCourse.add(course2);
 			
 			Users user1 = new Users("Max", "Chen", "max@gmail.com", "abc", Roles.STUDENT, "999", 
 					"Blk 54 #12-123, Singapore 123456", LocalDate.of(1988, 1, 30), "Mr", null, null);
@@ -83,7 +83,7 @@ public class CapsProjApplication {
 					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 19), "Mr", null, null);
 			urepo.save(user4);
 			
-			Users user5 = new Users("Kevin", "Goh", "chia@gmail.com", "abcde", Roles.STUDENT, "5454",
+			Users user5 = new Users("Kevin", "Goh", "chia@gmail.com", "abcde", Roles.LECTURER, "5454",
 					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 19), "Mr", null, null);
 			urepo.save(user5);
 			
@@ -99,20 +99,18 @@ public class CapsProjApplication {
 			
 			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 07, 19), "D", 
 					EnrolmentStatus.ACCEPTED, user4, javaCourse);
-			
-			StudentCourseDetails studentCourseDetail4 = new StudentCourseDetails(LocalDate.of(2001, 07, 13), "A+", 
-					EnrolmentStatus.REJECTED, user5, javaCourse);
-			
+
 			screpo.save(studentCourseDetail1);
 			screpo.save(studentCourseDetail2);
 			screpo.save(studentCourseDetail3);
-			screpo.save(studentCourseDetail4);
 			
 			LecturerCourseDetails lecturerCourseDetail1 = new LecturerCourseDetails(cSharpCourse, user2);
 			LecturerCourseDetails lecturerCourseDetail2 = new LecturerCourseDetails(javaCourse, user6);
+			LecturerCourseDetails lecturerCourseDetail3 = new LecturerCourseDetails(javaCourse, user5);
 			
 			lcrepo.save(lecturerCourseDetail1);
 			lcrepo.save(lecturerCourseDetail2);
+			lcrepo.save(lecturerCourseDetail3);
 		};
 	}
 

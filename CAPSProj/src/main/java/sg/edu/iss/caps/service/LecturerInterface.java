@@ -1,6 +1,7 @@
 package sg.edu.iss.caps.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,10 @@ public interface LecturerInterface {
 
 	List<Courses> getAllCourses();
 	
+	List<Courses> getAllCoursesByLecturerId(Long id);
+	
+	List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate);
+	
 	Courses getCoursesById(Long id);
 	
 	List<Users> getAllUsers();
@@ -22,7 +27,4 @@ public interface LecturerInterface {
 	Users getUsersById(Long id);
 	
 	List<Users> getAllUsersByRole(Roles role);
-	
-	List<Courses> getAllCoursesByLecturerId(Long id);
-	
 }

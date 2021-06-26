@@ -16,7 +16,7 @@ public class StudentCourseDetails {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfEnrollment;
 	
 	private String grades;
