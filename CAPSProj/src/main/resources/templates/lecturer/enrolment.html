@@ -61,7 +61,6 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th hidden>Course Name</th>
 				<th>S/N</th>
 				<th>Student Id</th>
 				<th>Student Name</th>
@@ -71,27 +70,11 @@
 		</thead>
 
 		<tbody>
-			<!-- <tr th:each = "enrolled,iterator: ${enrolments}">
-				<span th:each = "${enrolled.}">
-
-				</span>
+			<tr th:each = "enrolled,iterator: ${enrolments}">
 				<td th:text = "${enrolled.courseName}"></td>
-				<td th:text="${enrolled.courseStartDate}"></td> -->
+				<td th:text= "${enrolled.courseStartDate}"></td>
 
-				<!-- <div th:if="${enrolled.role != null}">
-				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
-					<span th:each = "enrolledthree: ${enrolledtwo.stuCourse}">
-					<td hidden th:text = "${enrolledthree.courseName}"></td>
-					</span>
-				</span>
-				<td th:text = "${iterator.index + 1}"></td>
-				<td th:text = "${enrolled.userID}"></td> 
-				<td th:text = "${enrolled.firstName} + ' ' + ${enrolled.lastName}" ></td>
-				<td th:text = "${enrolled.email}"></td>
-				<span th:each = "enrolledtwo: ${enrolled.studentCourseDetail}">
-					<td th:text = "${enrolledtwo.dateOfEnrollment}"></td>
-				</span>
-				</div> -->
+				
 			</tr>
 		</tbody>
 	</table>
