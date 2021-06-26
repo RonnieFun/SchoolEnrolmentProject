@@ -28,8 +28,8 @@ public class StudentCourseDetails {
 	private Users student;
 	
 	//Many to one relationship between Courses and StudentCourseDetails
-	@ManyToMany
-	private Collection<Courses> stuCourse;
+	@ManyToOne
+	private Courses course;
 
 	//No Argument constructor
 	public StudentCourseDetails() {
@@ -37,13 +37,13 @@ public class StudentCourseDetails {
 	}
 	
 	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus,
-			Users student, Collection<Courses> stuCourse) {
+			Users student, Courses course) {
 		super();
 		this.dateOfEnrollment = dateOfEnrollment;
 		this.grades = grades;
 		this.enrolmentStatus = enrolmentStatus;
 		this.student = student;
-		this.stuCourse = stuCourse;
+		this.course = course;
 	}
 
 	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus, Users student) {
@@ -94,12 +94,14 @@ public class StudentCourseDetails {
 		this.student = student;
 	}
 
-	public Collection<Courses> getStuCourse() {
-		return stuCourse;
+	public Courses getCourse() {
+		return course;
 	}
 
-	public void setStuCourse(Collection<Courses> stuCourse) {
-		this.stuCourse = stuCourse;
+	public void setCourse(Courses course) {
+		this.course = course;
 	}
+
+
 
 }

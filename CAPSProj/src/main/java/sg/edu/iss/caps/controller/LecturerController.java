@@ -30,7 +30,7 @@ public class LecturerController {
 	@GetMapping(value = "/lecturer/coursestaught/{id}")
 	public String showCoursesById(@PathVariable Long id, Model model) {
 		
-		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(id));
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(Roles.LECTURER, id));
 		
 		return "lecturer/coursestaught";
 	}
@@ -48,6 +48,14 @@ public class LecturerController {
 		return "lecturer/enrolment";
 	}
 	
+	@GetMapping(value = "/lecturer/enrolment/{id}") 
+	public String showEnrolmentsByLecturerId(@PathVariable Long id, Model model) {
+		
+		model.addAttribute("enrolmentByLecturerId", lectservice.getAllCoursesByLecturerId(Roles.LECTURER, id));
+		
+		return "lecturer/enrolment";
+	}
+
 	
 //	@GetMapping(value = "/lecturer/enrolment")
 //	public String showEnrolments(Model model) {
@@ -58,13 +66,6 @@ public class LecturerController {
 //		
 //		return "lecturer/enrolment";
 //	}
-//	
-//	@GetMapping(value = "/lecturer/enrolment/{id}") 
-//	public String showEnrolmentsByLecturerId(@PathVariable Long id, Model model) {
-//		
-//		model.addAttribute("enrolmentByLecturerId", lectservice.getAllCoursesByLecturerId(id));
-//		
-//		return "lecturer/enrolment";
-//	}
+	
 	
 }

@@ -44,25 +44,18 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		return coursesRepository.findAll();
 	}
-
-	@Transactional
-	public Courses getCoursesById(Long id) {
-		
-		return coursesRepository.findById(id).get();
-	}
 	
 	@Transactional
-	public List<Courses> getAllCoursesByLecturerId(Long id) {
+	public List<Courses> getAllCoursesByLecturerId(Roles role, Long id) {
 
-		return coursesRepository.findByLecturerId(id);
+		return coursesRepository.findByLecturerId(role, id);
 	}
 
 	@Transactional
 	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
 		
-		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
+		return coursesRepository.findByCourseNameCourseStart(courseName, courseStartDate);
 	}
-	
 	
 	@Transactional
 	public Users getUsersById(Long id) {

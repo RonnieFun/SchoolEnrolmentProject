@@ -14,17 +14,19 @@ import sg.edu.iss.caps.model.Users;
 
 public interface LecturerInterface {
 
+	//To get list of all courses
 	List<Courses> getAllCourses();
 	
-	List<Courses> getAllCoursesByLecturerId(Long id);
+	//To get list of all courses by Lecturer's Id
+	List<Courses> getAllCoursesByLecturerId(Roles role, Long id);
 	
+	//For search function on course enrolments html page:
 	List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate);
 	
-	Courses getCoursesById(Long id);
-	
+	//To get list of all users
 	List<Users> getAllUsers();
-	
-	Users getUsersById(Long id);
-	
+
+	//To get list of users by Role
 	List<Users> getAllUsersByRole(Roles role);
+	
 }

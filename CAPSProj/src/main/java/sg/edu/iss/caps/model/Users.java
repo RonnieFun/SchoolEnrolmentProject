@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
@@ -40,9 +41,10 @@ public class Users {
 	@OneToMany(mappedBy = "student")
 	private Collection<StudentCourseDetails> studentCourseDetail;
 	
-	// One to Many relationship between Users and LecturerCourseDetails
-	@OneToMany(mappedBy = "lecturer")
-	private Collection<LecturerCourseDetails> lecturerCourseDetail;
+
+	// many to many relation between Users and Courses
+	@ManyToMany
+	private Collection<Courses> courses;
 
 	//No Argument constructor
 	public Users() {
@@ -52,7 +54,7 @@ public class Users {
 	//Argument constructor with all fields(without userID)
 	public Users(String firstName, String lastName, String email, String password, Roles role, String phoneNumber,
 			String address, LocalDate birthday, String salutation, Collection<StudentCourseDetails> studentCourseDetail,
-			Collection<LecturerCourseDetails> lecturerCourseDetail) {
+			Collection<Courses> courses) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -64,8 +66,10 @@ public class Users {
 		this.birthday = birthday;
 		this.salutation = salutation;
 		this.studentCourseDetail = studentCourseDetail;
-		this.lecturerCourseDetail = lecturerCourseDetail;
+		this.courses = courses;
 	}
+	
+	
 
 	public Users(String firstName, String lastName, String email, String password, Roles role, String phoneNumber,
 			String address, LocalDate birthday, String salutation) {
@@ -178,17 +182,20 @@ public class Users {
 		this.studentCourseDetail = studentCourseDetail;
 	}
 
-	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
-		return lecturerCourseDetail;
+	public Collection<Courses> getCourses() {
+		return courses;
 	}
 
-	public void setLecturerCourseDetail(Collection<LecturerCourseDetails> lecturerCourseDetail) {
-		this.lecturerCourseDetail = lecturerCourseDetail;
+	public void setCourses(Collection<Courses> courses) {
+		this.courses = courses;
 	}
-	
-	
-	
-	
-	
 
+//	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
+//		return lecturerCourseDetail;
+//	}
+//
+//	public void setLecturerCourseDetail(Collection<LecturerCourseDetails> lecturerCourseDetail) {
+//		this.lecturerCourseDetail = lecturerCourseDetail;
+//	}
+	
 }
