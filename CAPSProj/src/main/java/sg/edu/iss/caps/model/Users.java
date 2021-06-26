@@ -31,7 +31,7 @@ public class Users {
 	
 	private String address;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	
 	private String salutation;

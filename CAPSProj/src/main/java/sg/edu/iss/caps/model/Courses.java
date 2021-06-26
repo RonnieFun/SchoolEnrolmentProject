@@ -17,13 +17,13 @@ public class Courses {
 	
 	private String courseName;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseStartDate;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseEndDate;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate examDate;
 	
 	private int credits;

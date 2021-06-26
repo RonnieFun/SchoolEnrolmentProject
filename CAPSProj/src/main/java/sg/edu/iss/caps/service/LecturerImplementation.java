@@ -1,5 +1,6 @@
 package sg.edu.iss.caps.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +50,20 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		return coursesRepository.findById(id).get();
 	}
+	
+	@Transactional
+	public List<Courses> getAllCoursesByLecturerId(Long id) {
 
+		return coursesRepository.findByLecturerId(id);
+	}
+
+	@Transactional
+	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
+		
+		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
+	}
+	
+	
 	@Transactional
 	public Users getUsersById(Long id) {
 		
@@ -67,12 +81,5 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		return usersRepository.findByRole(role);
 	}
-
-	@Transactional
-	public List<Courses> getAllCoursesByLecturerId(Long id) {
-
-		return coursesRepository.findByLecturerId(id);
-	}
-
 	
 }
