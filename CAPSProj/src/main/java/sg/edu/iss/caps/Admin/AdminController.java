@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,21 +29,28 @@ public class AdminController {
 	
 	@RequestMapping(value = "list")
 	public String listUser(Model model) {
-		return listByPage(model,1);
+		return listByPage(model,1, "lastName", "asc");
 	}
 	
 	@GetMapping("/page/{pageNumber}")
-	public String listByPage(Model model, @PathVariable("pageNumber") int currentPage) {
-		Page<Users> page = adservice.listAllUsers(currentPage);
+	public String listByPage(Model model, @PathVariable("pageNumber") int currentPage,
+			@Param("sortField") String sortField,
+			@Param("sortDir") String sortDir) {
+		Page<Users> page = adservice.listAllUsers(currentPage, sortField, sortDir);
 		long totalItems = page.getTotalElements();
 		int totalPages = page.getTotalPages();
 		List<Users> ulist = page.getContent();
-		
-		
+			
 		model.addAttribute("ulist", ulist);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		model.addAttribute("reverseSortDir", reverseSortDir);
+		
 		return "Admin";
 	}
 	

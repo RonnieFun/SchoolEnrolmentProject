@@ -58,6 +58,37 @@ public class CapsProjApplication {
 //					Roles.LECTURER, "91333333", "l street", LocalDate.of(1991, 04, 21), "Mr");
 //			urepo.save(u2);urepo.save(u3);urepo.save(u4);urepo.save(u5);urepo.save(u6);urepo.save(u7);
 //			urepo.save(u8);urepo.save(u9);urepo.save(u10);urepo.save(u11);urepo.save(u12);urepo.save(u13);
+//			Users u14 = new Users("Qi", "Zhao", "zhaoqi@gmail.com", "mmm", 
+//					Roles.STUDENT, "91333333", "m street", LocalDate.of(1989, 9, 04), "Ms");
+//			
+//			Users u15 = new Users("Phyu Sin", "Aye", "phyusin@gmail.com", "nnn", 
+//					Roles.STUDENT, "91444444", "n street", LocalDate.of(1994, 02, 17), "Ms");
+//			
+//			Users u16 = new Users("Ronnie", "Fun", "Ronnie@gmail.com", "ooo", 
+//					Roles.STUDENT, "91555555", "o street", LocalDate.of(1986, 01, 18), "Mr");
+//			
+//			Users u17 = new Users("Willard", "Toh", "willard@gmail.com", "ppp", 
+//					Roles.STUDENT, "91666666", "p street", LocalDate.of(1993, 10, 14), "Mr");
+//			
+//			Users u18 = new Users("Kim Son", "Troung", "kimson@gmail.com", "qqq", 
+//					Roles.STUDENT, "91666666", "q street", LocalDate.of(1988, 05, 02), "Mr");
+//			
+//			Users u19 = new Users("Zerita", "Lim", "zerita@gmail.com", "rrr", 
+//					Roles.STUDENT, "91777777", "r street", LocalDate.of(1994, 06, 21), "Ms");
+//			
+//			Users u20 = new Users("Austin", "Ma", "Austin@gmail.com", "sss", 
+//					Roles.STUDENT, "91888888", "s street", LocalDate.of(1991, 02, 01), "Mr");
+//			
+//			Users u21 = new Users("John", "Tan", "John@gmail.com", "ttt", 
+//					Roles.LECTURER, "91999999", "t street", LocalDate.of(1960, 04, 13), "Mr");
+//			
+//			Users u22 = new Users("Tom", "Tan", "Tom@gmail.com", "uuu", 
+//					Roles.LECTURER, "92111111", "u street", LocalDate.of(1973, 9, 02), "Mr");
+//			
+//			Users u23 = new Users("Michelle", "Koh", "michelle@gmail.com", "vvv", 
+//					Roles.LECTURER, "92222222", "v street", LocalDate.of(1965, 11, 8), "Mrs");
+//			urepo.save(u14);urepo.save(u15);urepo.save(u16);urepo.save(u17);urepo.save(u18);urepo.save(u19);
+//			urepo.save(u20);urepo.save(u21);urepo.save(u22);urepo.save(u23);
 			
 		};
 	}
