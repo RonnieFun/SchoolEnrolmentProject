@@ -46,11 +46,12 @@ public class StudentCourseDetails {
 		this.stuCourse = stuCourse;
 	}
 
-	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus) {
+	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus, Users student) {
 		super();
 		this.dateOfEnrollment = dateOfEnrollment;
 		this.grades = grades;
 		this.enrolmentStatus = enrolmentStatus;
+		this.student = student;
 	}
 
 	public long getId() {
