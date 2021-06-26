@@ -40,12 +40,6 @@ public class Courses {
 	@OneToMany(mappedBy = "course")
 	private Collection<StudentCourseDetails> studentCourseDetails;
 	
-	//Many to many relationship between LecturerCourseDetails and Courses
-//	@ManyToMany(mappedBy = "lectCourse")
-//	private Collection<LecturerCourseDetails> lecturerCourseDetails;
-	
-	
-	//By ZQ
 	// Many to many relation between Courses and Users
 	@ManyToMany(mappedBy = "courses")
 	private Collection<Users> users;
