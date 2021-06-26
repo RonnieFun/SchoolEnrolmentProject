@@ -6,6 +6,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.caps.model.Roles;
@@ -51,10 +54,18 @@ public class AdminImplementation implements AdminInterface{
 	}
 
 	@Transactional
-	public List<Users> listAllUsers() {
+	public Page<Users> listAllUsers(int pageNumber) {
 		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(pageNumber - 1, 5);
+		return urepo.findAll(pageable);
+	}
+	
+	@Transactional
+	public List<Users> listUsers(){
 		return urepo.findAll();
 	}
+	
+	
 
 
 }
