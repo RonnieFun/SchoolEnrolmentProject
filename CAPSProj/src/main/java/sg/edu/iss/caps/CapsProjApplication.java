@@ -31,7 +31,7 @@ public class CapsProjApplication {
 //			Users u1 = new Users("Alejandro", "Hou Lu", "alejandro@gmail.com", "123", 
 //					Roles.STUDENT, "90685997", "123 street", LocalDate.of(1990, 03, 04), "Mr");
 //			urepo.save(u1);
-			
+//			
 //			Users u2 = new Users("Aloysius", "Chee", "aloysius@gmail.com", "aaa", 
 //					Roles.STUDENT, "91111111", "a street", LocalDate.of(1996, 06, 02), "Mr");
 //			Users u3 = new Users("Metilda", "Chee", "Metilda@gmail.com", "bbb", 
@@ -57,7 +57,8 @@ public class CapsProjApplication {
 //			Users u13 = new Users("Brandon", "Chia", "brandon@gmail.com", "lll", 
 //					Roles.LECTURER, "91333333", "l street", LocalDate.of(1991, 04, 21), "Mr");
 //			urepo.save(u2);urepo.save(u3);urepo.save(u4);urepo.save(u5);urepo.save(u6);urepo.save(u7);
-//			urepo.save(u8);urepo.save(u9);urepo.save(u10);urepo.save(u11);urepo.save(u12);urepo.save(u13);
+//			urepo.save(u8);urepo.save(u9);urepo.save(u10);urepo.save(u11);
+//			urepo.save(u12);urepo.save(u13);
 //			Users u14 = new Users("Qi", "Zhao", "zhaoqi@gmail.com", "mmm", 
 //					Roles.STUDENT, "91333333", "m street", LocalDate.of(1989, 9, 04), "Ms");
 //			
@@ -89,6 +90,17 @@ public class CapsProjApplication {
 //					Roles.LECTURER, "92222222", "v street", LocalDate.of(1965, 11, 8), "Mrs");
 //			urepo.save(u14);urepo.save(u15);urepo.save(u16);urepo.save(u17);urepo.save(u18);urepo.save(u19);
 //			urepo.save(u20);urepo.save(u21);urepo.save(u22);urepo.save(u23);
+			
+//			Users u24 = new Users("Thomas", "Lim", "thomas@gmail.com", "www", 
+//				Roles.ADMIN, "92333333", "w street", LocalDate.of(1964, 3, 28), "Mr");
+//			Users u25 = new Users("Scarlet", "Johansson", "scarlet@gmail.com", "xxx", 
+//					Roles.ADMIN, "92444444", "x street", LocalDate.of(1985, 2, 21), "Ms");
+//			Users u26 = new Users("Angela", "baby", "angela@gmail.com", "yyy", 
+//					Roles.ADMIN, "92555555", "y street", LocalDate.of(1992, 04, 20), "Ms");
+//			Users u27 = new Users("Jennie", "Kim", "jennie@gmail.com", "zzz", 
+//					Roles.ADMIN, "92666666", "z street", LocalDate.of(1997, 5, 19), "Ms");
+//			urepo.save(u24);urepo.save(u25);urepo.save(u26);urepo.save(u27);
+
 			
 		};
 	}

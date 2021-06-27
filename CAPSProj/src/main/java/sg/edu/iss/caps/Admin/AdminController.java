@@ -1,7 +1,7 @@
 package sg.edu.iss.caps.Admin;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.Users;
@@ -75,16 +76,25 @@ public class AdminController {
 	  }
 	
 	@RequestMapping("/deleteuser")
-	public String DeleteUser(@RequestParam(value="id", required = true) long id)
-	{
-		Users user = adservice.findById(id);
-		adservice.deleteUser(user);		
-		return "Admin";
+	public String DeleteUser(@RequestParam(name="id", required = true) long id)
+	{		
+		adservice.deleteUser(id);		
+		return "redirect:/admin/page/1?sortField=userID&sortDir=asc";
 	}
+	//Path vaiable method (need to change html)
+//	public String deleteUser(@PathVariable(value = "id") long id) {
+//		//Users user = adservice.findById(id);
+//		adservice.deleteUser(id);
+//		return "redirect:/admin/list";
+//	}
+	
+	
 	
 	@RequestMapping("/edit/{id}")
 	public String ShowEditUserForm(Model model, @PathVariable("id") Long id)
 	{
+		List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
+		model.addAttribute("salutationList", salutationList);
 		model.addAttribute("user",adservice.findById(id));
 		return "EditUser";
 	}
@@ -96,15 +106,22 @@ public class AdminController {
 			return "EditUser";
 		}
 		adservice.updateUser(user);
-		return "forward:Admin";
+		return "success";
 	}
 	
 	@RequestMapping("/user/create")
 	public String createUser(Model model) {
 		Users user = new Users();
+		String password = adservice.passwordGenerator();
+		user.setPassword(password);
+		
+		List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
+		model.addAttribute("salutationList", salutationList);
 		model.addAttribute("user", user);
 		return "EditUser";
 	}
+	
+	
 	
 	
 

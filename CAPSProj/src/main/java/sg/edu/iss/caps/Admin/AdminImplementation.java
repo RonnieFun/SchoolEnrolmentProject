@@ -43,9 +43,9 @@ public class AdminImplementation implements AdminInterface{
 	}
 
 	@Transactional
-	public void deleteUser(Users user) {
+	public void deleteUser(Long id) {
 		// TODO Auto-generated method stub
-		urepo.delete(user);		
+		urepo.deleteById(id);		
 	}
 	
 	@Transactional
@@ -71,6 +71,13 @@ public class AdminImplementation implements AdminInterface{
 	@Transactional
 	public List<Users> listUsers(){
 		return urepo.findAll();
+	}
+	
+	@Transactional
+	public String passwordGenerator() {
+		int rand = (int) (10000 + (Math.random() * 99999));
+		String pw = Integer.toString(rand);
+		return pw;
 	}
 	
 	

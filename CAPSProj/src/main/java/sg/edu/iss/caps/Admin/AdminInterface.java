@@ -15,8 +15,9 @@ public interface AdminInterface {
 	public List<Users> listByRole(Roles role);
 	public Page<Users> listAllUsers(int pageNumber, String sortField, String sortDir);
 	public List<Users> listUsers();
-	public void deleteUser(Users user);
+	public void deleteUser(Long id);
 	public Users findByName(String name);
 	public Users findById(Long ID);
+	public String passwordGenerator();
 
 }

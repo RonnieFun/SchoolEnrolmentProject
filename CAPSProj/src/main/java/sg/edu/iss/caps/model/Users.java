@@ -29,7 +29,7 @@ public class Users {
 	
 	private String address;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	
 	private String salutation;
@@ -85,6 +85,21 @@ public class Users {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+	}
+	
+	
+
+	public Users(String firstName, String lastName, String email, Roles role, String phoneNumber, String address,
+			LocalDate birthday, String salutation) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.role = role;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.birthday = birthday;
+		this.salutation = salutation;
 	}
 
 	public long getUserID() {
