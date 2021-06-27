@@ -69,6 +69,15 @@ public class AdminImplementation implements AdminInterface{
 	}
 	
 	@Transactional
+	public Page<Users> listRoleUsers(int pageNumber, String sortField, String sortDir, Roles role) {
+		// TODO Auto-generated method stub
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(pageNumber - 1, 10, sort);
+		return urepo.findByRole(role,pageable);
+	}
+	
+	@Transactional
 	public List<Users> listUsers(){
 		return urepo.findAll();
 	}

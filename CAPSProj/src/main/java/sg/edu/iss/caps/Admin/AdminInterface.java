@@ -19,5 +19,6 @@ public interface AdminInterface {
 	public Users findByName(String name);
 	public Users findById(Long ID);
 	public String passwordGenerator();
+	public Page<Users> listRoleUsers(int pageNumber, String sortField, String sortDir, Roles role);
 
 }
