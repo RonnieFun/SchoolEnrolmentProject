@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Enrolment Form</title>
+</head>
+<body>
+<div align="center">
+    <h1>Enrolment Registration</h1>
+    <form action="#" th:action="@{/register}" method="post" th:object="${enrolment}">
+        <label>Student ID:</label>
+        <!-- <input type="text" th:field="*{student.userID}" /><br/> -->
+       <!--  <select th:field="*{student.userID}">
+            <option th:each="p : ${studentList}" th:value="${p}" th:text="${p}" />
+        </select> -->
+        <label>Student Name:</label>
+        <input type="text" th:field="*{student.firstName} " /><br/>
+ 
+ 		<label>Course Name:</label>
+        <input type="text" th:field="*{course.courseName}" /><br/>
+ 		
+        <label>Grades:</label>
+        <input type="text" th:field="*{grades}" /><br/>
+ 
+        <label>Date Of Enrolment:</label>
+        <input type="text" th:field="*{dateOfEnrollment}" /><br/>
+ 
+        <label>Enrolment Status:</label>
+        <select th:field="*{enrolmentStatus}">
+            <option th:each="p : ${T(sg.edu.iss.caps.model.EnrolmentStatus).values()}" th:value="${p}" th:text="${p}" />
+        </select>
+        <br/>
+ 
+       <!--  <label>Married?</label>
+        <input type="checkbox" th:field="*{married}" /><br/>
+ 
+        <label>Note:</label>
+        <textarea rows="5" cols="25" th:field="*{note}"></textarea>
+        <br/> -->
+ 
+        <button type="submit">Save</button>    
+    </form>
+</div>
+</body>
+</html>

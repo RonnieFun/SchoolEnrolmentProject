@@ -12,13 +12,13 @@
 <table>
 	<tr>
 		<th>No</th>
-		<th>Student Id</th>
+		<th>Enrolment ID</th>
 		<th>Student Name</th>
 		<th>Student Email</th>
 		<th>Date of Enrollment</th>
 		<th>Grades</th>
 		<th>Enrolment Status</th>
-		<th>Courses</th>
+		<th>Course</th>
 	</tr>
 	<tr th:each = "enrolment,iterator: ${enrolmentlist}">
 		<td th:text = "${iterator.index + 1}"></td>
@@ -28,16 +28,23 @@
 		<td th:text = "${enrolment.dateOfEnrollment}"></td>
 		<td th:text = "${enrolment.grades}"></td>
 		<td th:text = "${enrolment.enrolmentStatus}"></td>
-		<span th:each = "course: ${enrolment.stuCourse}">
-			<td th:text = "${course.courseName}"></td>
-		</span>
-		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED}">
+		<td th:text = "${enrolment.course.courseName}"></td>
+		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED} ">
+		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+			<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+				<td>
+	    			<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
+	    		</td>
+	    	</a>
 		<td>
-			<a th:href="@{/enrolment/edit/}+${enrolment.id}" > Edit </a></td>
+			<a th:href="@{/admin/editenrolment/}+${enrolment.id}" > Edit </a>
+		</td>
+	    </a>
 	    <td>
-	    <a th:href="@{/enrolment/delete/}+${enrolment.id}" > Delete </a>
+	    <a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
 	    </td>
 	    </a>
+	    
 	</tr>
 </table>
 </body>

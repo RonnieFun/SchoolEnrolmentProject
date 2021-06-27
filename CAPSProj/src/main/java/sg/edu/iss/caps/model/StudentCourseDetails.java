@@ -35,25 +35,22 @@ public class StudentCourseDetails {
 	public StudentCourseDetails() {
 		super();
 	}
-	
 
 	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus,
-			Users student, Courses c) {
+			Users student, Courses course) {
 		super();
 		this.dateOfEnrollment = dateOfEnrollment;
 		this.grades = grades;
 		this.enrolmentStatus = enrolmentStatus;
 		this.student = student;
-		this.course = c;
+		this.course = course;
 	}
 
-
-	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus, Users student) {
+	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus) {
 		super();
 		this.dateOfEnrollment = dateOfEnrollment;
 		this.grades = grades;
 		this.enrolmentStatus = enrolmentStatus;
-		this.student = student;
 	}
 
 	public long getId() {
@@ -96,14 +93,14 @@ public class StudentCourseDetails {
 		this.student = student;
 	}
 
-
-	public Courses getC() {
+	public Courses getCourse() {
 		return course;
 	}
 
-
-	public void setC(Courses c) {
-		this.course = c;
+	public void setCourse(Courses course) {
+		this.course = course;
 	}
+	
+	
 
 }
