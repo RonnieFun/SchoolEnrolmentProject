@@ -37,9 +37,16 @@ public class AdminController {
 	}
 
 	@RequestMapping("/deletecourse/{courseID}")
-	public String deleteCourse(@PathVariable("courseID") long courseID) {
-		adservice.deleteCourse(adservice.getCourseById(courseID));
-		return "forward:/admin/courselist";
+	public String deleteCourse(@PathVariable("courseID") long courseID, Model model) {
+		if (adservice.getCoursesWithStudents().contains(courseID)) {
+			model.addAttribute("ErrorMessage",
+					"Course " + courseID + " still has students associated with it. Please remove all students still associated with the course before deletion.");
+			return "forward:/admin/courselist";
+		} else {
+
+			adservice.deleteCourse(adservice.getCourseById(courseID));
+			return "forward:/admin/courselist";
+		}
 	}
 
 	@RequestMapping("/editcourse/{courseID}")

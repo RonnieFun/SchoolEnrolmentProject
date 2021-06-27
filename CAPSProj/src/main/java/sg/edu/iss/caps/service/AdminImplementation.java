@@ -9,6 +9,7 @@ import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.repo.CoursesRepository;
 import sg.edu.iss.caps.repo.LecturerCourseDetailsRepository;
+import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 
 @Service
 public class AdminImplementation implements AdminInterface {
@@ -16,6 +17,8 @@ public class AdminImplementation implements AdminInterface {
 	private CoursesRepository crepo;
 	@Autowired
 	private LecturerCourseDetailsRepository lcdrepo;
+	@Autowired
+	private StudentCourseDetailsRepository scdrepo;
 
 	@Override
 	public List<Courses> getCourses() {
@@ -40,5 +43,10 @@ public class AdminImplementation implements AdminInterface {
 	@Override
 	public void saveLecturerCourseDetails(LecturerCourseDetails lecturercoursedetails) {
 		lcdrepo.save(lecturercoursedetails);
+	}
+
+	public List<Long> getCoursesWithStudents()
+	{
+		return scdrepo.getCourseIDsWithStudents();
 	}
 }

@@ -7,6 +7,9 @@
 </head>
 <body>
 	<h2>List of Courses</h2>
+	
+	<h4 th:if="${ErrorMessage != null}" th:text="${ErrorMessage}" font-color="red"></h4>
+		
 	<table class="w3-container" th:if="${not #lists.isEmpty(courses)}">
 		<tr>
 			<th>Course Id</th>
