@@ -2,6 +2,7 @@ package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
 import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,25 +20,13 @@ public class Courses {
 	private long courseID;
 
 	private String courseName;
-<<<<<<< Upstream, based on origin/master
-	
-=======
 
->>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseStartDate;
-<<<<<<< Upstream, based on origin/master
-	
-=======
 
->>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseEndDate;
-<<<<<<< Upstream, based on origin/master
 	
-=======
-
->>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate examDate;
 
@@ -48,27 +37,18 @@ public class Courses {
 	private String description;
 
 	private CourseStatus courseStatus;
-<<<<<<< Upstream, based on origin/master
-	
-	//One to many relationship between StudentCoursedetails and Courses
-	@OneToMany(mappedBy = "course")
-=======
 
-	// Many to many relationship between StudentCoursedetails and Courses
-	@ManyToMany(mappedBy = "stuCourse")
->>>>>>> e7935f4 Temporary commit to rebase on new master 2
+	// One to many relationship between StudentCoursedetails and Courses
+	@OneToMany(mappedBy="course")
 	private Collection<StudentCourseDetails> studentCourseDetails;
-<<<<<<< Upstream, based on origin/master
-	
+
 	// Many to many relation between Courses and Users
-	@ManyToMany(mappedBy = "courses")
+	@ManyToMany (mappedBy="courses")
 	private Collection<Users> users;
-=======
 
 	// Many to many relationship between LecturerCourseDetails and Courses
 	@ManyToMany(mappedBy = "lectCourse")
 	private Collection<LecturerCourseDetails> lecturerCourseDetails;
->>>>>>> e7935f4 Temporary commit to rebase on new master 2
 
 	// No argument constructor
 	public Courses() {
@@ -92,8 +72,7 @@ public class Courses {
 	// Argument constructor with all fields(without courseID)
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int credits, int courseCapacity, String description, CourseStatus courseStatus,
-			Collection<StudentCourseDetails> studentCourseDetails,
-			Collection<Users> users) {
+			Collection<StudentCourseDetails> studentCourseDetails, Collection<Users> users) {
 		super();
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
@@ -203,7 +182,6 @@ public class Courses {
 	public void setStudentCourseDetails(Collection<StudentCourseDetails> studentCourseDetails) {
 		this.studentCourseDetails = studentCourseDetails;
 	}
-	
 
 	public Collection<Users> getUsers() {
 		return users;

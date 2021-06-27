@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>Add Course</h1>
-	<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
+	<form action="#" th:object="${course}" th:action="@{/admin/saveaddcourse}"
 		method="post">
 		<fieldset>
 			<input type="hidden" th:field="*{courseID}">
@@ -21,6 +21,10 @@
 			Course capacity: <input type="text" th:field="*{courseCapacity}">
 		</fieldset>
 		<fieldset>
+			Course description:
+			<textarea th:field="*{description}"></textarea>
+		</fieldset>
+		<fieldset>
 			Course Start Date: <input type="date" th:field="*{courseStartDate}">
 		</fieldset>
 		<fieldset>
@@ -30,10 +34,10 @@
 			Exam Date: <input type="date" th:field="*{examDate}">
 		</fieldset>
 		<fieldset>
-			Lecturers: <select th:value="${lecturerCourseDetails.lecturer}"
-				multiple="multiple">
-				<option th:each="lecturer : ${lecturers}" th:value="${lecturer}"
-					th:text="#{${lecturer.firstName} + ' ' + ${lecturer.lastName}}">
+			Lecturers: <select th:field="*{users}" multiple="multiple">
+				<option th:each="lecturer : ${lecturers}"
+					th:value="${lecturer.userID}"
+					th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">
 				</option>
 			</select>
 		</fieldset>

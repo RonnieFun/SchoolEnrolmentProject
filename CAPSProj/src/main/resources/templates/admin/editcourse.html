@@ -1,25 +1,49 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Edit Courses</title>
+<title>Edit Course</title>
 </head>
 <body>
 	<h1>Edit Course</h1>
-<form action="#" th:object="${product}" th:action="@{/product/save}" method="get">
-<fieldset> <input type="hidden" th:field="*{id}"> </fieldset>
-<fieldset> Name: <input type="text" th:field="*{name}"> </fieldset>
-<fieldset> Type: <input type="text" th:field="*{brand}"> </fieldset>
-<fieldset> Description: <input type="text" th:field="*{description}"> </fieldset>
-<fieldset> Price: <input type="text" th:field="*{price}"> </fieldset>
-<fieldset> Date of Manufacture: <input type="text" th:field="*{dom}" 
-placeholder="dd-MM-yyyy” th:text="${#dates.format(product.dom, 'dd-MM-yyyy')}"/>
-</fieldset>
-<fieldset> <button type="submit">Save</button> </fieldset>
-</form>
-</body>
-</html>
-	</table>
+	<form action="#" th:object="${course}" th:action="@{/admin/saveeditcourse}"
+		method="post">
+		<fieldset>
+			<input type="hidden" th:field="*{courseID}">
+		</fieldset>
+		<fieldset>
+			Course name: <input type="text" th:field="*{courseName}">
+		</fieldset>
+		<fieldset>
+			Number of credits: <input type="text" th:field="*{credits}">
+		</fieldset>
+		<fieldset>
+			Course capacity: <input type="text" th:field="*{courseCapacity}">
+		</fieldset>
+		<fieldset>
+			Course description:
+			<textarea th:field="*{description}"></textarea>
+		</fieldset>
+		<fieldset>
+			Course Start Date: <input type="date" th:field="*{courseStartDate}">
+		</fieldset>
+		<fieldset>
+			Course End Date: <input type="date" th:field="*{courseEndDate}">
+		</fieldset>
+		<fieldset>
+			Exam Date: <input type="date" th:field="*{examDate}">
+		</fieldset>
+		<fieldset>
+			Lecturers: <select th:field="*{users}" multiple="multiple">
+				<option th:each="lecturer : ${lecturers}"
+					th:value="${lecturer.userID}"
+					th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">
+				</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+	</form>
 </body>
 </html>

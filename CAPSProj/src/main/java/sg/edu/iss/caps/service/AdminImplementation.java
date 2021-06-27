@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.caps.model.Courses;
-import sg.edu.iss.caps.model.LecturerCourseDetails;
+import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.repo.CoursesRepository;
-import sg.edu.iss.caps.repo.LecturerCourseDetailsRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
+import sg.edu.iss.caps.repo.UsersRepository;
 
 @Service
 public class AdminImplementation implements AdminInterface {
 	@Autowired
 	private CoursesRepository crepo;
 	@Autowired
-	private LecturerCourseDetailsRepository lcdrepo;
-	@Autowired
 	private StudentCourseDetailsRepository scdrepo;
+	@Autowired
+	private UsersRepository urepo;
 
 	@Override
 	public List<Courses> getCourses() {
@@ -41,12 +41,13 @@ public class AdminImplementation implements AdminInterface {
 		}
 
 	@Override
-	public void saveLecturerCourseDetails(LecturerCourseDetails lecturercoursedetails) {
-		lcdrepo.save(lecturercoursedetails);
-	}
-
 	public List<Long> getCoursesWithStudents()
 	{
 		return scdrepo.getCourseIDsWithStudents();
+	}
+	
+	@Override
+	public void saveuser(Users user) {
+		urepo.save(user);
 	}
 }

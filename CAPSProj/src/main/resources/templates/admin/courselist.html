@@ -6,18 +6,19 @@
 <title>List of Courses</title>
 </head>
 <body>
-	<h2>List of Courses</h2>
-	
-	<h4 th:if="${ErrorMessage != null}" th:text="${ErrorMessage}" font-color="red"></h4>
-		
+	<h1>List of Courses</h1>
+	<h2><a th:href="@{/admin/addcourse/}">Add Course</a></h2>
+	<h4 th:if="${ErrorMessage != null}" th:text="${ErrorMessage}"
+		style="color: red"></h4>
+
 	<table class="w3-container" th:if="${not #lists.isEmpty(courses)}">
 		<tr>
 			<th>Course Id</th>
 			<th>Course Name</th>
-			<th>Course Start Date</th>
-			<th>Course End Date</th>
-			<th>Course Capacity</th>
-			<th>Course Status</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Capacity</th>
+			<th>Status</th>
 			<th>Credits</th>
 			<th>Course Description</th>
 			<th>Action</th>
@@ -32,10 +33,9 @@
 			<td th:text=${course.courseStatus}></td>
 			<td th:text=${course.credits}></td>
 			<td th:text=${course.description}></td>
-			<td><a href="admin-editcourse.html"
-				th:href="@{/admin/editcourse/}+${course.courseID}">Edit Course</a></td>
-			<td><a
-				th:href="@{/admin/deletecourse/}+${course.courseID}"> Delete
+			<td><a th:href="@{/admin/editcourse/}+${course.courseID}">Edit
+					Course</a></td>
+			<td><a th:href="@{/admin/deletecourse/}+${course.courseID}">Delete
 					Course </a></td>
 		</tr>
 	</table>

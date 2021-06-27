@@ -1,5 +1,6 @@
 package sg.edu.iss.caps.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
-import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.AdminInterface;
@@ -39,8 +40,12 @@ public class AdminController {
 	@RequestMapping("/deletecourse/{courseID}")
 	public String deleteCourse(@PathVariable("courseID") long courseID, Model model) {
 		if (adservice.getCoursesWithStudents().contains(courseID)) {
-			model.addAttribute("ErrorMessage",
-					"Course " + courseID + " still has students associated with it. Please remove all students still associated with the course before deletion.");
+			model.addAttribute("ErrorMessage", "Course " + courseID
+					+ " still has students associated with it. Please remove all students still associated with the course before deletion.");
+			return "forward:/admin/courselist";
+		} else if (leservice.getCoursesById(courseID).getUsers() != null) {
+			model.addAttribute("ErrorMessage", "Course " + courseID
+					+ " still has lecturers associated with it. Please remove all lecturers still associated with the course before deletion.");
 			return "forward:/admin/courselist";
 		} else {
 
@@ -50,8 +55,10 @@ public class AdminController {
 	}
 
 	@RequestMapping("/editcourse/{courseID}")
-	public String editCourse(Model model, @PathVariable("courseID") long courseID) {
-		model.addAttribute("courses", adservice.getCourseById(courseID));
+	public String editCourse(@PathVariable("courseID") long courseID, Model model) {
+		List<Users> lecturers = leservice.getAllUsersByRole(Roles.LECTURER);
+		model.addAttribute("course", adservice.getCourseById(courseID));
+		model.addAttribute("lecturers", lecturers);
 		return "admin/editcourse";
 	}
 
@@ -64,10 +71,54 @@ public class AdminController {
 		return "admin/addcourse";
 	}
 
-	@RequestMapping("/savecourse")
-	public String saveCourse(@ModelAttribute("course") Courses course, @ModelAttribute("lecturerCourseDetails") LecturerCourseDetails lecturerCourseDetails, Model model) {
+	@RequestMapping("/saveeditcourse")
+	public String saveEditCourse(@ModelAttribute("course") Courses course) {
+		Courses course1 = adservice.getCourseById(course.getCourseID());
+		if (course.getCourseStartDate().compareTo(LocalDate.now()) > 0) {
+			course.setCourseStatus(CourseStatus.UPCOMING);
+		} else if (course.getCourseStartDate().compareTo(LocalDate.now()) <= 0
+				&& course.getCourseEndDate().compareTo(LocalDate.now()) >= 0) {
+			course.setCourseStatus(CourseStatus.ONGOING);
+		} else if (course.getCourseEndDate().compareTo(LocalDate.now()) < 0) {
+			course.setCourseStatus(CourseStatus.COMPLETED);
+		}
+
+		if (course1.getUsers() != null)
+		{
+			for (Users a : course1.getUsers()) {
+				leservice.removeCourseTaught(a.getUserID(), course1);
+				adservice.saveuser(a);
+			}
+		}
+
 		adservice.savecourse(course);
-		adservice.saveLecturerCourseDetails(lecturerCourseDetails);
+
+		if (course.getUsers() != null)
+		{
+			for (Users a : course.getUsers()) {
+				leservice.addCourseTaught(a.getUserID(), course);
+				adservice.saveuser(a);
+			}
+		}
+		return "forward:/admin/courselist";
+	}
+
+	@RequestMapping("/saveaddcourse")
+	public String saveAddCourse(@ModelAttribute("course") Courses course) {
+		if (course.getCourseStartDate().compareTo(LocalDate.now()) > 0) {
+			course.setCourseStatus(CourseStatus.UPCOMING);
+		} else if (course.getCourseStartDate().compareTo(LocalDate.now()) <= 0
+				&& course.getCourseEndDate().compareTo(LocalDate.now()) >= 0) {
+			course.setCourseStatus(CourseStatus.ONGOING);
+		} else if (course.getCourseEndDate().compareTo(LocalDate.now()) < 0) {
+			course.setCourseStatus(CourseStatus.COMPLETED);
+		}
+		adservice.savecourse(course);
+		if (course.getUsers() != null)
+			for (Users a : course.getUsers()) {
+				leservice.addCourseTaught(a.getUserID(), course);
+				adservice.saveuser(a);
+			}
 		return "forward:/admin/courselist";
 	}
 }

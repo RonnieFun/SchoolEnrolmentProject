@@ -50,6 +50,7 @@ public class CapsProjApplication {
 			
 			crepo.save(course1);
 			crepo.save(course2);
+			crepo.save(course3);
 			
 			List<Courses> cSharpCourse = new ArrayList<Courses>();
 			cSharpCourse.add(course1);
