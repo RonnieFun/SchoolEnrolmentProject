@@ -13,43 +13,69 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Courses {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long courseID;
-	
+
 	private String courseName;
+<<<<<<< Upstream, based on origin/master
 	
+=======
+
+>>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseStartDate;
+<<<<<<< Upstream, based on origin/master
 	
+=======
+
+>>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseEndDate;
+<<<<<<< Upstream, based on origin/master
 	
+=======
+
+>>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate examDate;
-	
+
 	private int credits;
-	
+
 	private int courseCapacity;
-	
+
 	private String description;
-	
+
 	private CourseStatus courseStatus;
+<<<<<<< Upstream, based on origin/master
 	
 	//One to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy = "course")
+=======
+
+	// Many to many relationship between StudentCoursedetails and Courses
+	@ManyToMany(mappedBy = "stuCourse")
+>>>>>>> e7935f4 Temporary commit to rebase on new master 2
 	private Collection<StudentCourseDetails> studentCourseDetails;
+<<<<<<< Upstream, based on origin/master
 	
 	// Many to many relation between Courses and Users
 	@ManyToMany(mappedBy = "courses")
 	private Collection<Users> users;
+=======
 
-	//No argument constructor
+	// Many to many relationship between LecturerCourseDetails and Courses
+	@ManyToMany(mappedBy = "lectCourse")
+	private Collection<LecturerCourseDetails> lecturerCourseDetails;
+>>>>>>> e7935f4 Temporary commit to rebase on new master 2
+
+	// No argument constructor
 	public Courses() {
 		super();
 	}
-	
-	//Argument constructor
+
+	// Argument constructor
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int credits, int courseCapacity, String description, CourseStatus courseStatus) {
 		super();
@@ -62,8 +88,8 @@ public class Courses {
 		this.description = description;
 		this.courseStatus = courseStatus;
 	}
-	
-	//Argument constructor with all fields(without courseID)
+
+	// Argument constructor with all fields(without courseID)
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int credits, int courseCapacity, String description, CourseStatus courseStatus,
 			Collection<StudentCourseDetails> studentCourseDetails,
@@ -81,7 +107,7 @@ public class Courses {
 		this.users = users;
 	}
 
-	//Argument constructor with testing purpose
+	// Argument constructor with testing purpose
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int courseCapacity, CourseStatus courseStatus) {
 		super();
@@ -93,20 +119,19 @@ public class Courses {
 		this.courseStatus = courseStatus;
 	}
 
-	//Argument constructor for testing coursestaught.html page (By Max)
-		public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-				int courseCapacity, String description, CourseStatus courseStatus) {
-			super();
-			this.courseName = courseName;
-			this.courseStartDate = courseStartDate;
-			this.courseEndDate = courseEndDate;
-			this.credits = credits;
-			this.courseCapacity = courseCapacity;
-			this.description = description;
-			this.courseStatus = courseStatus;
-		}
-	
-	
+	// Argument constructor for testing coursestaught.html page (By Max)
+	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
+			int courseCapacity, String description, CourseStatus courseStatus) {
+		super();
+		this.courseName = courseName;
+		this.courseStartDate = courseStartDate;
+		this.courseEndDate = courseEndDate;
+		this.credits = credits;
+		this.courseCapacity = courseCapacity;
+		this.description = description;
+		this.courseStatus = courseStatus;
+	}
+
 	public long getCourseID() {
 		return courseID;
 	}
