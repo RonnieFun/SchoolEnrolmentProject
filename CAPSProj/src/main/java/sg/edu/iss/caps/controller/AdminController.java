@@ -4,13 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.StudentCourseDetails;
+import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.AdminInterface;
 import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/admin")
@@ -40,15 +46,43 @@ public class AdminController {
 	public String showEnrolmentForm(Model model) {
 		StudentCourseDetails enrolment = new StudentCourseDetails();
 		model.addAttribute("enrolment", enrolment);
-		model.addAttribute("courseList", adservice.getCourseList());
-		model.addAttribute("studentList", adservice.getStudentList());
+		//getting courseIDList
+		model.addAttribute("courseList",retrieveStudentList());
+
+		//getting studentIDList
+		model.addAttribute("studentList", retrieveCourseList());
 		return "admin/enrolmentform";
 	}
 	
 	
+	private List<Long> retrieveCourseList() {
+		// TODO Auto-generated method stub
+		List<Long> studentIDList = new ArrayList<>();
+		List<Users> studentList = adservice.getStudentList();
+		for(int i=0;i<studentList.size();i++) {
+			studentIDList.add(studentList.get(i).getUserID());
+		}
+		return studentIDList;
+	}
+
+	private List<Long> retrieveStudentList() {
+		// TODO Auto-generated method stub
+		List<Long> courseIDList = new ArrayList<>();
+		List<Courses> courseList = adservice.getCourseList();
+		for(int i=0;i<courseList.size();i++) {
+			courseIDList.add(courseList.get(i).getCourseID());
+		}
+		return courseIDList;
+	}
+
 	@GetMapping("/editenrolment/{id}")
 	  public String showEditForm(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("enrolment", adservice.getEnrolment(id));
+		//getting courseIDList
+		model.addAttribute("courseList",retrieveStudentList());
+
+		//getting studentIDList
+		model.addAttribute("studentList", retrieveCourseList());
 		return "admin/enrolmentform";
 	  }
 	
@@ -67,6 +101,14 @@ public class AdminController {
 		  adservice.deleteEnrolment(enrolment);
 		return "forward:/admin/enrolment";
 	  }
+	  
+	  //save enrolment 
+	  @RequestMapping("/saveenrolment")
+		public String saveEnrolment(@ModelAttribute("enrolment") StudentCourseDetails enrolment) 
+		{
+		  	adservice.saveEnrolment(enrolment);
+			return "forward:/admin/enrolment";
+		}
 
 
 }

@@ -19,4 +19,6 @@ public interface AdminInterface {
 
 	List<Courses> getCourseList();
 
+	void saveEnrolment(StudentCourseDetails enrolment);
+
 }

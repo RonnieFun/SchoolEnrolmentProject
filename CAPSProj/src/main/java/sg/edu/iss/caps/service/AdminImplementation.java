@@ -55,6 +55,12 @@ public class AdminImplementation implements AdminInterface{
 		// TODO Auto-generated method stub
 		return crepo.findAll();
 	}
+	@Override
+	public void saveEnrolment(StudentCourseDetails enrolment) {
+		// TODO Auto-generated method stub
+		studentCourseDetailsRepository.save(enrolment);
+	}
+
 
 
 }
