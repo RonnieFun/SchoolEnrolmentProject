@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,12 +54,6 @@ public class LecturerImplementation implements LecturerInterface {
 	}
 
 	@Transactional
-	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
-		
-		return coursesRepository.findByCourseNameCourseStart(courseName, courseStartDate);
-	}
-	
-	@Transactional
 	public Users getUsersById(Long id) {
 		
 		return usersRepository.findById(id).get();
@@ -74,5 +70,16 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		return usersRepository.findByRole(role);
 	}
+
+	@Transactional
+	public List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, 
+			String courseName, LocalDate courseStartDate) {
+		
+		return usersRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseName, courseStartDate);
+	}
+
 	
+
+	
+
 }

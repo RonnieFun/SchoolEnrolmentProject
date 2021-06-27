@@ -68,8 +68,6 @@ public class Users {
 		this.studentCourseDetail = studentCourseDetail;
 		this.courses = courses;
 	}
-	
-	
 
 	public Users(String firstName, String lastName, String email, String password, Roles role, String phoneNumber,
 			String address, LocalDate birthday, String salutation) {
