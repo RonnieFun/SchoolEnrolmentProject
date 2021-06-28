@@ -65,18 +65,19 @@ public class LecturerController {
 		
 	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
-	public String showStudentGradesByStudentId(@RequestParam(name = "userID") Long userID, Roles role, Model model ) {
+	public String showStudentGradesByStudentId(Long userID, Roles role, Model model ) {
 		
 		if (userID != null) {
-			model.addAttribute("students", lectservice.getAllUsersByRoleAndId(
-					Roles.STUDENT, 
-					userID));
+			model.addAttribute("studentCourseDetails", lectservice.getStudentResults(
+					userID,
+					Roles.STUDENT));
 		}
 		
 		model.addAttribute("users", lectservice.getAllUsers());
 		return "lecturer/viewstudentgrades";
 	}
 			
+	
 	// COMMENT BY MAX: KIV the below mapping methods. Please do not delete them for now.
 	
 //	@GetMapping(value = "/lecturer/enrolment")

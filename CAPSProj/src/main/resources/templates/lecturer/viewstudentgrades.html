@@ -78,16 +78,14 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = "student,iterator: ${students}">
+			<tr th:each = "scd,iterator: ${studentCourseDetails}">
 				<td th:text = "${iterator.index + 1}"></td>
-				<span th:each = "course: ${student.courses}">
+				<span th:each = "course: ${scd.course}">
 					<td th:text = "${course.courseName}"></td>
 					<td th:text = "${course.examDate}"></td>
 					<td th:text = "${course.credits}"></td>
 				</span>
-				<span th:each = "scd: ${student.studentCourseDetail}">
-					<td th:text = "${scd.grades}"></td>
-				</span>
+				<td th:text = "${scd.grades}"></td>
 			</tr>
 		</tbody>
 	</table>

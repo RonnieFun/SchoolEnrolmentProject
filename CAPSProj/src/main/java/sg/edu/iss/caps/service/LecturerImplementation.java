@@ -78,13 +78,17 @@ public class LecturerImplementation implements LecturerInterface {
 		return usersRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseName, courseStartDate);
 	}
 
-	@Override
+	@Transactional
 	public List<Users> getAllUsersByRoleAndId(Roles role, Long userID) {
 		
 		return usersRepository.findUsersByRoleAndId(role, userID);
 	}
 
-
+	@Transactional
+	public List<StudentCourseDetails> getStudentResults(Long userID, Roles role) {
+		
+		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
+	}
 
 
 }

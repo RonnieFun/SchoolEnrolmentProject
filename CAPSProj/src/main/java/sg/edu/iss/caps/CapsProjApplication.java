@@ -34,7 +34,7 @@ public class CapsProjApplication {
 	CoursesRepository coursesRepository;
 	
 	@Autowired
-	StudentCourseDetailsRepository screpo;
+	StudentCourseDetailsRepository studentCourseDetailsRepository;
 	
 	@Autowired
 	LecturerCourseDetailsRepository lcrepo;
@@ -130,7 +130,7 @@ public class CapsProjApplication {
 					EnrolmentStatus.REJECTED, user3, javaProgramming);
 	
 			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 01, 10), "D", 
-					EnrolmentStatus.ACCEPTED, user4, javaProgramming);
+					EnrolmentStatus.ACCEPTED, user1, javaProgramming);
 			
 			StudentCourseDetails studentCourseDetail4 = new StudentCourseDetails(LocalDate.of(2021, 05, 21), "B+", 
 					EnrolmentStatus.ACCEPTED, user7, machineLearning);
@@ -145,13 +145,13 @@ public class CapsProjApplication {
 					EnrolmentStatus.ACCEPTED, user10, cSharpProgramming);
 			
 			
-			screpo.save(studentCourseDetail1);
-			screpo.save(studentCourseDetail2);
-			screpo.save(studentCourseDetail3);
-			screpo.save(studentCourseDetail4);
-			screpo.save(studentCourseDetail5);
-			screpo.save(studentCourseDetail6);
-			screpo.save(studentCourseDetail7);
+			studentCourseDetailsRepository.save(studentCourseDetail1);
+			studentCourseDetailsRepository.save(studentCourseDetail2);
+			studentCourseDetailsRepository.save(studentCourseDetail3);
+			studentCourseDetailsRepository.save(studentCourseDetail4);
+			studentCourseDetailsRepository.save(studentCourseDetail5);
+			studentCourseDetailsRepository.save(studentCourseDetail6);
+			studentCourseDetailsRepository.save(studentCourseDetail7);
 			
 			LecturerCourseDetails lecturerCourseDetail1 = new LecturerCourseDetails(cSharpCourses, user2);
 			LecturerCourseDetails lecturerCourseDetail2 = new LecturerCourseDetails(javaCourses, user6);
