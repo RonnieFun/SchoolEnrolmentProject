@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import java.util.Collection;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
@@ -101,7 +103,5 @@ public class StudentCourseDetails {
 	public void setCourse(Courses course) {
 		this.course = course;
 	}
-
-
 
 }

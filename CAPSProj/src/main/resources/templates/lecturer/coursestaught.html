@@ -57,10 +57,7 @@
 				<td th:text = "${coursetaught.courseID}"></td>
 				<td th:text = "${coursetaught.courseName}"></td>
 				<td th:text = "${coursetaught.courseCapacity}"></td>
-				<td> test </td>
-				<!-- <span th:each = "studentCourseDetail: ${coursetaught.studentCourseDetails}">
-					<td th:text = "${studentCourseDetail.enrolmentStatus}"></td>
-				</span> -->
+				<td th:text = "${coursetaught.currentEnrolment}"></td>
 			</tr>
 		</tbody>
 	</table>

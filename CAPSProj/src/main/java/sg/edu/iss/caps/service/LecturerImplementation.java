@@ -78,8 +78,4 @@ public class LecturerImplementation implements LecturerInterface {
 		return usersRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseName, courseStartDate);
 	}
 
-	
-
-	
-
 }

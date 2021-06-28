@@ -113,7 +113,7 @@ public class CapsProjApplication {
 					EnrolmentStatus.REJECTED, user3, cSharpProgramming);
 	
 			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 07, 19), "D", 
-					EnrolmentStatus.ACCEPTED, user4, javaProgramming);
+					EnrolmentStatus.REJECTED, user4, javaProgramming);
 
 			screpo.save(studentCourseDetail1);
 			screpo.save(studentCourseDetail2);

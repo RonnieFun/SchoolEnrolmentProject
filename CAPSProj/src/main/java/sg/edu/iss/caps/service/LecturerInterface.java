@@ -33,6 +33,7 @@ public interface LecturerInterface {
 	//To get list of users by Role, Course Name and Course Start
 	List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);
+
 	
 	
 	// COMMENT BY MAX: KIV the below method. Please do not delete for now.
