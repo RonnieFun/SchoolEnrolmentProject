@@ -2,35 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Enrolment Form</title>
+<style type="text/css">
+		label{
+			display: inline-block;
+			width: 200px;
+		}
+		input[type=text], input[type=date], select{display: inline-block; width:200px;}
+</style>
+<title>Edit Enrolment Form</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
 <div align="center">
-    <h1>Enrolment Registration</h1>
-    <form th:action="@{/admin/saveenrolment}" method="GET" th:object="${enrolment}">
-        <label>Student ID:</label>
-       <select th:field="*{student.userID}">
-            <option th:each="p : ${studentList}" th:value="${p}" th:text="${p}" />
-        </select>
-        <br/>
+    <h1>Edit Enrolment</h1>
+    <form th:action="@{/admin/enrolment/update}" th:object="${enrolment}" method="post" >
+        <input type = "hidden" th:field="*{id}"/><br>
+        <label>Student Name:</label>
+        <input type="text" th:field="*{student.firstName}" disabled="disabled"/>
+        <br><br>
  		<label>Course Name:</label>
- 		<select th:field="*{course.courseID}">
-            <option th:each="p : ${courseList}" th:value="${p}" th:text="${p}" />
-        </select>
-        <br/>
-        <label>Grades:</label>
-        <input type="text" th:field="*{grades}" /><br/>
- 
-        <label>Date Of Enrolment:</label>
-        <input type="date" th:field="*{dateOfEnrollment}" />
-        <br/>
+ 		<input type="text" th:field="*{course.courseName}" disabled="disabled"/>
+        <br><br>
+		<label>Grades:</label>
+        <input type="text" th:field="*{grades}" disabled="disabled"/><br><br>
  
         <label>Enrolment Status:</label>
         <select th:field="*{enrolmentStatus}">
-            <option th:each="p : ${T(sg.edu.iss.caps.model.EnrolmentStatus).values()}" th:value="${p}" th:text="${p}" />
+        	<a th:each="p : ${T(sg.edu.iss.caps.model.EnrolmentStatus).values()}">
+            	<option th:if="${p == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${p == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED}" th:value="${p}" th:text="${p}" />
+            </a>
         </select>
-        <br/>
+        <br><br>
+        <input type = "hidden" th:field="*{course.courseID}"/><br>
+        <input type = "hidden" th:field="*{student.userID}"/><br>
  
         <button type="submit">Save</button>    
     </form>
