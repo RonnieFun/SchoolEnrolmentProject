@@ -1,9 +1,9 @@
 package sg.edu.iss.caps.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import sg.edu.iss.caps.model.Courses;
-import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.model.Users;
 
 public interface AdminInterface {
@@ -14,4 +14,5 @@ public interface AdminInterface {
 	void savecourse(Courses course);
 	List<Long> getCoursesWithStudents();
 	void saveuser(Users user);
+	Optional<Courses> findCourseById(long courseID);
 }

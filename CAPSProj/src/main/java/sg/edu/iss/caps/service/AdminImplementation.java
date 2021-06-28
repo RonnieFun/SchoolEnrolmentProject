@@ -1,6 +1,7 @@
 package sg.edu.iss.caps.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class AdminImplementation implements AdminInterface {
 
 	@Override
 	public Courses getCourseById(long courseID) {
-		return crepo.findById(courseID).get();
+		return crepo.getById(courseID);
 	}
 
 	@Override
@@ -38,16 +39,20 @@ public class AdminImplementation implements AdminInterface {
 	@Override
 	public void savecourse(Courses course) {
 		crepo.save(course);
-		}
+	}
 
 	@Override
-	public List<Long> getCoursesWithStudents()
-	{
+	public List<Long> getCoursesWithStudents() {
 		return scdrepo.getCourseIDsWithStudents();
 	}
-	
+
 	@Override
 	public void saveuser(Users user) {
 		urepo.save(user);
+	}
+
+	@Override
+	public Optional<Courses> findCourseById(long courseID) {
+		return crepo.findById(courseID);
 	}
 }

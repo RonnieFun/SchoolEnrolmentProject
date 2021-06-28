@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +21,7 @@ public class Courses {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long courseID;
 
+	@NotNull (message = "Course name must be filled in.")
 	private String courseName;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -29,9 +32,11 @@ public class Courses {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate examDate;
-
+	
+	@Min(value = 0, message = "Value should be greater than or equal to 0.")
 	private int credits;
-
+	
+	@Min(value = 0, message = "Value should be greater than or equal to 0.")
 	private int courseCapacity;
 
 	private String description;
@@ -110,7 +115,7 @@ public class Courses {
 		this.description = description;
 		this.courseStatus = courseStatus;
 	}
-
+	
 	public long getCourseID() {
 		return courseID;
 	}
@@ -198,5 +203,4 @@ public class Courses {
 	public void setExamDate(LocalDate examDate) {
 		this.examDate = examDate;
 	}
-
 }

@@ -7,13 +7,17 @@
 </head>
 <body>
 	<h1>List of Courses</h1>
-	<h2><a th:href="@{/admin/addcourse/}">Add Course</a></h2>
+	<h2>
+		<a th:href="@{/admin/addcourse/}">Add Course</a>
+	</h2>
 	<h4 th:if="${ErrorMessage != null}" th:text="${ErrorMessage}"
 		style="color: red"></h4>
+	<h4 th:if="${SuccessMessage != null}" th:text="${SuccessMessage}"
+		style="color: MediumSeaGreen"></h4>
 
 	<table class="w3-container" th:if="${not #lists.isEmpty(courses)}">
 		<tr>
-			<th>Course Id</th>
+			<th>Id</th>
 			<th>Course Name</th>
 			<th>Start Date</th>
 			<th>End Date</th>
@@ -21,6 +25,7 @@
 			<th>Status</th>
 			<th>Credits</th>
 			<th>Course Description</th>
+			<th>Lecturers</th>
 			<th>Action</th>
 		</tr>
 		<tr>
@@ -33,6 +38,7 @@
 			<td th:text=${course.courseStatus}></td>
 			<td th:text=${course.credits}></td>
 			<td th:text=${course.description}></td>
+			<td><p th:each="courselecturer : ${course.users}" th:utext="${courselecturer.firstName} + ' ' + ${courselecturer.lastName}"></p></td>
 			<td><a th:href="@{/admin/editcourse/}+${course.courseID}">Edit
 					Course</a></td>
 			<td><a th:href="@{/admin/deletecourse/}+${course.courseID}">Delete
