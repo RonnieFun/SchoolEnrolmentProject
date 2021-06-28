@@ -28,7 +28,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 			@Param("courseStartDate") LocalDate courseStartDate);
 	
 	
-	@Query("SELECT u FROM Users u JOIN u.courses c JOIN c.studentCourseDetails sc "
+	@Query("SELECT DISTINCT u FROM Users u JOIN u.courses c JOIN c.studentCourseDetails sc "
 			+ "WHERE u.role = :role "
 			+ "AND u.userID = :userID ")
 	List<Users> findUsersByRoleAndId(@Param("role") Roles role, @Param("userID") Long userID); 
