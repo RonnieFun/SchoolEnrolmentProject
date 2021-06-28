@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.validation.BindingResult;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;

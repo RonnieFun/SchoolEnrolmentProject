@@ -32,6 +32,16 @@ public class Users {
 	
 	private String address;
 	
+	private boolean enabled;
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	

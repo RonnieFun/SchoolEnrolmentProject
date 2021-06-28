@@ -20,5 +20,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	public Users findUserByfirstNameAndLastName(String firstName, String lastName);
 	
 	Page<Users> findByRole(Roles role, Pageable pageable);
+	
+	public Users getUserByEmail(String email);
 
 }
