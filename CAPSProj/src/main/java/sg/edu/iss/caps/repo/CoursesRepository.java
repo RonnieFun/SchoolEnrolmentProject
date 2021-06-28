@@ -16,9 +16,8 @@ import sg.edu.iss.caps.model.Users;
 public interface CoursesRepository extends JpaRepository<Courses, Long> {
 
 	@Query("SELECT c FROM Courses c JOIN c.users u WHERE u.role = :role AND u.userID = :userID")
-	List<Courses> findByLecturerId(@Param("role") Roles role, @Param("userID") Long userID); 
-	
-	
+	List<Courses> findCoursesByRoleAndId(@Param("role") Roles role, @Param("userID") Long userID); 
+
 	
 	// COMMENT BY MAX: KIV the below @Query methods. Please do not delete them for now.
 	

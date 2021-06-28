@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
@@ -39,9 +40,9 @@ public class LecturerController {
 	}
 	
 	@GetMapping(value = "/lecturer/coursestaught/{id}")
-	public String showCoursesById(@PathVariable Long id, Model model) {
+	public String showLecturerCoursesById(@PathVariable Long id, Model model) {
 		
-		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(Roles.LECTURER, id));
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, id));
 		
 		return "lecturer/coursestaught";
 	}
@@ -61,7 +62,21 @@ public class LecturerController {
 		
 		return "lecturer/enrolment";
 	}
+		
 	
+	@GetMapping(value = "/lecturer/viewstudentgrades")
+	public String showStudentGradesByStudentId(Long userID, Roles role, Model model ) {
+		
+		if (userID != null) {
+			model.addAttribute("students", lectservice.getAllUsersByRoleAndId(
+					Roles.STUDENT, 
+					userID));
+		}
+		
+		model.addAttribute("users", lectservice.getAllUsers());
+		return "lecturer/viewstudentgrades";
+	}
+			
 	// COMMENT BY MAX: KIV the below mapping methods. Please do not delete them for now.
 	
 //	@GetMapping(value = "/lecturer/enrolment")

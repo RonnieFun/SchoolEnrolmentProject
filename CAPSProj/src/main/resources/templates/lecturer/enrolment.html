@@ -40,11 +40,11 @@
 			<div class = "container">
 				<h2 class = "text-center"> View Course Enrollment </h2>
 				<div>
-					<form class= "form-inline justify-content-center" th:action="@{/lecturer/enrolment/}" method="GET">
+					<form class= "form-inline justify-content-center" th:action="@{/lecturer/enrolment}" method="GET">
 
 						<div class = "form-group">
 							<label class = "ml-3 mb-3 mr-3"> Course Name: </label>
-								<select id="selectCourse" name = "courseName" onchange="selectStartDate()">
+								<select id="selectCourse" name = "courseName">
 									<option 
 									th:each = "course: ${coursestaught}"
 									th:value = "${course.courseName}"

@@ -22,13 +22,16 @@ public interface LecturerInterface {
 	List<Courses> getAllCourses();
 	
 	//To get list of all courses by Lecturer's Id
-	List<Courses> getAllCoursesByLecturerId(Roles role, Long id);
+	List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID);
 		
 	//To get list of all users
 	List<Users> getAllUsers();
 
 	//To get list of users by Role
 	List<Users> getAllUsersByRole(Roles role);
+	
+	//To get list of users by Role and ID
+	List<Users> getAllUsersByRoleAndId(Roles role, Long userID);
 	
 	//To get list of users by Role, Course Name and Course Start
 	List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 

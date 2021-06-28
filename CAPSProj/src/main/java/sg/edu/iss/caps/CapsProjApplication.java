@@ -93,7 +93,7 @@ public class CapsProjApplication {
 			Users user3 = new Users("Tri Tin", "Nguyen", "tin@gmail.com", "abcde", Roles.STUDENT, "123123",
 					"Blk 654, #12-34, Singapore 564101", LocalDate.of(2000, 5, 25), "Mr", null, javaCourses);
 			urepo.save(user3);
-			
+				
 			Users user4 = new Users("Yuen Kwan", "Chia", "chia@gmail.com", "abcde", Roles.STUDENT, "5454",
 					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 19), "Mr", null, javaCourses);
 			urepo.save(user4);
@@ -103,22 +103,56 @@ public class CapsProjApplication {
 			urepo.save(user5);
 			
 			Users user6 = new Users("Alfred", "Wang", "chia@gmail.com", "abcde", Roles.LECTURER, "5454",
-					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 19), "Mr", null, javaCourses);
+					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 21), "Mr", null, javaCourses);
 			urepo.save(user6);
+			
+			Users user7 = new Users("Rurouni", "Kenshin", "Kenshin@gmail.com", "abewq", Roles.STUDENT, "1234",
+					"Blk 5467, #11-12, Singapore 543532", LocalDate.of(2000, 6, 19), "Mr", null, ML);
+			urepo.save(user7);
+			
+			Users user8 = new Users("Demon", "Slayer", "slayer@gmail.com", "abewq", Roles.STUDENT, "1234",
+					"Blk 123, #11-12, Singapore 543532", LocalDate.of(2020, 6, 15), "Mr", null, ML);
+			urepo.save(user8);
+			
+			Users user9 = new Users("Naught", "Jugger", "juggernaught@gmail.com", "abewq", Roles.STUDENT, "1234",
+					"Blk 854, #11-12, Singapore 5412332", LocalDate.of(2000, 6, 9), "Mr", null, DPM);
+			urepo.save(user9);
+			
+			Users user10 = new Users("Blade", "Maiden", "blademaiden@gmail.com", "abewq", Roles.STUDENT, "1234",
+					"Blk 854, #11-12, Singapore 5412332", LocalDate.of(2000, 6, 9), "Mr", null, cSharpCourses);
+			urepo.save(user10);
+			
 		
-			StudentCourseDetails studentCourseDetail1 = new StudentCourseDetails(LocalDate.of(2021, 07, 21), "A", 
-				EnrolmentStatus.ACCEPTED, user1, cSharpProgramming);
+			StudentCourseDetails studentCourseDetail1 = new StudentCourseDetails(LocalDate.of(2021, 01, 19), "A+", 
+				EnrolmentStatus.ACCEPTED, user1, digitalProductManagement);
 		
 			StudentCourseDetails studentCourseDetail2 = new StudentCourseDetails(LocalDate.of(2021, 12, 10), "B", 
-					EnrolmentStatus.REJECTED, user3, cSharpProgramming);
+					EnrolmentStatus.REJECTED, user3, javaProgramming);
 	
-			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 07, 19), "D", 
-					EnrolmentStatus.REJECTED, user4, javaProgramming);
+			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 01, 10), "D", 
+					EnrolmentStatus.ACCEPTED, user4, javaProgramming);
+			
+			StudentCourseDetails studentCourseDetail4 = new StudentCourseDetails(LocalDate.of(2021, 05, 21), "B+", 
+					EnrolmentStatus.ACCEPTED, user7, machineLearning);
 
+			StudentCourseDetails studentCourseDetail5 = new StudentCourseDetails(LocalDate.of(2020, 03, 11), "B-", 
+					EnrolmentStatus.ACCEPTED, user8, machineLearning);
+			
+			StudentCourseDetails studentCourseDetail6 = new StudentCourseDetails(LocalDate.of(2019, 02, 10), "C+", 
+					EnrolmentStatus.REJECTED, user9, digitalProductManagement);
+			
+			StudentCourseDetails studentCourseDetail7 = new StudentCourseDetails(LocalDate.of(2019, 03, 12), "A-", 
+					EnrolmentStatus.ACCEPTED, user10, cSharpProgramming);
+			
+			
 			screpo.save(studentCourseDetail1);
 			screpo.save(studentCourseDetail2);
 			screpo.save(studentCourseDetail3);
-		
+			screpo.save(studentCourseDetail4);
+			screpo.save(studentCourseDetail5);
+			screpo.save(studentCourseDetail6);
+			screpo.save(studentCourseDetail7);
+			
 			LecturerCourseDetails lecturerCourseDetail1 = new LecturerCourseDetails(cSharpCourses, user2);
 			LecturerCourseDetails lecturerCourseDetail2 = new LecturerCourseDetails(javaCourses, user6);
 			LecturerCourseDetails lecturerCourseDetail3 = new LecturerCourseDetails(javaCourses, user5);
