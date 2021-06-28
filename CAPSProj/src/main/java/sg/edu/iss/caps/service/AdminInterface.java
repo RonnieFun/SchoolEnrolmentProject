@@ -8,6 +8,12 @@ import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 
+import java.util.List;
+import java.util.Optional;
+
+import sg.edu.iss.caps.model.Courses;
+import sg.edu.iss.caps.model.Users;
+
 public interface AdminInterface {
 	
 	List<StudentCourseDetails> getAllEnrolment();
@@ -35,4 +41,11 @@ public interface AdminInterface {
 	public String passwordGenerator();
 	public Page<Users> listRoleUsers(int pageNumber, String sortField, String sortDir, Roles role);
 
+	List<Courses> getCourses();
+	Courses getCourseById(long courseID);
+	void deleteCourse(Courses course);
+	void savecourse(Courses course);
+	List<Long> getCoursesWithStudents();
+	void saveuser(Users user);
+	Optional<Courses> findCourseById(long courseID);
 }
