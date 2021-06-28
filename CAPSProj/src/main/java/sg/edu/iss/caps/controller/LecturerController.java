@@ -65,7 +65,7 @@ public class LecturerController {
 		
 	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
-	public String showStudentGradesByStudentId(Long userID, Roles role, Model model ) {
+	public String showStudentGradesByStudentId(@RequestParam(name = "userID") Long userID, Roles role, Model model ) {
 		
 		if (userID != null) {
 			model.addAttribute("students", lectservice.getAllUsersByRoleAndId(

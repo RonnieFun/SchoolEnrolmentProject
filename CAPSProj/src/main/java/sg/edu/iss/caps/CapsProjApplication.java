@@ -50,19 +50,19 @@ public class CapsProjApplication {
 //			urepo.save(user);
 			
 			Courses cSharpProgramming = new Courses("C# Programming", LocalDate.of(2021, 6, 30), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 15, 30, "Nice Course", CourseStatus.ONGOING, 
+					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 8, 50, "Nice Course", CourseStatus.ONGOING, 
 					null, null);
 			
 			Courses digitalProductManagement = new Courses("Digital Product Management", LocalDate.of(2021, 3, 15), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 15, 30, "Nice Course", CourseStatus.ONGOING, 
+					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 4, 60, "Nice Course", CourseStatus.ONGOING, 
 					null, null);
 			
 			Courses javaProgramming = new Courses("Java Programming", LocalDate.of(2021, 6, 30), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 15, 30, "Very Nice Course", CourseStatus.ONGOING, 
+					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 8, 40, "Very Nice Course", CourseStatus.ONGOING, 
 					null, null);
 			
 			Courses machineLearning = new Courses("Machine Learning", LocalDate.of(1999, 5, 2), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 15, 30, "Very Nice Course", CourseStatus.ONGOING, 
+					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 29), 6, 100, "Very Nice Course", CourseStatus.ONGOING, 
 					null, null);
 			
 			coursesRepository.save(cSharpProgramming);
