@@ -25,7 +25,7 @@ public interface LecturerInterface {
 	List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID);
 	
 	//To get all student grades by student id
-	List<StudentCourseDetails> getStudentResults(Long userID, Roles role);
+	List<Users> getStudentResults(Long userID, Roles role);
 		
 	//To get list of all users
 	List<Users> getAllUsers();
@@ -33,13 +33,11 @@ public interface LecturerInterface {
 	//To get list of users by Role
 	List<Users> getAllUsersByRole(Roles role);
 	
-	//To get list of users by Role and ID
-	List<Users> getAllUsersByRoleAndId(Roles role, Long userID);
-	
 	//To get list of users by Role, Course Name and Course Start
 	List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);
-
+	
+	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
 	
 	// COMMENT BY MAX: KIV the below method. Please do not delete for now.
 	//For search function on course enrolments html page and pagination:

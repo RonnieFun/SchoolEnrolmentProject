@@ -79,16 +79,18 @@ public class LecturerImplementation implements LecturerInterface {
 	}
 
 	@Transactional
-	public List<Users> getAllUsersByRoleAndId(Roles role, Long userID) {
-		
-		return usersRepository.findUsersByRoleAndId(role, userID);
+	public List<Users> getStudentResults(Long userID, Roles role) {
+
+		return usersRepository.findUsersByRoleAndId(userID, role) ;
 	}
 
 	@Transactional
-	public List<StudentCourseDetails> getStudentResults(Long userID, Roles role) {
-		
+	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
+		// TODO Auto-generated method stub
 		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
 	}
+	
+	
 
 
 }

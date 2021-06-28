@@ -14,7 +14,8 @@ import sg.edu.iss.caps.model.Users;
 
 public interface StudentCourseDetailsRepository extends JpaRepository<StudentCourseDetails, Long> {
 	
-	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN c.users u WHERE u.userID = :userID "
-			+ "AND u.role = :role")
-	List<StudentCourseDetails> findGradesByStudentId(@Param("userID") Long userID, @Param("role") Roles role);	
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN c.users u WHERE "
+			+ "u.userID = :userID AND u.role = :role")
+	List<StudentCourseDetails> findGradesByStudentId( @Param("userID") Long userID,
+			@Param("role") Roles role);	
 }

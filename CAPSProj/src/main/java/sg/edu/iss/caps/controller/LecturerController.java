@@ -68,12 +68,13 @@ public class LecturerController {
 	public String showStudentGradesByStudentId(Long userID, Roles role, Model model ) {
 		
 		if (userID != null) {
-			model.addAttribute("studentCourseDetails", lectservice.getStudentResults(
+			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
 					userID,
-					Roles.STUDENT));
+					Roles.STUDENT
+					));
 		}
 		
-		model.addAttribute("users", lectservice.getAllUsers());
+		model.addAttribute("users", lectservice.getAllCourses());
 		return "lecturer/viewstudentgrades";
 	}
 			
