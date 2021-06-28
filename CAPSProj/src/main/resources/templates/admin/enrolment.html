@@ -7,10 +7,8 @@
 </head>
 <body>
 <h1>Enrolment Lists</h1>
-<h2>Add a Enrolment</h2>
-<a href="productform.html"
-		th:href="@{/admin/addenrolment}"> Add </a>
-<table class="table table-striped">
+<a th:href="@{/admin/addenrolment}"> Add Enrolment</a>
+<table>
 	<tr>
 		<th>No</th>
 		<th>Enrolment ID</th>
@@ -31,19 +29,24 @@
 		<td th:text = "${enrolment.enrolmentStatus}"></td>
 		<td th:text = "${enrolment.course.courseName}"></td>
 		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED} ">
-		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
-			<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
-				<td>
-	    			<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
-	    		</td>
+			<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+				<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+					<td>
+						<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
+					</td>
+					<td>
+						<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Reject </a>
+					</td>
+	    		</a>
+	    		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED}">
+					<td>
+						<a th:href="@{/admin/editenrolment/}+${enrolment.id}" > Edit </a>
+	    			</td>
+	    		</a>
 	    	</a>
-		<td>
-			<a th:href="@{/admin/editenrolment/}+${enrolment.id}" > Edit </a>
-		</td>
-	    </a>
-	    <td>
-	    <a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
-	    </td>
+	    	<td>
+	    		<a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
+	    	</td>
 	    </a>
 	    
 	</tr>

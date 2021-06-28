@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Enrolment</title>
+
+<style type="text/css">
+		label{
+			display: inline-block;
+			width: 200px;
+		}
+		input[type=text], input[type=date], select{display: inline-block; width:200px;}
+</style>
+
+</head>
+<body>
+	<div align ="center">
+		<h1>Enrolment registration</h1>
+			<form action ="#" th:action="@{/admin/enrolment/create}" th:object = ${enrolment} method = "post">
+				<label>Student Name:</label>
+				<select th:field="*{student.userID}">
+            		<option th:each="p : ${studentList}" th:value="${p}" th:text="${p}" />
+        		</select>
+				<br><br>
+				<label>Course Name:</label>
+				<select th:field="*{course.courseID}">
+            		<option th:each="p : ${courseList}" th:value="${p}" th:text="${p}" />
+        		</select>
+        		<br><br>
+				<button type="submit">Create</button>
+			</form>
+	</div>
+	
+</body>
+</html>
