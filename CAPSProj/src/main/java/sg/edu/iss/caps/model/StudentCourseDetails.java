@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Collection;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Formula;
@@ -37,7 +35,7 @@ public class StudentCourseDetails {
 	public StudentCourseDetails() {
 		super();
 	}
-	
+
 	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus,
 			Users student, Courses course) {
 		super();
@@ -48,12 +46,11 @@ public class StudentCourseDetails {
 		this.course = course;
 	}
 
-	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus, Users student) {
+	public StudentCourseDetails(LocalDate dateOfEnrollment, String grades, EnrolmentStatus enrolmentStatus) {
 		super();
 		this.dateOfEnrollment = dateOfEnrollment;
 		this.grades = grades;
 		this.enrolmentStatus = enrolmentStatus;
-		this.student = student;
 	}
 
 	public long getId() {
@@ -103,5 +100,7 @@ public class StudentCourseDetails {
 	public void setCourse(Courses course) {
 		this.course = course;
 	}
+	
+	
 
 }

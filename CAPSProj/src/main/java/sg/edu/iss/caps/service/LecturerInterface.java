@@ -1,6 +1,5 @@
 package sg.edu.iss.caps.service;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +13,6 @@ import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
-
 
 public interface LecturerInterface {
 
@@ -39,8 +37,10 @@ public interface LecturerInterface {
 	
 	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
 	
-	// COMMENT BY MAX: KIV the below method. Please do not delete for now.
-	//For search function on course enrolments html page and pagination:
-//	List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate);
+  public void addCourseTaught(Long id, Courses course);
+
+	void removeCourseTaught(Long id, Courses course);
 
 }
+
+

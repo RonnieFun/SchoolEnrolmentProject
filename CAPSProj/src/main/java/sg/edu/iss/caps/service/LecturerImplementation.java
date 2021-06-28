@@ -17,12 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
-import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.repo.CoursesRepository;
-import sg.edu.iss.caps.repo.LecturerCourseDetailsRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 import sg.edu.iss.caps.repo.UsersRepository;
 
@@ -36,9 +34,6 @@ public class LecturerImplementation implements LecturerInterface {
 	UsersRepository usersRepository;
 	
 	@Autowired
-	LecturerCourseDetailsRepository lecturerCourseDetailsRepository;
-	
-	@Autowired
 	StudentCourseDetailsRepository studentCourseDetailsRepository;
 
 	@Transactional
@@ -50,7 +45,12 @@ public class LecturerImplementation implements LecturerInterface {
 	@Transactional
 	public List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID) {
 
+
 		return coursesRepository.findCoursesByRoleAndId(role, userID);
+
+		//return coursesRepository.findByLecturerId(id);
+		return null;
+
 	}
 
 	@Transactional
@@ -90,7 +90,23 @@ public class LecturerImplementation implements LecturerInterface {
 		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
 	}
 	
-	
-
 
 }
+
+	@Transactional
+	public void addCourseTaught(Long id, Courses course) {
+		Users user = this.getUsersById(id);
+		Collection<Courses> userCurrentTaughtCourses = user.getCourses();
+		userCurrentTaughtCourses.add(course);
+		user.setCourses(userCurrentTaughtCourses);
+	}
+	
+	@Transactional
+	public void removeCourseTaught(Long id, Courses course) {
+		Users user = this.getUsersById(id);
+		Collection<Courses> userCurrentTaughtCourses = user.getCourses();
+		userCurrentTaughtCourses.remove(course);
+		user.setCourses(userCurrentTaughtCourses);
+	}
+}
+

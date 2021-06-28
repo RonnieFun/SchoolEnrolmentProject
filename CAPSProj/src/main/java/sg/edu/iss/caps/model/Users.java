@@ -68,6 +68,8 @@ public class Users {
 		this.studentCourseDetail = studentCourseDetail;
 		this.courses = courses;
 	}
+	
+	
 
 	public Users(String firstName, String lastName, String email, String password, Roles role, String phoneNumber,
 			String address, LocalDate birthday, String salutation) {
@@ -188,6 +190,14 @@ public class Users {
 		this.courses = courses;
 	}
 
+  //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
+//		return lecturerCourseDetail;
+//	}
+//
+//	public void setLecturerCourseDetail(Collection<LecturerCourseDetails> lecturerCourseDetail) {
+//		this.lecturerCourseDetail = lecturerCourseDetail;
+//	}
+  
 //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
 //		return lecturerCourseDetail;
 //	}
