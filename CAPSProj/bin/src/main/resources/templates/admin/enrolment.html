@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin Enrolment Page</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+<h1>Enrolment Lists</h1>
+<h2>Add a Enrolment</h2>
+<a href="productform.html"
+		th:href="@{/admin/addenrolment}"> Add </a>
+<table class="table table-striped">
+	<tr>
+		<th>No</th>
+		<th>Enrolment ID</th>
+		<th>Student Name</th>
+		<th>Student Email</th>
+		<th>Date of Enrollment</th>
+		<th>Grades</th>
+		<th>Enrolment Status</th>
+		<th>Course</th>
+	</tr>
+	<tr th:each = "enrolment,iterator: ${enrolmentlist}">
+		<td th:text = "${iterator.index + 1}"></td>
+		<td th:text = "${enrolment.id}"></td> 
+		<td th:text = "${enrolment.student.firstName} + ' ' + ${enrolment.student.lastName}" ></td>
+		<td th:text = "${enrolment.student.email}"></td>
+		<td th:text = "${enrolment.dateOfEnrollment}"></td>
+		<td th:text = "${enrolment.grades}"></td>
+		<td th:text = "${enrolment.enrolmentStatus}"></td>
+		<td th:text = "${enrolment.course.courseName}"></td>
+		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED} ">
+		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+			<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+				<td>
+	    			<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
+	    		</td>
+	    	</a>
+		<td>
+			<a th:href="@{/admin/editenrolment/}+${enrolment.id}" > Edit </a>
+		</td>
+	    </a>
+	    <td>
+	    <a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
+	    </td>
+	    </a>
+	    
+	</tr>
+</table>
+</body>
+</html>
