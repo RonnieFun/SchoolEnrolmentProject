@@ -10,7 +10,7 @@
 	 <div sec:authorize="isAuthenticated()">
 		Welcome <b><span sec:authentication="name">first name</span></b>
 		&nbsp;
-		<span sec:authentication="principal.authorities">Roles</span>
+		<span sec:authentication="principal.authorities">Roles </span>
 		<br><br>
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Logout"/>
