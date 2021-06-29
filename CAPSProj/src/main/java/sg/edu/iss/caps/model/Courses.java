@@ -9,9 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -43,6 +44,20 @@ public class Courses {
 
 	private CourseStatus courseStatus;
 
+  @Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
+			+ "ON student_course_details.course_courseid = courses.courseid "
+			+ "WHERE student_course_details.enrolment_status = '1'"
+			+ "AND courses.course_name = course_name)")
+	private long currentEnrolment;
+	
+	//Many to many relationship between StudentCoursedetails and Courses
+	@OneToMany(mappedBy = "course")
+	private Collection<StudentCourseDetails> studentCourseDetails;
+	
+	// Many to many relation between Courses and Users
+	@ManyToMany(mappedBy = "courses")
+	private Collection<Users> users;
+  
 	// One to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy="course")
 	private Collection<StudentCourseDetails> studentCourseDetails;
@@ -77,7 +92,12 @@ public class Courses {
 	// Argument constructor with all fields(without courseID)
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int credits, int courseCapacity, String description, CourseStatus courseStatus,
+
+			Collection<StudentCourseDetails> studentCourseDetails,
+			Collection<Users> users) {
+
 			Collection<StudentCourseDetails> studentCourseDetails, Collection<Users> users) {
+
 		super();
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
@@ -103,19 +123,14 @@ public class Courses {
 		this.courseStatus = courseStatus;
 	}
 
-	// Argument constructor for testing coursestaught.html page (By Max)
-	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-			int courseCapacity, String description, CourseStatus courseStatus) {
-		super();
-		this.courseName = courseName;
-		this.courseStartDate = courseStartDate;
-		this.courseEndDate = courseEndDate;
-		this.credits = credits;
-		this.courseCapacity = courseCapacity;
-		this.description = description;
-		this.courseStatus = courseStatus;
-	}
-	
+	public long getCurrentEnrolment() {
+			return currentEnrolment;
+		}
+
+		public void setCurrentEnrolment(long currentEnrolment) {
+			this.currentEnrolment = currentEnrolment;
+		}
+
 	public long getCourseID() {
 		return courseID;
 	}
@@ -188,6 +203,15 @@ public class Courses {
 		this.studentCourseDetails = studentCourseDetails;
 	}
 
+  //	public Collection<LecturerCourseDetails> getLecturerCourseDetails() {
+//		return lecturerCourseDetails;
+//	}
+//
+//	public void setLecturerCourseDetails(Collection<LecturerCourseDetails> lecturerCourseDetails) {
+//		this.lecturerCourseDetails = lecturerCourseDetails;
+//	}
+	
+  
 	public Collection<Users> getUsers() {
 		return users;
 	}

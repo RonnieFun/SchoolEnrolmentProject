@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,27 +41,18 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		return coursesRepository.findAll();
 	}
-
-	@Transactional
-	public Courses getCoursesById(Long id) {
-		
-		return coursesRepository.findById(id).get();
-	}
 	
 	@Transactional
-	public List<Courses> getAllCoursesByLecturerId(Long id) {
+	public List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID) {
+
+
+		return coursesRepository.findCoursesByRoleAndId(role, userID);
 
 		//return coursesRepository.findByLecturerId(id);
 		return null;
+
 	}
 
-	@Transactional
-	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
-		
-		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
-	}
-	
-	
 	@Transactional
 	public Users getUsersById(Long id) {
 		
@@ -77,7 +70,29 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		return usersRepository.findByRole(role);
 	}
+
+	@Transactional
+	public List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, 
+			String courseName, LocalDate courseStartDate) {
+		
+		return usersRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseName, courseStartDate);
+	}
+
+	@Transactional
+	public List<Users> getStudentResults(Long userID, Roles role) {
+
+		return usersRepository.findUsersByRoleAndId(userID, role) ;
+	}
+
+	@Transactional
+	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
+		// TODO Auto-generated method stub
+		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
+	}
 	
+
+}
+
 	@Transactional
 	public void addCourseTaught(Long id, Courses course) {
 		Users user = this.getUsersById(id);
@@ -94,3 +109,4 @@ public class LecturerImplementation implements LecturerInterface {
 		user.setCourses(userCurrentTaughtCourses);
 	}
 }
+
