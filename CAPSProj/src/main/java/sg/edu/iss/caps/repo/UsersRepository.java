@@ -10,14 +10,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.User;
 
+import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
+import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
 	@Query("SELECT u FROM Users u WHERE u.role=:role")
 	List<Users> findByRole(@Param("role") Roles role);
+
+
+	@Query("SELECT c FROM Courses c JOIN c.users u WHERE u.role = :role")
+	List<Courses> findCoursesByRole(@Param("role") Roles role);
+
+
 
 	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE u.role= :role "
 			+ "AND sc.enrolmentStatus = :enrolmentStatus " + "AND c.courseName = :courseName "

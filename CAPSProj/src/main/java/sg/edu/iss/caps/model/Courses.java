@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Formula;
@@ -49,6 +50,11 @@ public class Courses {
 			+ "WHERE student_course_details.enrolment_status = '1'"
 			+ "AND courses.course_name = course_name)")
 	private long currentEnrolment;
+	
+//	@Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
+//			+ "ON student_course_details.course_courseid = courses.courseid "
+//			+ "WHERE student_course_details.enrolment_status = '1' AND courses.course_name = course_name)")
+//	private long currentEnrolment;
 	
 	//Many to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy = "course")
@@ -207,3 +213,4 @@ public class Courses {
 		this.examDate = examDate;
 	}
 }
+
