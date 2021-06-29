@@ -1,18 +1,15 @@
 package sg.edu.iss.caps.model;
 
-import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-<<<<<<< HEAD
-=======
+
 import org.hibernate.annotations.Formula;
->>>>>>> refs/remotes/origin/master
 import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 @Entity
 public class StudentCourseDetails {

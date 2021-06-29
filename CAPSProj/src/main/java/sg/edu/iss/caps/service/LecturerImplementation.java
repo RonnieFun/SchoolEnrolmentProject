@@ -1,20 +1,21 @@
 package sg.edu.iss.caps.service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
+import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
->>>>>>> refs/remotes/origin/master
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.caps.model.Courses;
+import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
@@ -27,19 +28,18 @@ public class LecturerImplementation implements LecturerInterface {
 
 	@Autowired
 	CoursesRepository coursesRepository;
-
+	
 	@Autowired
 	UsersRepository usersRepository;
-
+	
 	@Autowired
 	StudentCourseDetailsRepository studentCourseDetailsRepository;
 
 	@Transactional
 	public List<Courses> getAllCourses() {
-
+		
 		return coursesRepository.findAll();
 	}
-<<<<<<< HEAD
 
 	@Transactional
 	public Courses getCoursesById(Long id) {
@@ -47,37 +47,27 @@ public class LecturerImplementation implements LecturerInterface {
 		return coursesRepository.findById(id).get();
 	}
 
-=======
-	
->>>>>>> refs/remotes/origin/master
 	@Transactional
-<<<<<<< HEAD
-	public List<Courses> getAllCoursesByLecturerId(Long id) {
-		return coursesRepository.findCoursesByLecturerId(id);
-=======
 	public List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID) {
 
 
 		return coursesRepository.findCoursesByRoleAndId(role, userID);
+		return coursesRepository.findCoursesByLecturerId(id);
 
 		//return coursesRepository.findByLecturerId(id);
 		//return null;
 
->>>>>>> refs/remotes/origin/master
 	}
 
 	@Transactional
-<<<<<<< HEAD
 	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
 
 		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
 	}
 
 	@Transactional
-=======
->>>>>>> refs/remotes/origin/master
 	public Users getUsersById(Long id) {
-
+		
 		return usersRepository.findById(id).get();
 	}
 
@@ -86,14 +76,13 @@ public class LecturerImplementation implements LecturerInterface {
 
 		return usersRepository.findAll();
 	}
-
+	
 	@Transactional
 	public List<Users> getAllUsersByRole(Roles role) {
+		
 		return usersRepository.findByRole(role);
 	}
 
-<<<<<<< HEAD
-=======
 	@Transactional
 	public List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, 
 			String courseName, LocalDate courseStartDate) {
@@ -112,9 +101,8 @@ public class LecturerImplementation implements LecturerInterface {
 		// TODO Auto-generated method stub
 		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
 	}
-	
 
->>>>>>> refs/remotes/origin/master
+
 	@Transactional
 	public void addCourseTaught(Long id, Courses course) {
 		Users user = this.getUsersById(id);
@@ -122,7 +110,7 @@ public class LecturerImplementation implements LecturerInterface {
 		userCurrentTaughtCourses.add(course);
 		user.setCourses(userCurrentTaughtCourses);
 	}
-
+	
 	@Transactional
 	public void removeCourseTaught(Long id, Courses course) {
 		Users user = this.getUsersById(id);
@@ -130,7 +118,6 @@ public class LecturerImplementation implements LecturerInterface {
 		userCurrentTaughtCourses.remove(course);
 		user.setCourses(userCurrentTaughtCourses);
 	}
-<<<<<<< HEAD
 
 	@Override
 	public List<Users> getStudentsByCourseID(Long courseID) {
@@ -153,7 +140,3 @@ public class LecturerImplementation implements LecturerInterface {
 		
 	}
 }
-=======
-}
-
->>>>>>> refs/remotes/origin/master

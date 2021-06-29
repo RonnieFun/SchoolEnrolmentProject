@@ -2,12 +2,14 @@ package sg.edu.iss.caps.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import sg.edu.iss.caps.model.Courses;
+import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
@@ -38,7 +40,6 @@ public interface LecturerInterface {
   public void addCourseTaught(Long id, Courses course);
 
 	void removeCourseTaught(Long id, Courses course);
-<<<<<<< HEAD
 	
 	List<Users> getStudentsByCourseID(Long courseID);
 	
@@ -47,9 +48,6 @@ public interface LecturerInterface {
 	StudentCourseDetails getStudentCourseDetailsByStudentIDAndCourseID(long parseLong, long parseLong2);
 	
 	void saveStudentCourseDetails(StudentCourseDetails studentCourseDetails);
-=======
-
->>>>>>> refs/remotes/origin/master
 }
 
 
