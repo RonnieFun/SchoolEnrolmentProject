@@ -139,7 +139,6 @@ public class StudentController {
 		return "redirect:/student/enrolmentlist/1"; // temporarily view the enrolment for userID 1
 	}
 	
-	
 	// Users.Role=STUDENT?
 	// find all enrolment by UserID and enrolment status = ACCEPTED
 	@GetMapping("/gradesandgpa/{userid}")
@@ -166,24 +165,20 @@ public class StudentController {
 		
 		List<StudentCourseDetails> enrolmentaccepted = stuservice.findEnrolmentByUserIDAndEnrolmentStatus(userid, EnrolmentStatus.ACCEPTED);
 	
-		model.addAttribute("enrolmentsaccepted", enrolmentaccepted);
-			
+		model.addAttribute("enrolmentsaccepted", enrolmentaccepted);		
 		for(StudentCourseDetails e: enrolmentaccepted)
 		{
-			String grades = e.getGrades();
-			
+			String grades = e.getGrades();	
 			if (e.getGrades() == null)
 			{
 				sum += 0;
 				totalCredits += 0;
 				
-			}	else {
-				
+			}	else {				
 				sum +=  gradepointsmap.get(e.getGrades())  *  e.getCourse().getCredits();
 				totalCredits += e.getCourse().getCredits();
 			}
-		}
-		
+		}	
 
 		if (totalCredits != 0) {
 			cgpa = sum / totalCredits;
