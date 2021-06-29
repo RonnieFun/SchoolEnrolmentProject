@@ -1,12 +1,21 @@
 package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Collection;
 
@@ -24,19 +33,42 @@ public class Users {
 	
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
 	private Roles role;
 	
 	private String phoneNumber;
 	
 	private String address;
 	
-	@DateTimeFormat(pattern = "YYYY-MM-DD")
+	private boolean enabled;
+	
+	private String profilePicture;
+	
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		//this.enabled = enabled;
+		this.enabled = true;
+	}
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	
 	private String salutation;
 	
 	// One to Many relationship between Users and StudentCourseDetails
 	@OneToMany(mappedBy = "student")
+	//, cascade=CascadeType.REMOVE, orphanRemoval = true)
 	private Collection<StudentCourseDetails> studentCourseDetail;
 	
 
@@ -65,6 +97,7 @@ public class Users {
 		this.salutation = salutation;
 		this.studentCourseDetail = studentCourseDetail;
 		this.courses = courses;
+		this.enabled =true;
 	}
 	
 	
@@ -81,6 +114,8 @@ public class Users {
 		this.address = address;
 		this.birthday = birthday;
 		this.salutation = salutation;
+		this.enabled =true;
+
 	}
 
 	//Argument constructor for testing purpose
@@ -91,6 +126,7 @@ public class Users {
 		this.role = role;
 	}
 
+	
 	public long getUserID() {
 		return userID;
 	}
@@ -186,7 +222,23 @@ public class Users {
 	public void setCourses(Collection<Courses> courses) {
 		this.courses = courses;
 	}
+	
+	@Transient
+	public String getImagePath() {
+		System.out.println("/profile-pic/" + userID + "/" + profilePicture);
+		if(profilePicture == null)		
+			return null;
+		return"/profile-pic/" + userID + "/" + profilePicture;
+	}
 
+  //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
+//		return lecturerCourseDetail;
+//	}
+//
+//	public void setLecturerCourseDetail(Collection<LecturerCourseDetails> lecturerCourseDetail) {
+//		this.lecturerCourseDetail = lecturerCourseDetail;
+//	}
+  
 //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
 //		return lecturerCourseDetail;
 //	}

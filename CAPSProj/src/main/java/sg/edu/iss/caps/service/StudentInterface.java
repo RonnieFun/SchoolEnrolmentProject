@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
+
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
@@ -13,6 +14,7 @@ import sg.edu.iss.caps.model.Users;
 public interface StudentInterface {
 	
 	List<Users> findAllUsersByRole(Roles role);
+
 
 	List<Courses> findCoursesByRole(Roles role);
 	
@@ -34,15 +36,6 @@ public interface StudentInterface {
 	List<StudentCourseDetails> findEnrolmentByCourseID(long courseid);
 
 	
-
-
-
-
-
-
-
-
-
-	
-
 }
+
+

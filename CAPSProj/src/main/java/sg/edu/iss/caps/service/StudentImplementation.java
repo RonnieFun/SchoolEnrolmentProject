@@ -12,8 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
+
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
@@ -26,6 +28,7 @@ public class StudentImplementation implements StudentInterface {
 
 	@Autowired
 	UsersRepository urepo;
+
 	
 	@Autowired
 	StudentCourseDetailsRepository scdrepo;
@@ -33,12 +36,12 @@ public class StudentImplementation implements StudentInterface {
 	@Autowired
 	CoursesRepository crepo;
 	
-	
 	@Transactional
 	public List<Users> findAllUsersByRole(Roles role) {
 		
 		return urepo.findByRole(role);
 	}
+
 
 	@Transactional
 	public List<Courses> findCoursesByRole(Roles role){
@@ -102,9 +105,6 @@ public class StudentImplementation implements StudentInterface {
 		
 		return scdrepo.findEnrolmentByCourseID(courseid);
 	}
-
-
-	
 
 
 }
