@@ -1,38 +1,38 @@
 package sg.edu.iss.caps.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
-import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.time.LocalDate;
 
 @Entity
 public class StudentCourseDetails {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfEnrollment;
-	
+
 	private String grades;
-	
+
 	private EnrolmentStatus enrolmentStatus;
-	
+
 	// Many to one relationship between student User and StudentCourseDetails
 	@ManyToOne
 	private Users student;
-	
-	//Many to one relationship between Courses and StudentCourseDetails
+
+	// Many to one relationship between Courses and StudentCourseDetails
 	@ManyToOne
 	private Courses course;
 
-	//No Argument constructor
+	// No Argument constructor
 	public StudentCourseDetails() {
 		super();
 	}
@@ -101,7 +101,5 @@ public class StudentCourseDetails {
 	public void setCourse(Courses course) {
 		this.course = course;
 	}
-	
-	
 
 }

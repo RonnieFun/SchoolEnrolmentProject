@@ -1,16 +1,10 @@
 package sg.edu.iss.caps.service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
-import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,16 +22,16 @@ public class LecturerImplementation implements LecturerInterface {
 
 	@Autowired
 	CoursesRepository coursesRepository;
-	
+
 	@Autowired
 	UsersRepository usersRepository;
-	
+
 	@Autowired
 	StudentCourseDetailsRepository studentCourseDetailsRepository;
 
 	@Transactional
 	public List<Courses> getAllCourses() {
-		
+
 		return coursesRepository.findAll();
 	}
 
@@ -50,12 +44,10 @@ public class LecturerImplementation implements LecturerInterface {
 	@Transactional
 	public List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID) {
 
-
 		return coursesRepository.findCoursesByRoleAndId(role, userID);
-		return coursesRepository.findCoursesByLecturerId(id);
 
-		//return coursesRepository.findByLecturerId(id);
-		//return null;
+		// return coursesRepository.findByLecturerId(id);
+		// return null;
 
 	}
 
@@ -67,7 +59,7 @@ public class LecturerImplementation implements LecturerInterface {
 
 	@Transactional
 	public Users getUsersById(Long id) {
-		
+
 		return usersRepository.findById(id).get();
 	}
 
@@ -76,24 +68,24 @@ public class LecturerImplementation implements LecturerInterface {
 
 		return usersRepository.findAll();
 	}
-	
+
 	@Transactional
 	public List<Users> getAllUsersByRole(Roles role) {
-		
+
 		return usersRepository.findByRole(role);
 	}
 
 	@Transactional
-	public List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, 
+	public List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus,
 			String courseName, LocalDate courseStartDate) {
-		
+
 		return usersRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseName, courseStartDate);
 	}
 
 	@Transactional
 	public List<Users> getStudentResults(Long userID, Roles role) {
 
-		return usersRepository.findUsersByRoleAndId(userID, role) ;
+		return usersRepository.findUsersByRoleAndId(userID, role);
 	}
 
 	@Transactional
@@ -102,7 +94,6 @@ public class LecturerImplementation implements LecturerInterface {
 		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
 	}
 
-
 	@Transactional
 	public void addCourseTaught(Long id, Courses course) {
 		Users user = this.getUsersById(id);
@@ -110,7 +101,7 @@ public class LecturerImplementation implements LecturerInterface {
 		userCurrentTaughtCourses.add(course);
 		user.setCourses(userCurrentTaughtCourses);
 	}
-	
+
 	@Transactional
 	public void removeCourseTaught(Long id, Courses course) {
 		Users user = this.getUsersById(id);
@@ -137,6 +128,11 @@ public class LecturerImplementation implements LecturerInterface {
 	@Override
 	public void saveStudentCourseDetails(StudentCourseDetails studentCourseDetails) {
 		studentCourseDetailsRepository.save(studentCourseDetails);
-		
+
+	}
+
+	@Override
+	public List<Courses> getAllCoursesByLecturerId(Long id) {
+		return coursesRepository.findCoursesByLecturerId(id);
 	}
 }
