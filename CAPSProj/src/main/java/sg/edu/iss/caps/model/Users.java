@@ -1,7 +1,11 @@
 package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,13 +30,14 @@ public class Users {
 	
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
 	private Roles role;
 	
 	private String phoneNumber;
 	
 	private String address;
 	
-	private boolean enabled;
+	private boolean enabled = true;
 	
 	public boolean isEnabled() {
 		return enabled;
@@ -48,7 +53,7 @@ public class Users {
 	private String salutation;
 	
 	// One to Many relationship between Users and StudentCourseDetails
-	@OneToMany(mappedBy = "student")
+	@OneToMany(mappedBy = "student", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private Collection<StudentCourseDetails> studentCourseDetail;
 	
 

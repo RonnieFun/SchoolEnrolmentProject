@@ -76,8 +76,12 @@
 			<td th:text = ${user.phoneNumber}>Phone number</td>
 			<td th:text = ${user.email}>Email</td>
 			<td th:text = ${user.address}>Address</td>
-			<td><a th:href ="@{'/admin/edit/' + ${user.userID}}">Edit</a></td>
-			<td><a th:href ="@{/admin/deleteuser(id = ${user.userID})}">Delete</a></td>		
+			<td sec:authorize="hasAnyAuthority('ADMIN')">
+				<a th:href ="@{'/admin/edit/' + ${user.userID}}">Edit</a>
+<!-- 			</td> -->
+<!-- 			<td sec:authorize="hasAnyAuthority('ADMIN')"> -->
+			<a th:href ="@{/admin/deleteuser(id = ${user.userID})}">Delete</a>
+			</td>		
 		</tr>
 	</table>
 </div>

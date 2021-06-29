@@ -180,7 +180,7 @@ public class AdminController {
 		@RequestMapping("/deleteuser")
 		public String DeleteUser(@RequestParam(name = "id", required = true) long id) {
 			adservice.deleteUser(id);
-			return "redirect:/admin/admin/page/1?sortField=userID&sortDir=asc";
+			return "redirect:/admin/page/1?sortField=userID&sortDir=asc";
 		}
 		// Path variable method (need to change html)
 //		public String deleteUser(@PathVariable(value = "id") long id) {
