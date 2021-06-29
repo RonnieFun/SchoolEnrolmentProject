@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add/Edit Course</title>
+</head>
+<body>
+	<h1>Add/Edit Course</h1>
+	<form action="#" th:object="${course}" th:action="@{/admin/savecourse}"
+		method="post">
+		<fieldset>
+			<input type="hidden" th:field="*{courseID}">
+		</fieldset>
+		<fieldset>
+			Course name: <input type="text" required th:field="*{courseName}">
+			<p th:if="${#fields.hasErrors('courseName')}"
+				th:errors="*{courseName}" style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Number of credits: <input type="number" min="0" step="1"
+				th:field="*{credits}">
+			<p th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"
+				style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Course capacity: <input type="number" min="0" step="1"
+				th:field="*{courseCapacity}">
+			<p th:if="${#fields.hasErrors('courseCapacity')}"
+				th:errors="*{courseCapacity}" style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Course description:
+			<p th:if="${#fields.hasErrors('description')}"
+				th:errors="*{description}" style="color: red"></p>
+			<textarea th:field="*{description}"></textarea>
+		</fieldset>
+		<fieldset>
+			Course status: <select th:field="*{courseStatus}">
+				<option value="">Detect Automatically</option>
+				<option th:value="${statusupcoming}" th:text="${statusupcoming}"></option>
+				<option th:value="${statusongoing}" th:text="${statusongoing}"></option>
+				<option th:value="${statuscompleted}" th:text="${statuscompleted}"></option>
+			</select>
+			<p th:if="${datemissingerror != null}" th:text="${datemissingerror}"
+				style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Course Start Date: <input type="date" th:field="*{courseStartDate}">
+			<p th:if="${#fields.hasErrors('courseStartDate')}"
+				th:errors="*{courseStartDate}" style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Course End Date: <input type="date" th:field="*{courseEndDate}">
+			<p th:if="${#fields.hasErrors('courseEndDate')}"
+				th:errors="*{courseEndDate}" style="color: red"></p>
+			<p th:if="${enddateerror != null}" th:text="${enddateerror}"
+				style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Exam Date: <input type="date" th:field="*{examDate}">
+			<p th:if="${#fields.hasErrors('examDate')}" th:errors="*{examDate}"></p>
+			<p th:if="${examdateerror != null}" th:text="${examdateerror}"
+				style="color: red"></p>
+		</fieldset>
+		<fieldset>
+			Lecturers: <select th:field="*{users}" multiple="multiple">
+				<option th:each="lecturer : ${lecturers}"
+					th:value="${lecturer.userID}"
+					th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">
+				</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+	</form>
+</body>
+</html>
