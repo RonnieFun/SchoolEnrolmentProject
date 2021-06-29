@@ -96,12 +96,6 @@ public class AdminController {
 	@GetMapping("/editenrolment/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("enrolment", adservice.getEnrolment(id));
-		// getting courseIDList
-		model.addAttribute("courseList", retrieveStudentList());
-
-		// getting studentIDList
-		model.addAttribute("studentList", retrieveCourseList());
-
 		return "admin/enrolmentform";
 	}
 
@@ -111,14 +105,41 @@ public class AdminController {
 		// approve enrolment
 		enrolment.setEnrolmentStatus(EnrolmentStatus.ACCEPTED);
 		adservice.updateEnrolment(enrolment);
-		return "forward:/admin/enrolment";
+		return "redirect:/admin/enrolment";
 	}
 
 	@GetMapping("/deleteenrolment/{id}")
 	public String deleteMethod(Model model, @PathVariable("id") Long id) {
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		adservice.deleteEnrolment(enrolment);
-		return "forward:/admin/enrolment";
+		return "redirect:/admin/enrolment";
+	}
+
+	@RequestMapping("/enrolment/create")
+	public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
+			BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "enrolmentform";
+		}
+
+		LocalDate lt = LocalDate.now();
+		enrolment.setDateOfEnrollment(lt);
+		enrolment.setEnrolmentStatus(EnrolmentStatus.PENDING);
+		adservice.saveEnrolment(enrolment);
+		return "admin/enrolment";
+	}
+
+	@RequestMapping("/enrolment/update")
+	public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
+			BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "enrolmentform";
+		}
+		adservice.saveEnrolment(enrolment);
+		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
+		return "admin/enrolment";
 	}
 
 	@RequestMapping(value = "list")
@@ -157,33 +178,6 @@ public class AdminController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 
 		return "admin/Admin";
-	}
-
-	@RequestMapping("/enrolment/create")
-	public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
-			BindingResult bindingResult, Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return "enrolmentform";
-		}
-
-		LocalDate lt = LocalDate.now();
-		enrolment.setDateOfEnrollment(lt);
-		enrolment.setEnrolmentStatus(EnrolmentStatus.PENDING);
-		adservice.saveEnrolment(enrolment);
-		return "admin/enrolment";
-	}
-
-	@RequestMapping("/enrolment/update")
-	public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
-			BindingResult bindingResult, Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return "enrolmentform";
-		}
-		adservice.saveEnrolment(enrolment);
-		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
-		return "admin/enrolment";
 	}
 
 	@RequestMapping("/listfilter")
@@ -243,7 +237,6 @@ public class AdminController {
 	}
 
 	// delete course with validations on whether course still has students/lecturers
-
 	@RequestMapping("/deletecourse/{courseID}")
 	public String deleteCourse(@PathVariable("courseID") long courseID, Model model) {
 		if (adservice.getCoursesWithStudents().contains(courseID)) {
