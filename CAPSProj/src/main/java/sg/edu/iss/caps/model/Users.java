@@ -44,7 +44,8 @@ public class Users {
 	}
 
 	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+		//this.enabled = enabled;
+		this.enabled = true;
 	}
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -82,6 +83,7 @@ public class Users {
 		this.salutation = salutation;
 		this.studentCourseDetail = studentCourseDetail;
 		this.courses = courses;
+		this.enabled =true;
 	}
 	
 	
@@ -98,6 +100,8 @@ public class Users {
 		this.address = address;
 		this.birthday = birthday;
 		this.salutation = salutation;
+		this.enabled =true;
+
 	}
 
 	//Argument constructor for testing purpose

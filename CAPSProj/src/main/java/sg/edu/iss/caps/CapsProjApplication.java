@@ -32,7 +32,7 @@ public class CapsProjApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CapsProjApplication.class, args);
 	}
-	
+/*
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
@@ -165,6 +165,7 @@ public class CapsProjApplication {
 //			urepo.save(user2);
 //			urepo.save(user5);
 		};
-	}
 
+	}
+*/
 }
