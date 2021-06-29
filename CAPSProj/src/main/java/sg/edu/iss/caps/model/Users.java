@@ -1,6 +1,8 @@
 package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,6 +40,16 @@ public class Users {
 	
 	private boolean enabled;
 	
+	private String profilePicture;
+	
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -53,6 +66,7 @@ public class Users {
 	
 	// One to Many relationship between Users and StudentCourseDetails
 	@OneToMany(mappedBy = "student")
+	//, cascade=CascadeType.REMOVE, orphanRemoval = true)
 	private Collection<StudentCourseDetails> studentCourseDetail;
 	
 
@@ -205,6 +219,14 @@ public class Users {
 
 	public void setCourses(Collection<Courses> courses) {
 		this.courses = courses;
+	}
+	
+	@Transient
+	public String getImagePath() {
+		System.out.println("/profile-pic/" + userID + "/" + profilePicture);
+		if(profilePicture == null)		
+			return null;
+		return"/profile-pic/" + userID + "/" + profilePicture;
 	}
 
 //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {

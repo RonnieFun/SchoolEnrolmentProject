@@ -34,5 +34,6 @@ public interface AdminInterface {
 	public Users findById(Long ID);
 	public String passwordGenerator();
 	public Page<Users> listRoleUsers(int pageNumber, String sortField, String sortDir, Roles role);
+	public Users save(Users user);
 
 }
