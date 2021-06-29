@@ -1,12 +1,10 @@
 package sg.edu.iss.caps.controller;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.data.domain.Page;
 
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
@@ -26,6 +26,7 @@ import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.AdminInterface;
+
 import sg.edu.iss.caps.service.LecturerInterface;
 
 @Controller
@@ -70,7 +71,7 @@ public class AdminController {
 
 		// getting studentIDList
 		model.addAttribute("studentList", retrieveCourseList());
-		return "admin/enrolmentform";
+		return "admin/addenrolment";
 	}
 
 	private List<Long> retrieveCourseList() {
@@ -96,11 +97,14 @@ public class AdminController {
 	@GetMapping("/editenrolment/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("enrolment", adservice.getEnrolment(id));
+<<<<<<< HEAD
 		// getting courseIDList
 		model.addAttribute("courseList", retrieveStudentList());
 
 		// getting studentIDList
 		model.addAttribute("studentList", retrieveCourseList());
+=======
+>>>>>>> refs/remotes/origin/master
 		return "admin/enrolmentform";
 	}
 
@@ -110,6 +114,7 @@ public class AdminController {
 		// approve enrolment
 		enrolment.setEnrolmentStatus(EnrolmentStatus.ACCEPTED);
 		adservice.updateEnrolment(enrolment);
+<<<<<<< HEAD
 		return "forward:/admin/enrolment";
 	}
 
@@ -147,6 +152,46 @@ public class AdminController {
 		} else {
 			page = adservice.listAllUsers(currentPage, sortField, sortDir);
 			model.addAttribute("RoleType", "all");
+=======
+		return "redirect:/admin/enrolment";
+	  }
+	  
+	  @GetMapping("/deleteenrolment/{id}")
+	  public String deleteMethod(Model model, @PathVariable("id") Long id) {
+		  StudentCourseDetails enrolment = adservice.getEnrolment(id);
+		  adservice.deleteEnrolment(enrolment);
+		return "redirect:/admin/enrolment";
+	  }
+	  
+		@RequestMapping("/enrolment/create")
+		public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment, BindingResult bindingResult, Model model) {
+
+			if (bindingResult.hasErrors()) {
+				return "enrolmentform";
+			}
+
+			LocalDate lt = LocalDate.now();
+			enrolment.setDateOfEnrollment(lt);
+			enrolment.setEnrolmentStatus(EnrolmentStatus.PENDING);
+			adservice.saveEnrolment(enrolment);
+			return "admin/enrolment";
+		}
+		
+		@RequestMapping("/enrolment/update")
+		public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment, BindingResult bindingResult, Model model) {
+
+			if (bindingResult.hasErrors()) {
+				return "enrolmentform";
+			}
+			adservice.saveEnrolment(enrolment);
+			model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
+			return "admin/enrolment";
+		}
+		
+		@RequestMapping(value = "list")
+		public String listUser(Model model) {
+			return listByPage(model, 1, "lastName", "asc", "all");
+>>>>>>> refs/remotes/origin/master
 		}
 
 		long totalItems = page.getTotalElements();

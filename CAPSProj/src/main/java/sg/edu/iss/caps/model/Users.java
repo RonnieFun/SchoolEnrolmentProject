@@ -190,6 +190,14 @@ public class Users {
 		this.courses = courses;
 	}
 
+  //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
+//		return lecturerCourseDetail;
+//	}
+//
+//	public void setLecturerCourseDetail(Collection<LecturerCourseDetails> lecturerCourseDetail) {
+//		this.lecturerCourseDetail = lecturerCourseDetail;
+//	}
+  
 //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
 //		return lecturerCourseDetail;
 //	}
@@ -198,7 +206,4 @@ public class Users {
 //		this.lecturerCourseDetail = lecturerCourseDetail;
 //	}
 	
-	
-	
-
 }

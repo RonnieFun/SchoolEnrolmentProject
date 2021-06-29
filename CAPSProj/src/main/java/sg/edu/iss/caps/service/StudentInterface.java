@@ -8,10 +8,5 @@ import sg.edu.iss.caps.model.Users;
 public interface StudentInterface {
 	
 	List<Users> findAllUsersByRole(Roles role);
-	
-
-
-
-	
 
 }

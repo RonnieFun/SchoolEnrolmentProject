@@ -8,6 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+<<<<<<< HEAD
+=======
+import org.hibernate.annotations.Formula;
+>>>>>>> refs/remotes/origin/master
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity

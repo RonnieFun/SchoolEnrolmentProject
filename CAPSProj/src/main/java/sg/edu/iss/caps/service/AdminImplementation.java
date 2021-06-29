@@ -62,52 +62,46 @@ public class AdminImplementation implements AdminInterface {
 	public Optional<Courses> findCourseById(long courseID) {
 		return crepo.findById(courseID);
 	}
-
-	@Autowired
-	StudentCourseDetailsRepository studentCourseDetailsRepository;
-
-
-	@Override
+	
+	@Transactional
 	public List<StudentCourseDetails> getAllEnrolment() {
 		// TODO Auto-generated method stub
-		return studentCourseDetailsRepository.findAll();
+		return scdrepo.findAll();
 	}
 
-	@Override
+	@Transactional
 	public StudentCourseDetails getEnrolment(Long id) {
 		// TODO Auto-generated method stub
-		return studentCourseDetailsRepository.findById(id).get();
+		return scdrepo.findById(id).get();
 	}
 
-	@Override
+	@Transactional
 	public void deleteEnrolment(StudentCourseDetails enrolment) {
 		// TODO Auto-generated method stub
-		studentCourseDetailsRepository.delete(enrolment);
-		;
+		scdrepo.delete(enrolment);
 	}
-
-	@Override
+	@Transactional
 	public List<Users> getStudentList() {
 		// TODO Auto-generated method stub
 		return urepo.findByRole(Roles.STUDENT);
 	}
 
-	@Override
+	@Transactional
 	public void updateEnrolment(StudentCourseDetails enrolment) {
 		// TODO Auto-generated method stub
-		studentCourseDetailsRepository.save(enrolment);
+		scdrepo.save(enrolment);
 	}
-
-	@Override
+  
+	@Transactional
 	public List<Courses> getCourseList() {
 		// TODO Auto-generated method stub
 		return crepo.findAll();
 	}
 
-	@Override
+	@Transactional
 	public void saveEnrolment(StudentCourseDetails enrolment) {
 		// TODO Auto-generated method stub
-		studentCourseDetailsRepository.save(enrolment);
+		scdrepo.save(enrolment);
 	}
 
 	@Transactional
