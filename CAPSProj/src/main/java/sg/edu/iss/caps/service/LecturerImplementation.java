@@ -49,7 +49,7 @@ public class LecturerImplementation implements LecturerInterface {
 		return coursesRepository.findCoursesByRoleAndId(role, userID);
 
 		//return coursesRepository.findByLecturerId(id);
-		return null;
+		//return null;
 
 	}
 
@@ -90,8 +90,6 @@ public class LecturerImplementation implements LecturerInterface {
 		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
 	}
 	
-
-}
 
 	@Transactional
 	public void addCourseTaught(Long id, Courses course) {

@@ -15,13 +15,11 @@ import org.springframework.context.annotation.Bean;
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
-import sg.edu.iss.caps.model.LecturerCourseDetails;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 
 import sg.edu.iss.caps.repo.CoursesRepository;
-import sg.edu.iss.caps.repo.LecturerCourseDetailsRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 import sg.edu.iss.caps.repo.UsersRepository;
 
@@ -36,9 +34,6 @@ public class CapsProjApplication {
 	
 	@Autowired
 	StudentCourseDetailsRepository screpo;
-	
-	@Autowired
-	LecturerCourseDetailsRepository lcrepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CapsProjApplication.class, args);
@@ -152,14 +147,6 @@ public class CapsProjApplication {
 			screpo.save(studentCourseDetail4);
 			screpo.save(studentCourseDetail5);
 			screpo.save(studentCourseDetail7);
-			
-			LecturerCourseDetails lecturerCourseDetail1 = new LecturerCourseDetails(cSharpCourses, user2);
-			LecturerCourseDetails lecturerCourseDetail2 = new LecturerCourseDetails(javaCourses, user6);
-			LecturerCourseDetails lecturerCourseDetail3 = new LecturerCourseDetails(javaCourses, user5);
-			
-			lcrepo.save(lecturerCourseDetail1);
-			lcrepo.save(lecturerCourseDetail2);
-			lcrepo.save(lecturerCourseDetail3);
 		};
 	}
 

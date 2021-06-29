@@ -57,18 +57,6 @@ public class Courses {
 	// Many to many relation between Courses and Users
 	@ManyToMany(mappedBy = "courses")
 	private Collection<Users> users;
-  
-	// One to many relationship between StudentCoursedetails and Courses
-	@OneToMany(mappedBy="course")
-	private Collection<StudentCourseDetails> studentCourseDetails;
-
-	// Many to many relation between Courses and Users
-	@ManyToMany (mappedBy="courses")
-	private Collection<Users> users;
-
-	// Many to many relationship between LecturerCourseDetails and Courses
-	@ManyToMany(mappedBy = "lectCourse")
-	private Collection<LecturerCourseDetails> lecturerCourseDetails;
 
 	// No argument constructor
 	public Courses() {
@@ -88,16 +76,15 @@ public class Courses {
 		this.description = description;
 		this.courseStatus = courseStatus;
 	}
+	
+	
 
-	// Argument constructor with all fields(without courseID)
-	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
-			int credits, int courseCapacity, String description, CourseStatus courseStatus,
-
-			Collection<StudentCourseDetails> studentCourseDetails,
+	public Courses(@NotNull(message = "Course name must be filled in.") String courseName, LocalDate courseStartDate,
+			LocalDate courseEndDate, LocalDate examDate,
+			@Min(value = 0, message = "Value should be greater than or equal to 0.") int credits,
+			@Min(value = 0, message = "Value should be greater than or equal to 0.") int courseCapacity,
+			String description, CourseStatus courseStatus, Collection<StudentCourseDetails> studentCourseDetails,
 			Collection<Users> users) {
-
-			Collection<StudentCourseDetails> studentCourseDetails, Collection<Users> users) {
-
 		super();
 		this.courseName = courseName;
 		this.courseStartDate = courseStartDate;
@@ -202,14 +189,6 @@ public class Courses {
 	public void setStudentCourseDetails(Collection<StudentCourseDetails> studentCourseDetails) {
 		this.studentCourseDetails = studentCourseDetails;
 	}
-
-  //	public Collection<LecturerCourseDetails> getLecturerCourseDetails() {
-//		return lecturerCourseDetails;
-//	}
-//
-//	public void setLecturerCourseDetails(Collection<LecturerCourseDetails> lecturerCourseDetails) {
-//		this.lecturerCourseDetails = lecturerCourseDetails;
-//	}
 	
   
 	public Collection<Users> getUsers() {

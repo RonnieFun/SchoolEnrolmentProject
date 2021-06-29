@@ -36,11 +36,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 			+ "WHERE u.userID = :userID "
 			+ "AND u.role = :role")
 	List<Users> findUsersByRoleAndId(@Param("userID") Long userID, @Param("role") Roles role); 
-	
-	
-	
-
-}
 
 	public Users findUserByfirstNameAndLastName(String firstName, String lastName);
 	
