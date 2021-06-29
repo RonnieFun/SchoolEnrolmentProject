@@ -8,8 +8,8 @@
 <body>
 
 <h1>Course List</h1> <h3>(courses that have lecturers)</h3>
-
-<h4 th:if="${ExistsErrorMsg != null}" th:text="${ExistsErrorMsg}"></h4>
+<h4 th:if="${CapacityFullErrorMsg != null}" th:text="${CapacityFullErrorMsg}"></h4>
+<h4 th:if="${ExistsErrorMsg != null}" th:text="${ExistsErrorMsg} "></h4>
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
 
 <div>
