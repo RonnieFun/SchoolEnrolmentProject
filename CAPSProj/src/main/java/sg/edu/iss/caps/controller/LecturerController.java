@@ -50,15 +50,17 @@ public class LecturerController {
 
 	@GetMapping(value = "lecturer/enrolment")
 	public String showCoursesByCourseNameCourseStart(Model model, String courseName,
-			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role,
-			EnrolmentStatus enrolmentStatus) {
-
+			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus) {
+		
 		if (courseName != null && courseStartDate != null) {
-			model.addAttribute("users", lectservice.getAllUsersByRoleCourseNameStartDate(Roles.STUDENT,
-					EnrolmentStatus.ACCEPTED, courseName, courseStartDate));
-		}
+			model.addAttribute("users", lectservice.getAllUsersByRoleCourseNameStartDate(
+					Roles.STUDENT, 
+					EnrolmentStatus.ACCEPTED, 
+					courseName, 
+					courseStartDate));
+		} 		
 		model.addAttribute("coursestaught", lectservice.getAllCourses());
-
+		
 		return "lecturer/enrolment";
 	}
 
@@ -73,20 +75,36 @@ public class LecturerController {
 		return "lecturer/viewstudentgrades";
 	}
 
+	// COMMENT BY MAX: KIV the below mapping methods. Please do not delete them for now.
+	
+//	@GetMapping(value = "/lecturer/enrolment")
+//	public String showCoursesByCourseNameCourseStart(Model model, String courseName, 
+//			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role) {
+//		
+//		if (courseName != null && courseStartDate != null) {
+//			model.addAttribute("courses", lectservice.getByCourseNameCourseStart(courseName, courseStartDate));
+//		} else {
+//			model.addAttribute("courses", lectservice.getAllCourses());
+//		}
+//		
+//		return "lecturer/enrolment";
+//	}
+	
+//	@GetMapping(value = "/lecturer/enrolment/{id}") 
+//	public String showEnrolmentsByLecturerId(@PathVariable Long id, Model model) {
+//		
+//		model.addAttribute("enrolmentByLecturerId", lectservice.getAllCoursesByLecturerId(Roles.LECTURER, id));
+//		
+//		return "lecturer/enrolment";
+//	}
+//	
+	
 //	@GetMapping(value = "/lecturer/enrolment")
 //	public String showEnrolments(Model model) {
 //		
 //		model.addAttribute("allEnrolment", lectservice.getAllUsers());
 //		model.addAttribute("studentEnrolment", lectservice.getAllUsersByRole(Roles.STUDENT));
 //		model.addAttribute("lecturerEnrolment", lectservice.getAllUsersByRole(Roles.LECTURER));
-//		
-//		return "lecturer/enrolment";
-//	}
-//	
-//	@GetMapping(value = "/lecturer/enrolment/{id}") 
-//	public String showEnrolmentsByLecturerId(@PathVariable Long id, Model model) {
-//		
-//		model.addAttribute("enrolmentByLecturerId", lectservice.getAllCoursesByLecturerId(id));
 //		
 //		return "lecturer/enrolment";
 //	}
