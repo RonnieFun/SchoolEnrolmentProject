@@ -13,9 +13,17 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
 
 //	@Query("SELECT c FROM Courses c JOIN c.lecturerCourseDetails lc JOIN lc.lecturer l WHERE l.id = :id")
 //	List<Courses> findByLecturerId(@Param("id") Long id); 
-	
-	@Query("SELECT c from Courses c WHERE c.courseName = :courseName AND c.courseStartDate = :courseStartDate")
-	List<Courses> findByCourseSearch(@Param("courseName") String courseName, @Param("courseStartDate") LocalDate courseStartDate);
-	
-}
 
+	@Query("SELECT c from Courses c WHERE c.courseName = :courseName AND c.courseStartDate = :courseStartDate")
+	List<Courses> findByCourseSearch(@Param("courseName") String courseName,
+			@Param("courseStartDate") LocalDate courseStartDate);
+
+	@Query("SELECT c FROM Courses c JOIN c.users u where :lecturerId IN u.userID")
+	List<Courses> findCoursesByLecturerId(@Param("lecturerId") Long userID);
+
+	/*
+	 * @Query("SELECT c.courseName FROM Courses c JOIN c.users u where :lecturerId IN u.userID GROUP BY c.courseName"
+	 * ) List<Courses> findDistinctCourseNamesTaught (@Param("lecturerId") Long
+	 * userID);
+	 */
+}

@@ -1,6 +1,8 @@
 package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,9 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.util.Collection;
 
 @Entity
 public class Users {

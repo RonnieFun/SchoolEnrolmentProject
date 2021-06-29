@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.repo.UsersRepository;

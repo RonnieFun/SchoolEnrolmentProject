@@ -1,14 +1,14 @@
 package sg.edu.iss.caps.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Collection;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
 import org.springframework.format.annotation.DateTimeFormat;
-import java.time.LocalDate;
 
 @Entity
 public class StudentCourseDetails {
