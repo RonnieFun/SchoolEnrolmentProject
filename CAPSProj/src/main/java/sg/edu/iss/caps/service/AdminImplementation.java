@@ -170,5 +170,10 @@ public class AdminImplementation implements AdminInterface {
 		String pw = Integer.toString(rand);
 		return pw;
 	}
+	
+	@Transactional
+	public Users save(Users user) {
+		return urepo.save(user);
+	}
 
 }

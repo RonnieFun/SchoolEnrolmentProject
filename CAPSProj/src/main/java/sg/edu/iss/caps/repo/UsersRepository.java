@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.User;
 
 import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
@@ -32,5 +33,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	public Users findUserByfirstNameAndLastName(String firstName, String lastName);
 
 	Page<Users> findByRole(Roles role, Pageable pageable);
+	
+	public Users getUserByEmail(String email);
 
 }

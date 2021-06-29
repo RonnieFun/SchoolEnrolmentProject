@@ -10,14 +10,24 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
@@ -26,7 +36,16 @@ import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.AdminInterface;
+import sg.edu.iss.caps.service.MyUserDetails;
 import sg.edu.iss.caps.service.LecturerInterface;
+
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,6 +53,7 @@ public class AdminController {
 
 	@Autowired
 	AdminInterface adservice;
+	
 	@Autowired
 	LecturerInterface leservice;
 
@@ -114,7 +134,7 @@ public class AdminController {
 		adservice.deleteEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
 	}
-
+	
 	@RequestMapping("/enrolment/create")
 	public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
 			BindingResult bindingResult, Model model) {
@@ -129,7 +149,14 @@ public class AdminController {
 		adservice.saveEnrolment(enrolment);
 		return "admin/enrolment";
 	}
-
+/*
+	// save enrolment
+	@RequestMapping("/saveenrolment")
+	public String saveEnrolment(@ModelAttribute("enrolment") StudentCourseDetails enrolment) {
+		adservice.saveEnrolment(enrolment);
+		return "forward:/admin/enrolment";
+	}
+*/
 	@RequestMapping("/enrolment/update")
 	public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
 			BindingResult bindingResult, Model model) {
@@ -141,16 +168,37 @@ public class AdminController {
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 		return "admin/enrolment";
 	}
+	
+	
 
+	
+	//BRANDON AND ALE
 	@RequestMapping(value = "list")
-	public String listUser(Model model) {
-		return listByPage(model, 1, "lastName", "asc", "all");
+	public String listUser(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		return listByPage(model, 1, "lastName", "asc", "all", userDetails);
 	}
 
 	@GetMapping("/page/{pageNumber}")
-	public String listByPage(Model model, @PathVariable("pageNumber") int currentPage,
-			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
-			@RequestParam(value = "role", required = false, defaultValue = "all") String role) {
+	public String listByPage(Model model, 
+			@PathVariable("pageNumber") int currentPage,
+			@Param("sortField") String sortField, 
+			@Param("sortDir") String sortDir,
+			@RequestParam(value = "role", required = false, defaultValue = "all") String role,
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+
+		String firstName = "firstNamePlaceHolder";
+		String lastName = "lastNamePlaceHolder";
+		String roletag = "roletag";
+
+		if (userDetails != null) {
+			firstName = userDetails.getFirstName();
+			lastName = userDetails.getLastName();
+			roletag=userDetails.getRole().toString();
+			model.addAttribute("firstName", firstName);
+			model.addAttribute("lastName", lastName);
+			model.addAttribute("roleTag", roletag);
+		}
+		//System.out.println(firstName); // for debuggging
 
 		List<Users> ulist;
 		Page<Users> page;
@@ -181,7 +229,8 @@ public class AdminController {
 	}
 
 	@RequestMapping("/listfilter")
-	public String listRoleAll(@RequestParam(value = "role", required = false) String role, Model model) {
+	public String listRoleAll(@RequestParam(value = "role", required = false) String role, 
+			Model model) {
 		if (role != null) {
 			List<Users> ulist = adservice.listByRole(Roles.valueOf(role));
 			model.addAttribute("ulist", ulist);
@@ -197,14 +246,8 @@ public class AdminController {
 	@RequestMapping("/deleteuser")
 	public String DeleteUser(@RequestParam(name = "id", required = true) long id) {
 		adservice.deleteUser(id);
-		return "redirect:/admin/admin/page/1?sortField=userID&sortDir=asc";
+		return "redirect:/admin/page/1?sortField=userID&sortDir=asc";
 	}
-	// Path variable method (need to change html)
-//		public String deleteUser(@PathVariable(value = "id") long id) {
-//			//Users user = adservice.findById(id);
-//			adservice.deleteUser(id);
-//			return "redirect:/admin/list";
-//		}
 
 	@RequestMapping("/edit/{id}")
 	public String ShowEditUserForm(Model model, @PathVariable("id") Long id) {
@@ -215,11 +258,25 @@ public class AdminController {
 	}
 
 	@RequestMapping("/user/save")
-	public String saveUserForm(@ModelAttribute("user") @Valid Users user, BindingResult bindingResult, Model model) {
+	public String saveUserForm(@ModelAttribute("user") @Valid Users user, 
+			BindingResult bindingResult, 
+			Model model) {
+
+		String password = null;
 
 		if (bindingResult.hasErrors()) {
 			return "EditUser";
 		}
+
+		if (user.getPassword() == "") {
+			password = adservice.passwordGenerator();
+			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+			user.setPassword(pass.encode(password));
+		} else {
+			password = user.getPassword();
+		}
+
+		model.addAttribute("password", password);
 		adservice.updateUser(user);
 		return "admin/success";
 	}
@@ -227,8 +284,6 @@ public class AdminController {
 	@RequestMapping("/user/create")
 	public String createUser(Model model) {
 		Users user = new Users();
-		String password = adservice.passwordGenerator();
-		user.setPassword(password);
 
 		List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
 		model.addAttribute("salutationList", salutationList);
@@ -350,4 +405,7 @@ public class AdminController {
 		}
 		return "forward:/admin/courselist";
 	}
+	
+	
+	
 }
