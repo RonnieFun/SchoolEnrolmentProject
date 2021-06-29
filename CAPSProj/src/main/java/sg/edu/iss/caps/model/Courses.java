@@ -2,6 +2,7 @@ package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
 import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,34 +10,47 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Courses {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long courseID;
-	
+
+	@NotNull (message = "Course name must be filled in.")
 	private String courseName;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseStartDate;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate courseEndDate;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate examDate;
 	
+	@Min(value = 0, message = "Value should be greater than or equal to 0.")
 	private int credits;
 	
+	@Min(value = 0, message = "Value should be greater than or equal to 0.")
 	private int courseCapacity;
-	
+
 	private String description;
-	
+
 	private CourseStatus courseStatus;
+
+  @Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
+			+ "ON student_course_details.course_courseid = courses.courseid "
+			+ "WHERE student_course_details.enrolment_status = '1'"
+			+ "AND courses.course_name = course_name)")
+	private long currentEnrolment;
 	
-	//One to many relationship between StudentCoursedetails and Courses
+	//Many to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy = "course")
 	private Collection<StudentCourseDetails> studentCourseDetails;
 	
@@ -44,12 +58,12 @@ public class Courses {
 	@ManyToMany(mappedBy = "courses")
 	private Collection<Users> users;
 
-	//No argument constructor
+	// No argument constructor
 	public Courses() {
 		super();
 	}
-	
-	//Argument constructor
+
+	// Argument constructor
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int credits, int courseCapacity, String description, CourseStatus courseStatus) {
 		super();
@@ -63,10 +77,13 @@ public class Courses {
 		this.courseStatus = courseStatus;
 	}
 	
-	//Argument constructor with all fields(without courseID)
-	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
-			int credits, int courseCapacity, String description, CourseStatus courseStatus,
-			Collection<StudentCourseDetails> studentCourseDetails,
+	
+
+	public Courses(@NotNull(message = "Course name must be filled in.") String courseName, LocalDate courseStartDate,
+			LocalDate courseEndDate, LocalDate examDate,
+			@Min(value = 0, message = "Value should be greater than or equal to 0.") int credits,
+			@Min(value = 0, message = "Value should be greater than or equal to 0.") int courseCapacity,
+			String description, CourseStatus courseStatus, Collection<StudentCourseDetails> studentCourseDetails,
 			Collection<Users> users) {
 		super();
 		this.courseName = courseName;
@@ -81,7 +98,7 @@ public class Courses {
 		this.users = users;
 	}
 
-	//Argument constructor with testing purpose
+	// Argument constructor with testing purpose
 	public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate examDate,
 			int courseCapacity, CourseStatus courseStatus) {
 		super();
@@ -93,20 +110,14 @@ public class Courses {
 		this.courseStatus = courseStatus;
 	}
 
-	//Argument constructor for testing coursestaught.html page (By Max)
-		public Courses(String courseName, LocalDate courseStartDate, LocalDate courseEndDate, int credits,
-				int courseCapacity, String description, CourseStatus courseStatus) {
-			super();
-			this.courseName = courseName;
-			this.courseStartDate = courseStartDate;
-			this.courseEndDate = courseEndDate;
-			this.credits = credits;
-			this.courseCapacity = courseCapacity;
-			this.description = description;
-			this.courseStatus = courseStatus;
+	public long getCurrentEnrolment() {
+			return currentEnrolment;
 		}
-	
-	
+
+		public void setCurrentEnrolment(long currentEnrolment) {
+			this.currentEnrolment = currentEnrolment;
+		}
+
 	public long getCourseID() {
 		return courseID;
 	}
@@ -179,7 +190,7 @@ public class Courses {
 		this.studentCourseDetails = studentCourseDetails;
 	}
 	
-
+  
 	public Collection<Users> getUsers() {
 		return users;
 	}
@@ -195,5 +206,4 @@ public class Courses {
 	public void setExamDate(LocalDate examDate) {
 		this.examDate = examDate;
 	}
-
 }

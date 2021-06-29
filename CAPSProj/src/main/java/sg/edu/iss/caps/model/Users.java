@@ -1,6 +1,8 @@
 package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -229,6 +231,14 @@ public class Users {
 		return"/profile-pic/" + userID + "/" + profilePicture;
 	}
 
+  //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
+//		return lecturerCourseDetail;
+//	}
+//
+//	public void setLecturerCourseDetail(Collection<LecturerCourseDetails> lecturerCourseDetail) {
+//		this.lecturerCourseDetail = lecturerCourseDetail;
+//	}
+  
 //	public Collection<LecturerCourseDetails> getLecturerCourseDetail() {
 //		return lecturerCourseDetail;
 //	}

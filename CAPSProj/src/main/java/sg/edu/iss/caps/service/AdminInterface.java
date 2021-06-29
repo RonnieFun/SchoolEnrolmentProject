@@ -1,5 +1,6 @@
 package sg.edu.iss.caps.service;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -36,4 +37,11 @@ public interface AdminInterface {
 	public Page<Users> listRoleUsers(int pageNumber, String sortField, String sortDir, Roles role);
 	public Users save(Users user);
 
+	List<Courses> getCourses();
+	Courses getCourseById(long courseID);
+	void deleteCourse(Courses course);
+	void savecourse(Courses course);
+	List<Long> getCoursesWithStudents();
+	void saveuser(Users user);
+	Optional<Courses> findCourseById(long courseID);
 }
