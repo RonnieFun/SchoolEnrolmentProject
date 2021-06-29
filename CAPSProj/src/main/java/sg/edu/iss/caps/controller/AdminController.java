@@ -2,6 +2,7 @@ package sg.edu.iss.caps.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -182,12 +183,6 @@ public class AdminController {
 			adservice.deleteUser(id);
 			return "redirect:/admin/admin/page/1?sortField=userID&sortDir=asc";
 		}
-		// Path variable method (need to change html)
-//		public String deleteUser(@PathVariable(value = "id") long id) {
-//			//Users user = adservice.findById(id);
-//			adservice.deleteUser(id);
-//			return "redirect:/admin/list";
-//		}
 
 		@RequestMapping("/edit/{id}")
 		public String ShowEditUserForm(Model model, @PathVariable("id") Long id) {
@@ -200,9 +195,21 @@ public class AdminController {
 		@RequestMapping("/user/save")
 		public String saveUserForm(@ModelAttribute("user") @Valid Users user, BindingResult bindingResult, Model model) {
 
+			String password = null;
+
 			if (bindingResult.hasErrors()) {
 				return "EditUser";
 			}
+
+			if (user.getPassword() == "") {
+				password = adservice.passwordGenerator();
+				BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+				user.setPassword(pass.encode(password));
+			} else {
+				password = user.getPassword();
+			}
+
+			model.addAttribute("password", password);
 			adservice.updateUser(user);
 			return "admin/success";
 		}
@@ -210,14 +217,13 @@ public class AdminController {
 		@RequestMapping("/user/create")
 		public String createUser(Model model) {
 			Users user = new Users();
-			String password = adservice.passwordGenerator();
-			user.setPassword(password);
 
 			List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
 			model.addAttribute("salutationList", salutationList);
 			model.addAttribute("user", user);
 			return "admin/EditUser";
 		}
+
 
 
 

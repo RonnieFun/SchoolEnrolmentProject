@@ -2,6 +2,8 @@ package sg.edu.iss.caps.model;
 
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ public class Users {
 	
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
 	private Roles role;
 	
 	private String phoneNumber;
@@ -39,7 +42,8 @@ public class Users {
 	}
 
 	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+		//this.enabled = enabled;
+		this.enabled = true;
 	}
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -77,6 +81,7 @@ public class Users {
 		this.salutation = salutation;
 		this.studentCourseDetail = studentCourseDetail;
 		this.courses = courses;
+		this.enabled =true;
 	}
 	
 	
@@ -93,6 +98,8 @@ public class Users {
 		this.address = address;
 		this.birthday = birthday;
 		this.salutation = salutation;
+		this.enabled =true;
+
 	}
 
 	//Argument constructor for testing purpose

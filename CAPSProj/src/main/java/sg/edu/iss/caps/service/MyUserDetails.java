@@ -21,12 +21,12 @@ public class MyUserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Roles roles[] = Roles.values();
+		//Roles roles[] = Roles.values();
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		
-		for(Roles role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role.name()));
-		}
+		//for(Roles role : roles) {
+			authorities.add(new SimpleGrantedAuthority("ROLE_"+user.getRole().toString()));
+		//}
 		return authorities;
 	}      
 
@@ -41,7 +41,27 @@ public class MyUserDetails implements UserDetails {
 		// TODO Auto-generated method stub
 		return user.getEmail();
 	}
-
+	
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return user.getEmail();
+	}
+	
+	public String getFirstName() {
+		// TODO Auto-generated method stub
+		return user.getFirstName();
+	}
+	
+	public String getLastName() {
+		// TODO Auto-generated method stub
+		return user.getFirstName();
+	}
+	
+	public long getUserID() {
+		// TODO Auto-generated method stub
+		return user.getUserID();
+	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
