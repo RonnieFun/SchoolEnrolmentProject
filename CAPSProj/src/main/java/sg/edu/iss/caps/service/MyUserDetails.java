@@ -35,31 +35,11 @@ public class MyUserDetails implements UserDetails {
 		// TODO Auto-generated method stub
 		return user.getPassword();
 	}
-
+	
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return user.getEmail();
-	}
-	
-	public String getEmail() {
-		// TODO Auto-generated method stub
-		return user.getEmail();
-	}
-	
-	public String getFirstName() {
-		// TODO Auto-generated method stub
-		return user.getFirstName();
-	}
-	
-	public String getLastName() {
-		// TODO Auto-generated method stub
-		return user.getFirstName();
-	}
-	
-	public long getUserID() {
-		// TODO Auto-generated method stub
-		return user.getUserID();
 	}
 	
 	@Override
@@ -84,6 +64,31 @@ public class MyUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return user.isEnabled();
+	}
+	
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return user.getEmail();
+	}
+	
+	public String getFirstName() {
+		// TODO Auto-generated method stub
+		return user.getFirstName();
+	}
+	
+	public String getLastName() {
+		// TODO Auto-generated method stub
+		return user.getFirstName();
+	}
+	
+	public long getUserID() {
+		// TODO Auto-generated method stub
+		return user.getUserID();
+	}
+	
+	public Roles getRole() {
+		// TODO Auto-generated method stub
+		return user.getRole();
 	}
 
 }
