@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta charset="ISO-8859-1">
+<title>Course List</title>
+<h3></h3>
+</head>
+<body>
+
+<h1>Course List</h1> <h3>(courses that have lecturers)</h3>
+
+<h4 th:if="${ExistsErrorMsg != null}" th:text="${ExistsErrorMsg}"></h4>
+<h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
+
+<div>
+<table>
+	<thead>	
+		<tr>			
+			<th>NO</th>
+			<th>CourseID</th>	
+			<th>CourseName</th>
+			<th>Credits</th>
+			<th>Lecturer Name</th>
+			<th>Course Capacity</th>
+			<th>Current Enrolment</th>
+			<th>courseStartDate</th>
+			<th>courseEndDate</th>
+			<th>Operation</th>
+		</tr>
+	</thead>
+	
+	
+	<tbody>	
+		<tr th:each="lc,iterator: ${lecturercourses}">	
+			<td th:text = "${iterator.index + 1}">NO</td>	
+			<td th:text="${lc.courseID}">Course ID</td>
+			<td th:text="${lc.courseName}">Course Name</td>
+			<td th:text="${lc.credits}">Credits</td>
+					
+			<span th:each="lecturer: ${lc.users}">	
+				<td th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">Lecturer Name</td>
+			</span>		
+			<td th:text="${lc.courseCapacity}">Course Capacity</td>		
+			
+			<td th:if="${currentEnrolmentMap.containsKey(lc.courseID)}" 
+			    th:text="${currentEnrolmentMap.get(lc.courseID)}">Current Enrolment</td>			
+
+			<td th:text="${#temporals.format(lc.courseStartDate, 'yyyy-MM-dd')}">courseStartDate</td>
+			<td th:text="${#temporals.format(lc.courseEndDate, 'yyyy-MM-dd')}">courseEndDate</td>	
+			 <td> <button> <a th:href="@{/student/addenrolment/} + ${lc.courseID}"> Enroll Now </a></button> </td>											
+		</tr>	
+	</tbody>
+</table>
+</div>
+<div>
+	<!-- temporarily view student of userID == 1 -->
+	
+	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
+	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
+	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
+</div>
+
+
+</body>
+</html>

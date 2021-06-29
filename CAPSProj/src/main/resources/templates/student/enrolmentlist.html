@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta charset="ISO-8859-1">
+<title>Enrolment List</title>
+</head>
+<body>
+
+<h1>Enrolment List</h1>
+
+<table>
+
+	<thead>
+
+		<tr>
+			<th>NO</th>
+			<th>EnrolmentID</th>
+			<th>Date of Enrolment</th>
+			<th>Course ID</th>
+			<th>Course Name</th>
+			<th>Credits</th>	
+			<th>courseStartDate</th>
+			<th>courseEndDate</th>
+			<th>Enrolment Status</th>
+			<th>Operation</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr th:each="enrolment,iterator: ${enrolmentlist}">	
+			<td th:text = "${iterator.index + 1}">NO</td>	
+			<td th:text="${enrolment.id}">EnrolmentID</td>
+			<td th:text="${#temporals.format(enrolment.dateOfEnrollment, 'yyyy-MM-dd')}">DateOfEnrolment</td>
+			<td th:text="${enrolment.course.courseID}">Course ID</td>
+			<td th:text="${enrolment.course.courseName}">Course Name</td>
+			<td th:text="${enrolment.course.credits}">Credits</td>
+			<td th:text="${#temporals.format(enrolment.course.courseStartDate, 'yyyy-MM-dd')}">courseStartDate</td>
+			<td th:text="${#temporals.format(enrolment.course.courseEndDate, 'yyyy-MM-dd')}">courseEndDate</td>	
+		
+			
+			<td th:text="${enrolment.enrolmentStatus}">Enrolment Status</td>	
+							
+			<!-- The withdraw button can only show when the enrolment status is PENDING or ACCEPTED -->
+			<span th:if= "${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+				<td> 
+					<button><a th:href="@{/student/withdrawenrolment/} + ${enrolment.id}">Withdraw</a></button> 
+				</td>
+			</span> 
+								
+									
+			
+		</tr>	
+	</tbody>
+	
+</table>
+	<!-- temporarily view student of userID == 1 -->
+	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
+	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
+	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
+</body>
+</html>
+	

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta charset="ISO-8859-1">
+<title>My Courses</title>
+</head>
+<body>
+
+<h1>My Courses</h1>
+
+<table>
+
+	<thead>
+
+		<tr>
+			<th>NO</th>
+			<th>Course ID</th>
+			<th>Course Name</th>
+			<th>Credits</th>
+			<th>LecturerName</th>	
+			<th>courseStartDate</th>
+			<th>courseEndDate</th>	
+			<th>courseStatus</th>					
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr th:each="enrolment,iterator: ${enrolmentsaccepted}">	
+			<td th:text = "${iterator.index + 1}">NO</td>	
+			<td th:text="${enrolment.course.courseID}">Course ID</td>
+			<td th:text="${enrolment.course.courseName}">Course Name</td>
+			<td th:text="${enrolment.course.credits}">Credits</td>
+			
+			<span th:each="user: ${enrolment.course.users}"> 
+               <a th:if= "${user.role == T(sg.edu.iss.caps.model.Roles).LECTURER}">
+                    <td th:text="${user.firstName} + ' ' + ${user.lastName}">Lecturer Name</td>
+               </a>
+           </span>	
+           
+           <td th:text="${#temporals.format(enrolment.course.courseStartDate, 'yyyy-MM-dd')}">CourseSartDate</td>
+           <td th:text="${#temporals.format(enrolment.course.courseEndDate, 'yyyy-MM-dd')}">CourseEndDate</td>
+		<td th:text="${enrolment.course.courseStatus}">CourseStatus</td>						
+			
+		</tr>	
+	</tbody>
+	
+</table>
+	<!-- temporarily view student of userID == 1 -->
+	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
+	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
+	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
+	
+</body>
+</html>
+	

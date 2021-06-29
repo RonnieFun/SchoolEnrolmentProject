@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import java.util.Collection;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
@@ -20,6 +22,9 @@ public class StudentCourseDetails {
 	private LocalDate dateOfEnrollment;
 	
 	private String grades;
+	
+
+	private double gradepoint;
 	
 	private EnrolmentStatus enrolmentStatus;
 	

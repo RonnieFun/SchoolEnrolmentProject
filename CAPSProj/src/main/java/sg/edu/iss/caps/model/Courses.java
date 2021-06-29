@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -35,6 +36,11 @@ public class Courses {
 	private String description;
 	
 	private CourseStatus courseStatus;
+	
+//	@Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
+//			+ "ON student_course_details.course_courseid = courses.courseid "
+//			+ "WHERE student_course_details.enrolment_status = '1' AND courses.course_name = course_name)")
+//	private long currentEnrolment;
 	
 	//Many to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy = "course")
@@ -191,5 +197,9 @@ public class Courses {
 	public void setExamDate(LocalDate examDate) {
 		this.examDate = examDate;
 	}
+
+//	public long getCurrentEnrolment() {
+//		return currentEnrolment;
+//	}
 
 }
