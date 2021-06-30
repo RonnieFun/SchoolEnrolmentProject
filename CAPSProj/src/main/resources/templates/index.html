@@ -17,6 +17,7 @@
 	<div sec:authorize="isAuthenticated()">
 		Welcome <b><span sec:authentication="principal.firstName">first
 				name</span></b> &nbsp; <span sec:authentication="principal.role">Roles </span>
+				</span></b> &nbsp; <span sec:authentication="principal.userID">ID </span>
 		<br> <br>
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Logout" />
