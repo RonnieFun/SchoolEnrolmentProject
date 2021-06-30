@@ -170,7 +170,7 @@ public class StudentController {
 		
 		long userid = userDetails.getUserID();
 		//System.out.println(userid);
-		int totalCredits = 0;
+		double totalCredits = 0;
 		double cgpa = 0;
 		double sum = 0.0;
 		
@@ -194,7 +194,7 @@ public class StudentController {
 		for(StudentCourseDetails e: enrolmentaccepted)
 		{
 			String grades = e.getGrades();	
-			if (e.getGrades() == null)
+			if (grades == null || grades.trim().isEmpty())
 			{
 				sum += 0;
 				totalCredits += 0;
@@ -210,7 +210,7 @@ public class StudentController {
 		}
 		
 		model.addAttribute("totalCredits", totalCredits); 		
-		model.addAttribute("cgpa", cgpa); 
+		model.addAttribute("cgpa", Math.round(cgpa * 100.0) / 100.0); 
 		return "/student/gradesandgpa";
 	}
 	
