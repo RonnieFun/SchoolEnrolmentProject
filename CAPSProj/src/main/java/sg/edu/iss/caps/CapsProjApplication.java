@@ -138,7 +138,7 @@ public class CapsProjApplication {
 				EnrolmentStatus.ACCEPTED, student1, digitalProductManagement);
 		
 			StudentCourseDetails studentCourseDetail2 = new StudentCourseDetails(LocalDate.of(2021, 12, 10), "B", 
-					EnrolmentStatus.REJECTED, student2, cSharpProgramming);
+					EnrolmentStatus.ACCEPTED, student2, cSharpProgramming);
 	
 			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 01, 10), "D", 
 					EnrolmentStatus.ACCEPTED, student3, javaProgramming);
