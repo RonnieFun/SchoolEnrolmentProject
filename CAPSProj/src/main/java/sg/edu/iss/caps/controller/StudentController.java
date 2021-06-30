@@ -169,7 +169,7 @@ public class StudentController {
 		}
 		
 		long userid = userDetails.getUserID();
-		
+		//System.out.println(userid);
 		int totalCredits = 0;
 		double cgpa = 0;
 		double sum = 0.0;
