@@ -44,6 +44,7 @@ public class CapsProjApplication {
 		return args -> { 
 //			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
 //			urepo.save(user);
+
 			
 			List<StudentCourseDetails> scCollection = new ArrayList<StudentCourseDetails>();
 			List<Users> userCollection = new ArrayList<Users>();
@@ -163,7 +164,6 @@ public class CapsProjApplication {
 			screpo.save(studentCourseDetail4);
 			screpo.save(studentCourseDetail5);
 			screpo.save(studentCourseDetail6);
-
 		};
 	}
 

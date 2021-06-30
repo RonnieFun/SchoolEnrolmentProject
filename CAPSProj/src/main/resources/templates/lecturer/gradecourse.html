@@ -37,7 +37,8 @@
 					<th>S/N</th>
 					<th>Student ID</th>
 					<th>Student Name</th>
-					<th>Assigned Exam Grade</th>
+					<th>Currently Assigned Grade</th>
+					<th>Change Exam Grade</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -46,27 +47,31 @@
 					<td th:text="${student.userID}"></td>
 					<td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>
 					<th:block th:each="studentdetail: ${studentdetails}">
-						<td th:if="${student.userID} == ${studentdetail.student.userID}">
-							<form action="#" th:action="@{/lecturer/savegrade}">
-								<input type="hidden" name="studentID"
-									th:value="${student.userID}"> <input type="hidden"
-									name="courseID" th:value="${studentdetail.course.courseID}">
-								<select name="grade" onchange="this.form.submit()">
-									<option value="" th:selected="${studentdetail.grades} == null"></option>
-									<option value="A+" th:selected="${studentdetail.grades} == 'A+'">A+</option>
-									<option value="A" th:selected="${studentdetail.grades} == A">A</option>
-									<option value="A-" th:selected="${studentdetail.grades} == 'A-'">A-</option>
-									<option value="B+" th:selected="${studentdetail.grades} == 'B+'">B+</option>
-									<option value="B" th:selected="${studentdetail.grades} == B">B</option>
-									<option value="B-" th:selected="${studentdetail.grades} == 'B-'">B-</option>
-									<option value="C+" th:selected="${studentdetail.grades} == 'C+'">C+</option>
-									<option value="C" th:selected="${studentdetail.grades} == C">C</option>
-									<option value="D+" th:selected="${studentdetail.grades} == 'D+'">D+</option>
-									<option value="D" th:selected="${studentdetail.grades} == D">D</option>
-									<option value="F" th:selected="${studentdetail.grades} == F">F</option>
-								</select>
-							</form>
-						</td>
+						<th:block
+							th:if="${student.userID} == ${studentdetail.student.userID}">
+							<td th:text="${studentdetail.grades}"></td>
+							<td>
+								<form action="#" th:action="@{/lecturer/savegrade}">
+									<input type="hidden" name="studentID"
+										th:value="${student.userID}"> <input type="hidden"
+										name="courseID" th:value="${studentdetail.course.courseID}">
+									<select name="grade" onchange="this.form.submit()">
+										<option value=""></option>
+										<option value="A+">A+</option>
+										<option value="A">A</option>
+										<option value="A-">A-</option>
+										<option value="B+">B+</option>
+										<option value="B">B</option>
+										<option value="B-">B-</option>
+										<option value="C+">C+</option>
+										<option value="C">C</option>
+										<option value="D+">D+</option>
+										<option value="D">D</option>
+										<option value="F">F</option>
+									</select>
+								</form>
+							</td>
+						</th:block>
 				</tr>
 			</tbody>
 		</table>
