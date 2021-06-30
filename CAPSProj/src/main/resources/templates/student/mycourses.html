@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"> 
-<head>
-<meta charset="ISO-8859-1">
-<title>My Courses</title>
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <body>
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
 <h1>My Courses</h1>
 
-<table>
+<div class = "container">
+<table id = "table_mycourses">
 
 	<thead>
 
@@ -45,11 +44,17 @@
 	</tbody>
 	
 </table>
+
 	<!-- temporarily view student of userID == 1 -->
 	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
 	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
 	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
-	
+</div>
+<script>
+	  $(document).ready( function () {
+    	$('#table_mycourses').DataTable();
+		} );
+	</script>	
 </body>
 </html>
 	

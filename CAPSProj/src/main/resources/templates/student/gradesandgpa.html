@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"> 
-<head>
-<meta charset="ISO-8859-1">
-<title>Grades And GPA</title>
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <body>
-
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 <h1>Grades And GPA</h1>
 
-<table>
+<div class = "container"> 
+<table id = "table_gradesgpa">
 
 	<thead>
 
@@ -38,6 +36,8 @@
 	</tbody>
 	
 </table>&nbsp;&nbsp;
+</div>
+
 
 <div>
 	<span><a th:text=" 'Credits Earned:' + ${totalCredits}">CGPA</a></span>
@@ -54,7 +54,11 @@
 	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
 	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
 	</div>
-	
+	<script>
+	  $(document).ready( function () {
+    	$('#table_gradesgpa').DataTable();
+		} );
+	</script>
 </body>
 </html>
 	

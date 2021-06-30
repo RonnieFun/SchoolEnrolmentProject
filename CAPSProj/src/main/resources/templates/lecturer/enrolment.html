@@ -1,39 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta charset="ISO-8859-1">
-	<title>View Course Enrollment</title>
-	 <meta name="viewport" content="width=device-width, initial-scale=1">
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
-      <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
-        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-	<script>
-	  $(document).ready( function () {
-    	$('#table_enrolment').DataTable();
-		} );
-	</script>
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">CAPS</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" th:href = "@{/index}">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href = "@{/lecturer/coursestaught}">Courses Taught</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+	<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
 <div class = "container">
 		<div class = "row">
@@ -74,7 +45,7 @@
 			<h3 class = "text-center"> Course Enrollment Details: </h3>
 		</div>
 
-	<table id = "table_enrolment" class="table table-striped">
+	<table id = "table_enrolment">
 		<thead>
 			<tr>
 				<th>S/N</th>
@@ -96,43 +67,11 @@
 		</tbody>
 	</table>
 	</div>
+		<script>
+	  $(document).ready( function () {
+    	$('#table_enrolment').DataTable();
+		} );
+	</script>
 </body>
-
-<!-- Code for Search Bar function. Please do not delete. Thank you. -->
-
-<!-- <div class = "form-group" style="float:left">
-							<label class = "mb-3"> Course Name: </label>
-							<input type = "text" name = "courseName" class = "form-control" required>
-						</div> -->
-
-						
-
-
-<!-- <div class = "form-group" style="float:right">
-							<label class = "mb-3"> Course Start Date: </label>
-								<select id="selectStartDate" name = "courseStartDate">
-									<option 
-									th:each = "course: ${coursestaught}"
-									th:value = "${course.courseStartDate}"
-									th:text = "${course.courseStartDate}">
-									</option>
-								</select>
-						</div> -->
-
-						
-
-<!-- <tr th:each = "course,iterator: ${courses}">
-					<td th:text = "${iterator.index + 1}"></td>
-				<span th:each = "user: ${course.users}">
-					<span th:if = "${user.role == user.role.STUDENT}">
-						<td th:text = "${user.userID}"></td>
-						<td th:text = "${user.firstName} + ' ' + ${user.lastName}"></td>
-						<td th:text = "${user.email}"></td>
-						<span th:each = "studentCourseDetails: ${user.studentCourseDetail}">
-							<td th:text = "${studentCourseDetails.dateOfEnrollment}"></td>
-						</span>
-					</span>
-				</span>
-			</tr> -->
 
 </html>

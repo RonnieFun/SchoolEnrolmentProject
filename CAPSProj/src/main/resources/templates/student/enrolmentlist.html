@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"> 
-<head>
-<meta charset="ISO-8859-1">
-<title>Enrolment List</title>
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <body>
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
 <h1>Enrolment List</h1>
 
-<table>
+<div class="container">
+	<div class="row">
+<table id = "table_enrolmentlist" class = "table table-responsive">
 
 	<thead>
-
 		<tr>
 			<th>NO</th>
 			<th>EnrolmentID</th>
@@ -46,17 +45,26 @@
 					<button><a th:href="@{/student/withdrawenrolment/} + ${enrolment.id}">Withdraw</a></button> 
 				</td>
 			</span> 
-								
-									
-			
+			<span th:if= "${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).WITHDRAWN} 
+			or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED}
+				or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED}">
+				<td>-</td>
+			</span>
 		</tr>	
 	</tbody>
 	
 </table>
+	</div>
+</div>
 	<!-- temporarily view student of userID == 1 -->
 	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
 	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
 	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
+	<script>
+	  $(document).ready( function () {
+    	$('#table_enrolmentlist').DataTable();
+		} );
+	</script>	
 </body>
 </html>
 	

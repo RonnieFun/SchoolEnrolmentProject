@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"> 
-<head>
-<meta charset="ISO-8859-1">
-<title>Course List</title>
-<h3></h3>
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <body>
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
 <h1>Course List</h1> <h3>(courses that have lecturers)</h3>
 <h4 th:if="${CapacityFullErrorMsg != null}" th:text="${CapacityFullErrorMsg}"></h4>
 <h4 th:if="${ExistsErrorMsg != null}" th:text="${ExistsErrorMsg} "></h4>
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
 
-<div>
-<table>
+<div class = "container">
+<table id = "table_lecturercourses">
 	<thead>	
 		<tr>			
 			<th>NO</th>
@@ -59,7 +56,11 @@
 	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
 	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
 </div>
-
+<script>
+	  $(document).ready( function () {
+    	$('#table_lecturercourses').DataTable();
+		} );
+	</script>
 
 </body>
 </html>

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Admin Enrolment Page</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <body>
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 <h1>Enrolment Lists</h1>
 <a th:href="@{/admin/addenrolment}"> Add Enrolment</a>
-<table>
+<table id = "table_adminenrolment">
+	<thead>
 	<tr>
 		<th>No</th>
 		<th>Enrolment ID</th>
@@ -18,7 +16,13 @@
 		<th>Grades</th>
 		<th>Enrolment Status</th>
 		<th>Course</th>
+		<th></th>
+		<th></th>
+		<th></th>
 	</tr>
+	</thead>
+
+	<tbody>
 	<tr th:each = "enrolment,iterator: ${enrolmentlist}">
 		<td th:text = "${iterator.index + 1}"></td>
 		<td th:text = "${enrolment.id}"></td> 
@@ -37,19 +41,36 @@
 					<td>
 						<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Reject </a>
 					</td>
+					<td>
+						<a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
+					</td>
 	    		</a>
 	    		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED}">
 					<td>
 						<a th:href="@{/admin/editenrolment/}+${enrolment.id}" > Edit </a>
-	    			</td>
+					</td>
+					<td>-</td>
+					<td>
+						<a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
+					</td>
 	    		</a>
-	    	</a>
+			</a>
+		</a>
+			<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED} 
+			or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).WITHDRAWN}">
 	    	<td>
 	    		<a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
-	    	</td>
-	    </a>
-	    
+			</td>
+			<td>-</td>
+			<td>-</td>
+			</a>
 	</tr>
+	</tbody>
 </table>
+<script>
+	  $(document).ready( function () {
+    	$('#table_adminenrolment').DataTable();
+		} );
+	</script>
 </body>
 </html>
