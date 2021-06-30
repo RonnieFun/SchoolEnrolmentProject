@@ -95,19 +95,19 @@ public class LecturerImplementation implements LecturerInterface {
 	}
 
 	@Transactional
-	public void addCourseTaught(Long id, Courses course) {
-		Users user = this.getUsersById(id);
+	public void addCourseTaught(Users user, Courses course) {
 		Collection<Courses> userCurrentTaughtCourses = user.getCourses();
 		userCurrentTaughtCourses.add(course);
 		user.setCourses(userCurrentTaughtCourses);
+		usersRepository.save(user);
 	}
 
 	@Transactional
-	public void removeCourseTaught(Long id, Courses course) {
-		Users user = this.getUsersById(id);
+	public void removeCourseTaught(Users user, Courses course) {
 		Collection<Courses> userCurrentTaughtCourses = user.getCourses();
 		userCurrentTaughtCourses.remove(course);
 		user.setCourses(userCurrentTaughtCourses);
+		usersRepository.save(user);
 	}
 
 	@Override

@@ -32,9 +32,9 @@ public interface LecturerInterface {
 
 	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
 
-	public void addCourseTaught(Long id, Courses course);
+	public void addCourseTaught(Users user, Courses course);
 
-	void removeCourseTaught(Long id, Courses course);
+	void removeCourseTaught(Users user, Courses course);
 
 	List<Users> getStudentsByCourseID(Long courseID);
 
