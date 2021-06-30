@@ -69,11 +69,13 @@ public class LecturerController {
 	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
 	public String showStudentGrades(Roles role, Long userID, Model model ) {
-		
+		 
 		if(userID != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
 					userID,
 					Roles.STUDENT));
+			
+			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
 		
 		int totalCredits = 0;

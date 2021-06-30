@@ -18,14 +18,16 @@ public interface LecturerInterface {
 	List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID);
 		
 	//To get all student grades by student id
-	List<Users> getStudentResults(Long userID, Roles role);
+	List<Users> findUsersByRoleAndId(Long userID, Roles role);
 			
 	//To get list of all users
 	List<Users> getAllUsers();
 
 	//To get list of users by Role
 	List<Users> getAllUsersByRole(Roles role);
-		
+	
+	List<Users> getAllUsersByUserID(Long userID);
+	
 	//To get list of users by Role, Course Name and Course Start
 	List<StudentCourseDetails> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);

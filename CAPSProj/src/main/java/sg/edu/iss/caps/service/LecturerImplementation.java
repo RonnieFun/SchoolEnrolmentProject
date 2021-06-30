@@ -57,7 +57,13 @@ public class LecturerImplementation implements LecturerInterface {
 
 		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
 	}
-
+	
+	@Transactional
+	public List<Users> getAllUsersByUserID(Long userID) {
+		
+		return usersRepository.findByUserID(userID);
+	}
+	
 	@Transactional
 	public Users getUsersById(Long id) {
 
@@ -77,7 +83,7 @@ public class LecturerImplementation implements LecturerInterface {
 	}
 
 	@Transactional
-	public List<Users> getStudentResults(Long userID, Roles role) {
+	public List<Users> findUsersByRoleAndId(Long userID, Roles role) {
 
 		return usersRepository.findUsersByRoleAndId(userID, role);
 	}
