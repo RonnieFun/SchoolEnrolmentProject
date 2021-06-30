@@ -55,7 +55,7 @@ public class LecturerController {
 	@GetMapping(value = "lecturer/enrolment")
 	public String showCoursesByCourseNameCourseStart(Model model, String courseName,
 			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus) {
-		 
+	
 		if (courseName != null && courseStartDate != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseNameStartDate(
 					Roles.STUDENT, 
