@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
+import sg.edu.iss.caps.service.MyUserDetails;
 import sg.edu.iss.caps.service.StudentInterface;
 
 @Controller
@@ -63,12 +65,15 @@ public class StudentController {
 	}
 	
 	
-	//need to check Users.Role=STUDENT??
 	@GetMapping("/addenrolment/{courseid}")
-	public String addEnrolment( Model model, @PathVariable long courseid) {		
+	public String addEnrolment( Model model, @PathVariable long courseid, @AuthenticationPrincipal MyUserDetails userDetails) {		
 		
-		// temporarily set userID to 1
-		long userid = 1;
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
+		long userid = userDetails.getUserID();
+
 		Courses course = stuservice.findCoursebyCourseID(courseid);
 		
 		// find enrolment by UserID and CourseID regardless of enrolmentStatus
@@ -114,13 +119,18 @@ public class StudentController {
 		stuservice.addEnrolment(enrolment);
 		
 			
-		return "redirect:/student/enrolmentlist/1";	
+		return "redirect:/student/enrolmentlist";	
 	}
 		
-	// Users.Role=STUDENT?
 	// find all enrolled courses by UserID
-	@GetMapping("/enrolmentlist/{userid}")
-	public String showEnrolmentList(Model model, @PathVariable long userid ) {
+	@GetMapping("/enrolmentlist")
+	public String showEnrolmentList(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+			
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
+		long userid = userDetails.getUserID();
 		
 		model.addAttribute("enrolmentlist", stuservice.findEnrolmentByUserID(userid));
 		
@@ -128,8 +138,7 @@ public class StudentController {
 	}
 	
 	
-	// Users.Role=STUDENT?
-	// withdraw enrolment by UserID
+	// withdraw enrolment
 	@GetMapping("/withdrawenrolment/{enrolmentid}")
 	public String withdrawEnrolment(Model model, @PathVariable long enrolmentid) {
 		
@@ -138,7 +147,7 @@ public class StudentController {
 		if (enrolment.getCourse().getCourseStartDate().compareTo(LocalDate.now()) <= 0)
 		{
 			model.addAttribute("CourseAlreadyStartedErrorMsg", "Course has already started, you can't withdraw from it now.");
-			return "forward:/student/enrolmentlist/1";	
+			return "forward:/student/enrolmentlist";	
 		}
 		else
 		{
@@ -148,14 +157,19 @@ public class StudentController {
 		}
 		
 		
-		return "redirect:/student/enrolmentlist/1"; // temporarily view the enrolment for userID 1
+		return "redirect:/student/enrolmentlist";
 	}
 	
-	// Users.Role=STUDENT?
 	// find all enrolment by UserID and enrolment status = ACCEPTED
-	@GetMapping("/gradesandgpa/{userid}")
-	public String showEnrolmentListAccepted1(Model model, @PathVariable long userid ) {
-
+	@GetMapping("/gradesandgpa")
+	public String showEnrolmentListAccepted1(Model model, @AuthenticationPrincipal MyUserDetails userDetails ) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
+		long userid = userDetails.getUserID();
+		
 		int totalCredits = 0;
 		double cgpa = 0;
 		double sum = 0.0;
@@ -203,8 +217,14 @@ public class StudentController {
 	
 	// Users.Role=STUDENT?
 	// find all enrolment by UserID and enrolment status = ACCEPTED
-	@GetMapping("/mycourses/{userid}")
-	public String showEnrolmentListAccepted2(Model model, @PathVariable long userid ) {
+	@GetMapping("/mycourses")
+	public String showEnrolmentListAccepted2(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
+		long userid = userDetails.getUserID();
 		
 		model.addAttribute("enrolmentsaccepted", stuservice.findEnrolmentByUserIDAndEnrolmentStatus(userid, EnrolmentStatus.ACCEPTED));
 		

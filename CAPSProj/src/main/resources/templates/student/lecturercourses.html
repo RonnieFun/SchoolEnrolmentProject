@@ -37,9 +37,18 @@
 			<td th:text="${lc.courseName}">Course Name</td>
 			<td th:text="${lc.credits}">Credits</td>
 					
-			<span th:each="lecturer: ${lc.users}">	
-				<td th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">Lecturer Name</td>
-			</span>		
+	      <td>
+	      	<p th:each="user: ${lc.users}">
+	      		<span th:if= "${user.role == T(sg.edu.iss.caps.model.Roles).LECTURER}" th:text="${user.firstName} + ' ' + ${user.lastName}"> Lecturer Name </span>
+	      	</p>
+	      
+	      </td>
+	      
+	       <!-- <span th:each="lecturer: ${lc.users}">	
+				    <td th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">Lecturer Name</td>
+			    </span>		
+			
+			-->
 			<td th:text="${lc.courseCapacity}">Course Capacity</td>		
 			
 			<td th:if="${currentEnrolmentMap.containsKey(lc.courseID)}" 
@@ -55,9 +64,9 @@
 <div>
 	<!-- temporarily view student of userID == 1 -->
 	
-	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
-	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
-	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
+	<button><a th:href="@{/student/enrolmentlist}">View Enrolment List and Withdraw</a></button>
+	<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
+	<button><a th:href="@{/student/mycourses}">View My Courses</a></button>
 </div>
 
 

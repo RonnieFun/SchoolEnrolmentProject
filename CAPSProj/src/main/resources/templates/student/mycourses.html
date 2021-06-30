@@ -31,11 +31,20 @@
 			<td th:text="${enrolment.course.courseName}">Course Name</td>
 			<td th:text="${enrolment.course.credits}">Credits</td>
 			
-			<span th:each="user: ${enrolment.course.users}"> 
+
+			<td>
+	      	<p th:each="user: ${enrolment.course.users}">
+	      		<span th:if= "${user.role == T(sg.edu.iss.caps.model.Roles).LECTURER}" th:text="${user.firstName} + ' ' + ${user.lastName}"> Lecturer Name </span>
+	      	</p>  
+	        </td>
+			
+			
+		<!--  	<span th:each="user: ${enrolment.course.users}"> 
                <a th:if= "${user.role == T(sg.edu.iss.caps.model.Roles).LECTURER}">
                     <td th:text="${user.firstName} + ' ' + ${user.lastName}">Lecturer Name</td>
                </a>
            </span>	
+        -->
            
            <td th:text="${#temporals.format(enrolment.course.courseStartDate, 'yyyy-MM-dd')}">CourseSartDate</td>
            <td th:text="${#temporals.format(enrolment.course.courseEndDate, 'yyyy-MM-dd')}">CourseEndDate</td>
@@ -47,8 +56,8 @@
 </table>
 	<!-- temporarily view student of userID == 1 -->
 	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
-	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
-	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
+	<button><a th:href="@{/student/enrolmentlist}">View Enrolment List and Withdraw</a></button>
+	<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
 	
 </body>
 </html>

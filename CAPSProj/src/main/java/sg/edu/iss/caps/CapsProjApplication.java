@@ -119,11 +119,9 @@ public class CapsProjApplication {
 //			screpo.save(studentCourseDetail4);
 //
 //			
-//			user1.setCourses(PythonAndML);
 //			user2.setCourses(javaCourse);
 //			user2.setCourses(PythonAndML);
 //			user5.setCourses(cSharpCourse);		
-//			urepo.save(user1);
 //			urepo.save(user2);
 //			urepo.save(user5);
 			
