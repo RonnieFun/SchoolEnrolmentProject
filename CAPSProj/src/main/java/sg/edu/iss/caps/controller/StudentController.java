@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
@@ -35,6 +36,7 @@ import sg.edu.iss.caps.service.StudentInterface;
 
 @Controller
 @RequestMapping("/student")
+@PreAuthorize("hasRole('ROLE_STUDENT')")
 public class StudentController {
 
 	@Autowired

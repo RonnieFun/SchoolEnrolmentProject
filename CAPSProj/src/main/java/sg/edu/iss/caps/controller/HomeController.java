@@ -53,6 +53,11 @@ public class HomeController {
 		return "login";
 	}
 	
+	@RequestMapping("/403")
+	public String ForbiddenError() {
+		return "403";
+	}
+	
 	@RequestMapping("/edituser/{id}")
 	public String showEditProfileForm(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("user", adservice.findById(id));
