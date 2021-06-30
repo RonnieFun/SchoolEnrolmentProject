@@ -86,14 +86,12 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = "user,iterator: ${users}">
+			<tr th:each = "scd,iterator: ${studentCourseDetails}">
 				<td th:text = "${iterator.index + 1}"></td>
-				<td th:text = "${user.userID}"></td>
-				<td th:text = "${user.firstName} + ' ' + ${user.lastName}"></td>
-				<td th:text = "${user.email}"></td>
-				<span th:each = "sc: ${user.studentCourseDetail}">
-					<td th:text = "${sc.dateOfEnrollment}"></td>
-				</span>
+				<td th:text = "${scd.student.userID}"></td>
+				<td th:text = "${scd.student.firstName} + ' ' + ${scd.student.lastName}"></td>
+				<td th:text = "${scd.student.email}"></td>
+				<td th:text = "${scd.dateOfEnrollment}"></td>
 			</tr>
 		</tbody>
 	</table>

@@ -1,5 +1,6 @@
 package sg.edu.iss.caps.repo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,23 @@ import sg.edu.iss.caps.model.Users;
 
 public interface StudentCourseDetailsRepository extends JpaRepository<StudentCourseDetails, Long> {
 
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN c.users u WHERE "
+			+ "u.userID = :userID AND u.role = :role AND c.courseID = sc.course AND u.userID = sc.student")
+	List<StudentCourseDetails> findGradesByStudentId( @Param("userID") Long userID,
+			@Param("role") Roles role);
+	
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.student u JOIN u.courses c WHERE u.role= :role "
+			+ "AND sc.enrolmentStatus = :enrolmentStatus "
+			+ "AND c.courseID = :courseID "
+			+ "AND c.courseStartDate = :courseStartDate ")
+	List<StudentCourseDetails> findByCourseNameCourseStart(
+			@Param("role") Roles role,
+			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus,
+			@Param("courseID") Long courseID, 
+			@Param("courseStartDate") LocalDate courseStartDate);
+	
+	@Query("SELECT scd.course.courseID FROM StudentCourseDetails scd")
+	List<Long> getCourseIDsWithStudents();
 	
 	@Query("SELECT scd FROM StudentCourseDetails scd "
 			+ "WHERE scd.student.userID = :id")
@@ -34,20 +52,11 @@ public interface StudentCourseDetailsRepository extends JpaRepository<StudentCou
 	@Query("SELECT scd FROM StudentCourseDetails scd WHERE scd.course.courseID=:courseid")
 	List<StudentCourseDetails> findEnrolmentByCourseID(@Param("courseid") long courseid);
 
-	
-
-	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN c.users u WHERE "
-			+ "u.userID = :userID AND u.role = :role")
-	List<StudentCourseDetails> findGradesByStudentId(@Param("userID") Long userID, @Param("role") Roles role);
-
-	@Query("SELECT scd.course.courseID FROM StudentCourseDetails scd")
-	List<Long> getCourseIDsWithStudents();
-
 	@Query("Select scd.student from StudentCourseDetails scd where scd.course.courseID = :courseID")
-	List<Users> getStudentsByCourseID(@Param("courseID") Long courseID);
+	List<Users> getStudentsByCourseID(@Param("courseID") long courseID);
 
 	@Query("Select scd from StudentCourseDetails scd where scd.course.courseID= :courseID")
-	List<StudentCourseDetails> getStudentCourseDetailsByCourseID(@Param("courseID") Long courseID);
+	List<StudentCourseDetails> getStudentCourseDetailsByCourseID(@Param("courseID") long courseID);
 
 	@Query("Select scd from StudentCourseDetails scd where scd.course.courseID=:courseID and scd.student.userID=:studentID")
 	StudentCourseDetails getStudentCourseDetailsByStudentIDAndCourseID(long studentID, long courseID);

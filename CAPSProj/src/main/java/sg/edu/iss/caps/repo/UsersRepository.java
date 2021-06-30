@@ -20,12 +20,9 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
 	@Query("SELECT u FROM Users u WHERE u.role=:role")
 	List<Users> findByRole(@Param("role") Roles role);
-
-
+	
 	@Query("SELECT c FROM Courses c JOIN c.users u WHERE u.role = :role")
 	List<Courses> findCoursesByRole(@Param("role") Roles role);
-
-
 
 	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE u.role= :role "
 			+ "AND sc.enrolmentStatus = :enrolmentStatus " + "AND c.courseName = :courseName "
@@ -43,5 +40,10 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	Page<Users> findByRole(Roles role, Pageable pageable);
 	
 	public Users getUserByEmail(String email);
+	
+	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE "
+			+ "u.userID = :userID AND u.role = :role ")
+	List<Users> findUsersByStudentId( @Param("userID") Long userID,
+			@Param("role") Roles role);	
 
 }

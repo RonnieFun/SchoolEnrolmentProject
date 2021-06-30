@@ -11,23 +11,23 @@ import sg.edu.iss.caps.model.Users;
 
 public interface LecturerInterface {
 
-	// To get list of all courses
+	//To get list of all courses
 	List<Courses> getAllCourses();
-
-	// To get list of all courses by Lecturer's Id
+		
+	//To get list of all courses by Lecturer's Id
 	List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID);
-
-	// To get all student grades by student id
+		
+	//To get all student grades by student id
 	List<Users> getStudentResults(Long userID, Roles role);
-
-	// To get list of all users
+			
+	//To get list of all users
 	List<Users> getAllUsers();
 
-	// To get list of users by Role
+	//To get list of users by Role
 	List<Users> getAllUsersByRole(Roles role);
-
-	// To get list of users by Role, Course Name and Course Start
-	List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName,
+		
+	//To get list of users by Role, Course Name and Course Start
+	List<StudentCourseDetails> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);
 
 	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
@@ -47,4 +47,7 @@ public interface LecturerInterface {
 	List<Courses> getAllCoursesByLecturerId(Long id);
 
 	Courses getCoursesById(Long id);
+	
+	List<StudentCourseDetails> getAllStudentCourseDetails();
+
 }

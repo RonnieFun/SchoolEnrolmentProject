@@ -43,11 +43,11 @@
 			<div class = "container">
 				<h2 class = "text-center"> View Student Performance </h2>
 				<div>
-					<form class= "form-inline justify-content-center" th:action="@{/lecturer/viewstudentgrades}"  method="GET">
+					<form class= "form-inline justify-content-center" th:action="@{/lecturer/viewstudentgrades/}"  method="GET">
 
 						<div class = "form-group">
 							<label class = "ml-3 mb-3 mr-3"> Student ID: </label>
-								<input type = "text" name = "userID" class = "form-control" required>
+								<input type = "number" name = "userID" class = "form-control" required>
 						</div>
 
 						<div class = "box-footer float-end mt-3 ml-3">
@@ -62,8 +62,8 @@
 	</div>
 
 	<div class = "container">
-		<div class = "row justify-content-center">
-			<h3 class = "text-center"> Student's Grades: </h3>
+		<div class = "row justify-content-center mt-4">
+			<h3 class = "text-center">Student's Grades: </h3>
 		</div>
 
 	<table id = "table_viewgrades" class="table table-striped">
@@ -76,7 +76,7 @@
 				<th>Exam Grade</th>
 			</tr>
 		</thead>
-
+				
 		<tbody>
 			<tr th:each = "scd,iterator: ${studentCourseDetails}">
 				<td th:text = "${iterator.index + 1}"></td>
@@ -86,8 +86,19 @@
 					<td th:text = "${courses.credits}"></td>
 				</span>
 				<td th:text = "${scd.grades}"></td>
-			</tr>
+			</tr>	
 		</tbody>
 	</table>
+</div>
+	
+	<div class = "container">
+		<div class = "row justify-content-center mt-5">
+		<h5><a th:text=" 'Total Credits Earned: ' + ${totalCredits}">CGPA</a></h5>
+		</div> 
+
+		<div class= "row justify-content-center mt-2">
+			<h5><a th:text=" 'CGPA: ' + ${cgpa}"></a></h5>
+		</div>
 	</div>
+
 </body>
