@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.LecturerInterface;
+import sg.edu.iss.caps.service.MyUserDetails;
 
 @Controller
 @RequestMapping("/")
@@ -110,23 +112,17 @@ public class LecturerController {
 //	}
 
 	@RequestMapping("/lecturer/gradecourse")
-	public String gradeCourse(Model model) {
+	public String gradeCourse(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 
-		// next line is temporary lines pending sessions
-		Long a = (long) 2;
-
-		List<Courses> coursesTaught = lectservice.getAllCoursesByLecturerId(a);
+		List<Courses> coursesTaught = lectservice.getAllCoursesByLecturerId(userDetails.getUserID());
 		model.addAttribute("coursestaught", coursesTaught);
 		return "lecturer/gradecourse";
 	}
 
 	@RequestMapping("/lecturer/gradecourse2")
-	public String gradeCertainCourse(Model model, HttpServletRequest request, @RequestParam String courseID) {
+	public String gradeCertainCourse(Model model, HttpServletRequest request, @RequestParam String courseID, @AuthenticationPrincipal MyUserDetails userDetails) {
 
-		// next line is temporary lines pending sessions
-		Long a = (long) 2;
-
-		List<Courses> coursesTaught = lectservice.getAllCoursesByLecturerId(a);
+		List<Courses> coursesTaught = lectservice.getAllCoursesByLecturerId(userDetails.getUserID());
 		List<Users> studentsTookCourse = lectservice.getStudentsByCourseID(Long.parseLong(courseID));
 		List<StudentCourseDetails> studentdetails = lectservice
 				.getStudentCourseDetailsByCourseID(Long.parseLong(courseID));
