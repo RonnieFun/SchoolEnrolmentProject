@@ -38,14 +38,23 @@ public class LecturerController {
 	}
 	
 	@GetMapping(value = "/lecturer/coursestaught")
-	public String showAllCourses(Model model) {
+	public String showAllCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
 		model.addAttribute("coursestaught", lectservice.getAllCourses());
 		
 		return "lecturer/coursestaught";
 	}
 	
 	@GetMapping(value = "/lecturer/coursestaught/{id}")
-	public String showLecturerCoursesById(@PathVariable Long id, Model model) {
+	public String showLecturerCoursesById(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
 		
 		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, id));
 		
@@ -54,7 +63,12 @@ public class LecturerController {
 	
 	@GetMapping(value = "lecturer/enrolment")
 	public String showCoursesByCourseNameCourseStart(Model model, String courseName,
-			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus) {
+			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus, 
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
 	
 		if (courseName != null && courseStartDate != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseNameStartDate(
@@ -72,8 +86,12 @@ public class LecturerController {
 		
 	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
-	public String showStudentGrades(Roles role, Long userID, Model model ) {
+	public String showStudentGrades(Roles role, Long userID, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		 
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
 		if(userID != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
 					userID,
