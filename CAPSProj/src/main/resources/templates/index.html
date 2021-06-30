@@ -1,28 +1,163 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymelead-extras-springsecurity5">
-<html>
+
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
 <title>Home Page</title>
-</head>
 <body>
 
-	<H1>TEMP LANDING PAGE</H1>
-
-	<div sec:authorize="isAnonymous()">
-		<a href="/login"><button>Login</button></a>
-	</div>
-
+	<div class="header-background">
+	<div id="nav" class="sticky-nav">
+	
+		<nav class="navbar navbar-expand-lg">
+		  <div class="container-fluid">
+		    <a class="navbar-brand" href="#">CAPS</a>
+		    <img th:src="@{/images/schoolLogo.png}" />
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		      <span></span>
+		      <span></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-left">
+		        <li class="nav-item">
+		          <a class="nav-link active" aria-current="page" href="#">Home</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#news">Breaking News</a>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            Services
+		          </a>
+		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		            <li><a class="dropdown-item" href="#">Students</a></li>
+		            <li><a class="dropdown-item" href="#">Lecturers</a></li>
+		            <li><a class="dropdown-item" href="#">Admin</a></li>
+		            <li><hr class="dropdown-divider"></li>
+		            <li><a class="dropdown-item" href="#">Contact IT</a></li>
+		          </ul>
+		        </li>
+		       	
+		       	<li class="nav-item">
+		          <a class="nav-link" href="#feature">Feature</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">Contact us</a>
+		        </li>
+		       	
+		      </ul>
+		      <form class="d-flex">
+		        <div sec:authorize="isAnonymous()">
+					<a href="/login"><button type="button" class="btn">Login</button></a>
+				</div>
+				 </form>
+				<div sec:authorize="isAuthenticated()">
+					<a href="/logout"><button type="button" class="btn">Logout</button></a>
+				</div>
+		     
+		    </div>
+		  </div>
+		</nav>
+</div>
+	
 	<div sec:authorize="isAuthenticated()">
-		Welcome <b><span sec:authentication="principal.firstName">first
-				name</span></b> &nbsp; <span sec:authentication="principal.role">Roles </span>
-		<br> <br>
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Logout" />
-		</form>
+		<h1 class="heading">Welcome back, <b><span sec:authentication="principal.firstName">first
+				name</span></b> &nbsp; <span sec:authentication="principal.role">Roles </span></h1> 
+		<br><br>
 	</div>
+</div>
 
-
+	<div class="container-fluid" id="news">
+		<div class="row">
+			<div class="col-xs12 col-sm-6 col-lg-6 column-left">
+			
+			</div>
+			<div class="col-xs12 col-sm-6 col-lg-6 column-right">
+				<h1 class="section-title">News</h1>
+				<p class="paragraph">
+				As of 30th June 2021, The school has preliminarily confirmed 20 cases of NUS transmitted GdipSA-Typhoid-Fever-OCD21 infection. <br><br>
+				Based on investigations so far, the cases have mutated into a new variant. 
+				While we are seeing less of the "C#" infections, the new "Springboot" variant has began to rise.<br><br>
+				There are no new cases of the "C#" variant in the community. There are 7 imported cases today, 
+				who have already been placed on the "Counciling list" or isolated upon arrival in school. 
+				ISS will share further updates in its press release that will be issued next week.<br><br>
+				
+				The GdipSA-Typhoid-Fever-OCD21, also known as <b>GTFO-21</b>, is a highly contagious deadly virus which can cause a slow, and painless fade away. 
+				Please be aware of the following symptoms: <br><br>
+				
+				Stage 1: Insomnia<br>
+				This is a very common stage 1 symptom. Patients find it very difficult, almost impossible to fall asleep as the sound of typing keyboards haunt their nights creating an 
+				aural illusion. And the sight of a keyboard makes the patient shiver in fear. <br><br>
+				
+				Stage 2: Myopia<br>
+				Patients will begin to experience blur visions. However, unlike common myopia, patients seem to be extremely sensitive to curly red lines, sometimes, even curly yellow lines.
+				Warning to care-givers to never let the patient see curly red lines under a word. This can cause severe distress to the patient and it can send them off the deep-end in seconds.
+				Patients will stare at the curly red lines for hours without feeling hungry, sleepy or tired. This is when stage 3 is nearing.<br><br>
+				
+				Stage 3: OCD <br>
+				Patients will become obsessed with getting rid of red lines. At this point, sleep is no longer possible. Food no longer have any taste. Anger will consume patient when they 
+				need to use the washroom because it will take their eyes off the red lines. Patients will lose reality of the real world and they will no longer be able to speak. However, interesting 
+				research has surfaced as most patients at stage 3 still have memories of certain vocabularies. Most common being, "If" "Where" "For" "String". Scientist has discovered that if you hear the patient
+				who are in stage 3 of GTFO-21 say words like, "Select", "From", "Join", family and friends should consider admitting patient into the ICU. Finally if you hear the words, "Many to Many", we are afraid
+				there's no cure. May the force be with you.<br><br>
+				
+				Final stage: self abandonment<br>
+				At this stage, patients can be seem using Google every second of the day. They will experience a roller coaster of emotions all day round.
+				First they will experience immense joy as it seem like they have found what they were looking for and you will see them type frantically like stage 1 of Bipolar disorder. 
+				Then when the typing stops the patient will get very anxious, like waiting for something to happen, waiting to see some kind of result. 
+				Finally, complete despair. They will crumble in pure saddness and disappointment. 
+				The cycle will repeat until the end of time. <br><br>
+				
+				<a href="#">Read more</a> to learn about some home remedies for GTFO-21. 
+				</p>
+		</div>
+	</div>
+	</div>
+	<div class="container-fuild" id="feature">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-lg-6">
+				<h1 class="featured-section">Featured professor: Dr. Suriya</h1>	
+				<p class="paragraph">
+				"PHD = Permanent head damage. Nothing more, nothing less".<br>
+				~ Dr.Suriya 
+				</p>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-lg-6 traits-1">
+						<i class="fa fa-magic"></i>
+						<h1 class="featured-title-1">Student Testimonial</h1>
+						<p class="featured-paragraph-1">
+						"I always thought light is the fastest thing in the world. Back then I have yet attended Dr.Suriya's lectures". <br><br>
+						~ Alejandro(First recorded case of GTFO-21)
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-lg-6 traits-2">
+						<i class="fa fa-graduation-cap"></i>
+						<h1 class="featured-title-1">Professor Testimonial</h1>
+						<p class="featured-paragraph-1">
+						"Teaching is my passion, so being Suriya's teaching partner has been very fulfilling. She gives me all the work :)". <br><br>
+						~ Prof.Tin(Record holder for having the most OT hours)
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-lg-6 featured-right"></div>
+		</div>
+	</div>
+	
+	<a href="#" class="gotopbtn">
+	 <i class="fa fa-arrow-up"></i>
+	</a>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
