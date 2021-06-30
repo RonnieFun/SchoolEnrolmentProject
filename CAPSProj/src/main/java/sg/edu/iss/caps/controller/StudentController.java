@@ -131,12 +131,22 @@ public class StudentController {
 	// Users.Role=STUDENT?
 	// withdraw enrolment by UserID
 	@GetMapping("/withdrawenrolment/{enrolmentid}")
-	public String withdrawEnrolment(@PathVariable long enrolmentid) {
+	public String withdrawEnrolment(Model model, @PathVariable long enrolmentid) {
 		
 		StudentCourseDetails enrolment = stuservice.findEnrolmentByEnrolmentID(enrolmentid);
-		enrolment.setEnrolmentStatus(EnrolmentStatus.WITHDRAWN);
 		
-		stuservice.updateEnrolment(enrolment);
+		if (enrolment.getCourse().getCourseStartDate().compareTo(LocalDate.now()) <= 0)
+		{
+			model.addAttribute("CourseAlreadyStartedErrorMsg", "Course has already started, you can't withdraw from it now.");
+			return "forward:/student/enrolmentlist/1";	
+		}
+		else
+		{
+			enrolment.setEnrolmentStatus(EnrolmentStatus.WITHDRAWN);
+			
+			stuservice.updateEnrolment(enrolment);
+		}
+		
 		
 		return "redirect:/student/enrolmentlist/1"; // temporarily view the enrolment for userID 1
 	}
@@ -162,8 +172,7 @@ public class StudentController {
 		gradepointsmap.put("D+", 1.5);
 		gradepointsmap.put("D", 1.0);
 		gradepointsmap.put("F", 0.0);
-		
-		
+			
 		
 		List<StudentCourseDetails> enrolmentaccepted = stuservice.findEnrolmentByUserIDAndEnrolmentStatus(userid, EnrolmentStatus.ACCEPTED);
 	
