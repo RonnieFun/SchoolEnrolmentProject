@@ -60,6 +60,8 @@ public class LecturerController {
 					EnrolmentStatus.ACCEPTED, 
 					courseName, 
 					courseStartDate));
+			
+			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseName(courseName));
 		} 		
 		model.addAttribute("coursestaught", lectservice.getAllCourses());
 		
@@ -112,7 +114,7 @@ public class LecturerController {
 
 		if (totalCredits != 0) {
 			cgpa = sum / totalCredits;
-			cgpa = Math.round(cgpa);
+			cgpa = Math.round(cgpa * 100.0) / 100.0;
 		}
 		
 		model.addAttribute("totalCredits", totalCredits); 		

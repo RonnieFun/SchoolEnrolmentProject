@@ -29,7 +29,10 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
 	
 	@Query("SELECT c FROM Courses c JOIN c.users u WHERE u.role = :role AND u.userID = :userID")
 	List<Courses> findCoursesByRoleAndId(@Param("role") Roles role, @Param("userID") Long userID); 
-
+	
 	Courses findByCourseNameAndCourseStartDate(String courseName, LocalDate courseStartDate);
+	
+	@Query("SELECT c FROM Courses c WHERE c.courseName = :courseName")
+	List<Courses> findCoursebyCourseName(@Param("courseName") String courseName);
 	
 }

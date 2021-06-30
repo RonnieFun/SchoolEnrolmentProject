@@ -58,6 +58,13 @@ public class LecturerImplementation implements LecturerInterface {
 		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
 	}
 	
+	
+	@Transactional
+	public List<Courses> findCoursebyCourseName(String courseName) {
+		
+		return coursesRepository.findCoursebyCourseName(courseName);
+	}
+	
 	@Transactional
 	public List<Users> getAllUsersByUserID(Long userID) {
 		
@@ -123,7 +130,6 @@ public class LecturerImplementation implements LecturerInterface {
 		Long courseID = coursesRepository.findByCourseNameAndCourseStartDate(courseName, courseStartDate).getCourseID();
 		return studentCourseDetailsRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseID, courseStartDate);
 	}
-	
 	
 	@Transactional
 	public List<Users> getStudentsByCourseID(Long courseID) {
