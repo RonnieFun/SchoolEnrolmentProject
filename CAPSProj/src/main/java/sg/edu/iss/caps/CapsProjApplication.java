@@ -74,8 +74,6 @@ public class CapsProjApplication {
 			
 			List<Courses> DPM = new ArrayList<Courses>();
 			DPM.add(digitalProductManagement);
-			DPM.add(javaProgramming);
-			DPM.add(machineLearning);
 			
 			List<Courses> javaCourses = new ArrayList<Courses>();
 			javaCourses.add(javaProgramming);
@@ -112,7 +110,7 @@ public class CapsProjApplication {
 			urepo.save(lecturer1); 
 			
 			Users lecturer2 = new Users("Demon", "Slayer", "slayer@gmail.com", "abewq", Roles.LECTURER, "1234",
-					"Blk 123, #11-12, Singapore 543532", LocalDate.of(2020, 6, 15), "Mr", scCollection, ML);
+					"Blk 123, #11-12, Singapore 543532", LocalDate.of(2020, 6, 15), "Mr", scCollection, javaCourses);
 			urepo.save(lecturer2);
 			
 			Users lecturer3 = new Users("Naught", "Jugger", "juggernaught@gmail.com", "abewq", Roles.LECTURER, "1234",
@@ -147,11 +145,10 @@ public class CapsProjApplication {
 					EnrolmentStatus.ACCEPTED, student4, javaProgramming);
 
 			StudentCourseDetails studentCourseDetail5 = new StudentCourseDetails(LocalDate.of(2020, 03, 11), "B-", 
-					EnrolmentStatus.ACCEPTED, student1, machineLearning);
+					EnrolmentStatus.ACCEPTED, student5, machineLearning);
 		
 			StudentCourseDetails studentCourseDetail6 = new StudentCourseDetails(LocalDate.of(2019, 03, 12), "A-", 
-					EnrolmentStatus.ACCEPTED, student1, javaProgramming);
-
+					EnrolmentStatus.ACCEPTED, student6, javaProgramming);
 			
 			scCollection.add(studentCourseDetail1);
 			scCollection.add(studentCourseDetail2);
@@ -159,7 +156,6 @@ public class CapsProjApplication {
 			scCollection.add(studentCourseDetail4);
 			scCollection.add(studentCourseDetail5);
 			scCollection.add(studentCourseDetail6);
-			
 			
 			screpo.save(studentCourseDetail1);
 			screpo.save(studentCourseDetail2);

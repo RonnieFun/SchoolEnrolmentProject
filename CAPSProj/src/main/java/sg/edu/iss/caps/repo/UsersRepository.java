@@ -30,7 +30,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
 	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE u.role= :role "
 			+ "AND sc.enrolmentStatus = :enrolmentStatus " + "AND c.courseName = :courseName "
-			+ "AND c.courseStartDate = :courseStartDate ")
+			+ "AND c.courseStartDate = :courseStartDate AND c.courseID = sc.course AND u.userID = sc.student")
 	List<Users> findByCourseNameCourseStart(@Param("role") Roles role,
 			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus, @Param("courseName") String courseName,
 			@Param("courseStartDate") LocalDate courseStartDate);
