@@ -10,44 +10,55 @@
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
 
 <div class = "container">
-<table id = "table_lecturercourses">
-	<thead>	
-		<tr>			
-			<th>NO</th>
-			<th>CourseID</th>	
-			<th>CourseName</th>
-			<th>Credits</th>
-			<th>Lecturer Name</th>
-			<th>Course Capacity</th>
-			<th>Current Enrolment</th>
-			<th>courseStartDate</th>
-			<th>courseEndDate</th>
-			<th>Operation</th>
-		</tr>
-	</thead>
-	
-	
-	<tbody>	
-		<tr th:each="lc,iterator: ${lecturercourses}">	
-			<td th:text = "${iterator.index + 1}">NO</td>	
-			<td th:text="${lc.courseID}">Course ID</td>
-			<td th:text="${lc.courseName}">Course Name</td>
-			<td th:text="${lc.credits}">Credits</td>
-					
-			<span th:each="lecturer: ${lc.users}">	
-				<td th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">Lecturer Name</td>
-			</span>		
-			<td th:text="${lc.courseCapacity}">Course Capacity</td>		
+	<div class = "row"> 
+		<div class = "container">
+		<table id = "table_lecturercourses" class="table table-striped table-bordered">
+			<thead>	
+				<tr>			
+					<th>NO</th>
+					<th>CourseID</th>	
+					<th>CourseName</th>
+					<th>Credits</th>
+					<th>Lecturer Name</th>
+					<th>Course Capacity</th>
+					<th>Current Enrolment</th>
+					<th>courseStartDate</th>
+					<th>courseEndDate</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
 			
-			<td th:if="${currentEnrolmentMap.containsKey(lc.courseID)}" 
-			    th:text="${currentEnrolmentMap.get(lc.courseID)}">Current Enrolment</td>			
+			
+			<tbody>	
+				<tr th:each="lc,iterator: ${lecturercourses}">	
+					<td th:text = "${iterator.index + 1}">NO</td>	
+					<td th:text="${lc.courseID}">Course ID</td>
+					<td th:text="${lc.courseName}">Course Name</td>
+					<td th:text="${lc.credits}">Credits</td>
+					
+					<td>
+					<p th:each="user: ${lc.users}">
+						<span th:if= "${user.role == T(sg.edu.iss.caps.model.Roles).LECTURER}" th:text="${user.firstName} + ' ' + ${user.lastName}"> Lecturer Name </span>
+					</p>
+				
+				</td>
 
-			<td th:text="${#temporals.format(lc.courseStartDate, 'yyyy-MM-dd')}">courseStartDate</td>
-			<td th:text="${#temporals.format(lc.courseEndDate, 'yyyy-MM-dd')}">courseEndDate</td>	
-			 <td> <button> <a th:href="@{/student/addenrolment/} + ${lc.courseID}"> Enroll Now </a></button> </td>											
-		</tr>	
-	</tbody>
-</table>
+					<!-- <span th:each="lecturer: ${lc.users}">	
+						<td th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">Lecturer Name</td>
+					</span>		 -->
+					<td th:text="${lc.courseCapacity}">Course Capacity</td>		
+					
+					<td th:if="${currentEnrolmentMap.containsKey(lc.courseID)}" 
+						th:text="${currentEnrolmentMap.get(lc.courseID)}">Current Enrolment</td>			
+
+					<td th:text="${#temporals.format(lc.courseStartDate, 'yyyy-MM-dd')}">courseStartDate</td>
+					<td th:text="${#temporals.format(lc.courseEndDate, 'yyyy-MM-dd')}">courseEndDate</td>	
+					<td> <button> <a th:href="@{/student/addenrolment/} + ${lc.courseID}"> Enroll Now </a></button> </td>											
+				</tr>	
+			</tbody>
+		</table>
+		</div>
+	</div>
 </div>
 <div>
 	<!-- temporarily view student of userID == 1 -->

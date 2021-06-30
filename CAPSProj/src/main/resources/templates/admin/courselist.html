@@ -14,7 +14,9 @@
 		style="color: MediumSeaGreen"></h4>
 
 <div class = "container">
-	<table id = "table_admincourselist" class="w3-container" th:if="${not #lists.isEmpty(courses)}">
+	<div class = "row">
+		<div class = "container">
+	<table id = "table_admincourselist" class="w3-container table table-striped table-bordered" th:if="${not #lists.isEmpty(courses)}">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -49,7 +51,9 @@
 			</tr>
 		</tbody>
 	</table>
-</div>	
+		</div>		
+	</div>
+</div>		
 	<script>
 	  $(document).ready( function () {
     	$('#table_admincourselist').DataTable();
