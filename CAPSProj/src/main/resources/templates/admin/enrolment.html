@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
 <meta charset="UTF-8">
 <title>Admin Enrolment Page</title>
@@ -35,7 +35,7 @@
 						<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
 					</td>
 					<td>
-						<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Reject </a>
+						<a th:href="@{/admin/rejectenrolment/}+${enrolment.id}" > Reject </a>
 					</td>
 	    		</a>
 	    		<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED}">

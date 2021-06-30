@@ -27,7 +27,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.HashMap;
+import java.util.Map;
 
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
@@ -71,65 +72,99 @@ public class AdminController {
 
 	// retrieve enrolment list
 	@GetMapping("/enrolment")
-	public String showEnrolments(Model model) {
-//		List<StudentCourseDetails> enrollist = adservice.getAllEnrolment();
-//		for(int i=0;i< enrollist.size();i++) {
-//			System.out.println(enrollist.get(i).getC().getCourseName());
-//		}
+	public String showEnrolments(Model model,@AuthenticationPrincipal MyUserDetails userDetails) {
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 		return "admin/enrolment";
 	}
 
 	// show enrolment form
 	@GetMapping("/addenrolment")
-	public String showEnrolmentForm(Model model) {
+	public String showEnrolmentForm(Model model,@AuthenticationPrincipal MyUserDetails userDetails) {
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = new StudentCourseDetails();
 		model.addAttribute("enrolment", enrolment);
 		// getting courseIDList
-		model.addAttribute("courseList", retrieveStudentList());
+		model.addAttribute("courseList", retrieveCourseList() );
 
 		// getting studentIDList
-		model.addAttribute("studentList", retrieveCourseList());
+		model.addAttribute("studentList",retrieveStudentList());
 		return "admin/addenrolment";
 	}
 
-	private List<Long> retrieveCourseList() {
+	private Map<Long, String> retrieveStudentList() {
 		// TODO Auto-generated method stub
-		List<Long> studentIDList = new ArrayList<>();
+		Map<Long, String> studentIDList= new HashMap<Long, String>();
 		List<Users> studentList = adservice.getStudentList();
 		for (int i = 0; i < studentList.size(); i++) {
-			studentIDList.add(studentList.get(i).getUserID());
+			studentIDList.put(studentList.get(i).getUserID(),studentList.get(i).getFirstName()+' '+studentList.get(i).getLastName());
 		}
 		return studentIDList;
 	}
 
-	private List<Long> retrieveStudentList() {
+	private Map<Long, String> retrieveCourseList() {
 		// TODO Auto-generated method stub
-		List<Long> courseIDList = new ArrayList<>();
+		Map<Long, String> courseIDList= new HashMap<Long, String>();
 		List<Courses> courseList = adservice.getCourseList();
 		for (int i = 0; i < courseList.size(); i++) {
-			courseIDList.add(courseList.get(i).getCourseID());
+			courseIDList.put(courseList.get(i).getCourseID(),courseList.get(i).getCourseName());
 		}
 		return courseIDList;
 	}
 
 	@GetMapping("/editenrolment/{id}")
-	public String showEditForm(Model model, @PathVariable("id") Long id) {
+	public String showEditForm(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 		model.addAttribute("enrolment", adservice.getEnrolment(id));
 		return "admin/enrolmentform";
 	}
 
 	@GetMapping("/approveenrolment/{id}")
-	public String approveEnrolment(Model model, @PathVariable("id") Long id) {
+	public String approveEnrolment(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		// approve enrolment
 		enrolment.setEnrolmentStatus(EnrolmentStatus.ACCEPTED);
 		adservice.updateEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
 	}
+	
+	@GetMapping("/rejectenrolment/{id}")
+	public String rejectEnrolment(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
 
+		long userid = userDetails.getUserID();
+		StudentCourseDetails enrolment = adservice.getEnrolment(id);
+		// approve enrolment
+		enrolment.setEnrolmentStatus(EnrolmentStatus.REJECTED);
+		adservice.updateEnrolment(enrolment);
+		return "redirect:/admin/enrolment";
+	}
 	@GetMapping("/deleteenrolment/{id}")
-	public String deleteMethod(Model model, @PathVariable("id") Long id) {
+	public String deleteMethod(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		adservice.deleteEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
@@ -137,11 +172,16 @@ public class AdminController {
 	
 	@RequestMapping("/enrolment/create")
 	public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 
 		if (bindingResult.hasErrors()) {
 			return "enrolmentform";
 		}
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 
 		LocalDate lt = LocalDate.now();
 		enrolment.setDateOfEnrollment(lt);
@@ -149,21 +189,19 @@ public class AdminController {
 		adservice.saveEnrolment(enrolment);
 		return "admin/enrolment";
 	}
-/*
-	// save enrolment
-	@RequestMapping("/saveenrolment")
-	public String saveEnrolment(@ModelAttribute("enrolment") StudentCourseDetails enrolment) {
-		adservice.saveEnrolment(enrolment);
-		return "forward:/admin/enrolment";
-	}
-*/
+
 	@RequestMapping("/enrolment/update")
 	public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model , @AuthenticationPrincipal MyUserDetails userDetails) {
 
 		if (bindingResult.hasErrors()) {
 			return "enrolmentform";
 		}
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+
+		long userid = userDetails.getUserID();
 		adservice.saveEnrolment(enrolment);
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 		return "admin/enrolment";
