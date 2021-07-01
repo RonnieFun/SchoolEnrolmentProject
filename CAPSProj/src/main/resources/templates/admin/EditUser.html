@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div align ="center">
-		<h1>User registration</h1>
+		<h1>User registration/edit</h1>
 			<form action ="#" th:action="@{/admin/user/save}" th:object = ${user} method = "post">
 				<label>First name:</label>
 				<input type = "text" th:field="*{firstName}"/><br><br>
@@ -52,9 +52,12 @@
 				<br>
 				<br>
 				<br>
-				<button type="submit">Create</button>
+				<button type="submit">Submit</button>
 			</form>
-	</div>
+			</div>
+			
+			
+	
 	
 </body>
 </html>

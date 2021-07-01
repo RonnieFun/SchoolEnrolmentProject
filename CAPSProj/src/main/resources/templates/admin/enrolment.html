@@ -5,14 +5,11 @@
 
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
-<div class = "text-center">
-	<h1>Enrolment Lists</h1>
-</div>
-<div>
+<h1 style="text-align:center;">Enrolment Lists</h1>
+<h4 style="text-align:center;">
+<a th:href="@{/admin/addenrolment}"> Add Enrolment</a>
+</h4>
 
-<a th:href="@{/admin/addenrolment}"> <button type="button">Add Enrolment</button> </a>
-</div>
-<br>
 <div class = "container">
 	<div class = "row">
 		<div class = "container">
