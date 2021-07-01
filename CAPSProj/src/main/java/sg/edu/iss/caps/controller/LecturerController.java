@@ -39,26 +39,17 @@ public class LecturerController {
 		this.lectservice =ls;
 	}
 	
-	@GetMapping(value = "/lecturer/coursestaught")
-	public String showAllCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
-		
-		if(userDetails == null) {
-			return "redirect:/login";	
-		}
-		
-		model.addAttribute("coursestaught", lectservice.getAllCourses());
-		
-		return "lecturer/coursestaught";
-	}
 	
-	@GetMapping(value = "/lecturer/coursestaught/{id}")
-	public String showLecturerCoursesById(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+	@GetMapping(value = "/lecturer/coursestaught")
+	public String showLecturerCoursesById(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		
 		if(userDetails == null) {
 			return "redirect:/login";	
 		}
 		
-		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, id));
+		long userID = userDetails.getUserID();
+		
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, userID));
 		
 		return "lecturer/coursestaught";
 	}
@@ -72,6 +63,8 @@ public class LecturerController {
 			return "redirect:/login";	
 		}
 	
+		long lecturerID = userDetails.getUserID();
+		
 		if (courseName != null && courseStartDate != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseNameStartDate(
 					Roles.STUDENT, 
@@ -88,19 +81,27 @@ public class LecturerController {
 		
 	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
-	public String showStudentGrades(Roles role, Long userID, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+	public String showStudentGrades(Roles role, Long userID, Model model, 
+			@AuthenticationPrincipal MyUserDetails userDetails) {
 		 
 		if(userDetails == null) {
 			return "redirect:/login";	
 		}
 		
+		long lecturerID = userDetails.getUserID();
+		
 		if(userID != null) {
-			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
-					userID,
-					Roles.STUDENT));
 			
+			model.addAttribute("studentCourseDetails2", lectservice.findGradesByStudentIDLecturerID(lecturerID, userID));
+			
+//			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
+//					userID,
+//					Roles.STUDENT));
+
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
+		
+		
 		
 		int totalCredits = 0;
 		double cgpa = 0;
@@ -119,11 +120,13 @@ public class LecturerController {
 		gradepointsmap.put("D", 1.0);
 		gradepointsmap.put("F", 0.0);
 
-		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(userID, Roles.STUDENT);
+		List<StudentCourseDetails> studentSelected = lectservice.findGradesByStudentIDLecturerID(
+				lecturerID, userID);
 			
 		for(StudentCourseDetails e: studentSelected)
 		{
-			if (e.getGrades() == null)
+			String grades = e.getGrades();
+			if (e.getGrades() == null || grades.trim().isEmpty())
 			{
 				sum += 0;
 				totalCredits += 0;
