@@ -27,7 +27,7 @@ public interface StudentCourseDetailsRepository extends JpaRepository<StudentCou
 			+ "and scd.student_userid =:userID", nativeQuery = true)
 	List<StudentCourseDetails> findGradesByStudentIDLecturerID(@Param("lecturerID") Long lecturerID, @Param("userID") Long userID);
 	
-	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.student u JOIN u.courses c WHERE u.role= :role "
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN sc.student u WHERE u.role= :role "
 			+ "AND sc.enrolmentStatus = :enrolmentStatus "
 			+ "AND c.courseID = :courseID "
 			+ "AND c.courseStartDate = :courseStartDate AND c.courseID = sc.course")

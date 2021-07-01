@@ -54,6 +54,6 @@ public interface LecturerInterface {
 	
 	List<StudentCourseDetails> getAllStudentCourseDetails();
 	
-	List<Courses> findCoursebyCourseName(String courseName);
+	List<Courses> findCoursebyCourseNameStartDateCourseID(String courseName, LocalDate courseStartDate);
 
 }

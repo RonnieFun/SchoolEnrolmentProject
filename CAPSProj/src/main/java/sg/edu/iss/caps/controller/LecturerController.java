@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
@@ -72,9 +76,9 @@ public class LecturerController {
 					courseName, 
 					courseStartDate));
 			
-			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseName(courseName));
+			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseNameStartDateCourseID(courseName, courseStartDate));
 		} 		
-		model.addAttribute("coursestaught", lectservice.getAllCourses());
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(lecturerID));
 		
 		return "lecturer/enrolment";
 	}
@@ -178,5 +182,7 @@ public class LecturerController {
 		lectservice.saveStudentCourseDetails(scd);
 		return "forward:/lecturer/gradecourse2";
 	}
+		
+	
 
 }

@@ -51,7 +51,7 @@ public class LecturerImplementation implements LecturerInterface {
 		//return null;
 
 	}
-
+	
 	@Transactional
 	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
 
@@ -60,9 +60,10 @@ public class LecturerImplementation implements LecturerInterface {
 	
 	
 	@Transactional
-	public List<Courses> findCoursebyCourseName(String courseName) {
+	public List<Courses> findCoursebyCourseNameStartDateCourseID(String courseName, LocalDate courseStartDate) {
 		
-		return coursesRepository.findCoursebyCourseName(courseName);
+		Long courseID = coursesRepository.findByCourseNameAndCourseStartDate(courseName, courseStartDate).getCourseID();
+		return coursesRepository.findCoursebyCourseNameStartDateCourseID(courseName, courseStartDate, courseID);
 	}
 	
 	@Transactional
