@@ -1,9 +1,10 @@
 package sg.edu.iss.caps.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,16 +20,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.validation.BindingResult;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.Map;
 
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
@@ -38,16 +30,9 @@ import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.AdminInterface;
-import sg.edu.iss.caps.service.MyUserDetails;
+import sg.edu.iss.caps.service.EmailSendingInterface;
 import sg.edu.iss.caps.service.LecturerInterface;
-
-
-import java.util.List;
-
-import javax.validation.Valid;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import sg.edu.iss.caps.service.MyUserDetails;
 
 @Controller
 @RequestMapping("/admin")
@@ -59,6 +44,9 @@ public class AdminController {
 	
 	@Autowired
 	LecturerInterface leservice;
+	
+	@Autowired
+	EmailSendingInterface sendEmail;
 
 //	@Autowired
 //	public void setAdminInterface(AdminInterface ads) {
@@ -303,6 +291,7 @@ public class AdminController {
 			Model model) {
 
 		String password = null;
+		String unhashedpassword = null;
 
 		if (bindingResult.hasErrors()) {
 			return "EditUser";
@@ -310,6 +299,7 @@ public class AdminController {
 
 		if (user.getPassword() == "") {
 			password = adservice.passwordGenerator();
+			unhashedpassword = password;
 			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
 			user.setPassword(pass.encode(password));
 		} else {
@@ -318,6 +308,9 @@ public class AdminController {
 
 		model.addAttribute("password", password);
 		adservice.updateUser(user);
+		
+		sendEmail.sendAccountCreatedEmail(user, unhashedpassword);
+		
 		return "admin/success";
 	}
 

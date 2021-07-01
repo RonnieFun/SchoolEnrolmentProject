@@ -53,5 +53,4 @@ public interface LecturerInterface {
 	List<StudentCourseDetails> getAllStudentCourseDetails();
 	
 	List<Courses> findCoursebyCourseName(String courseName);
-
 }
