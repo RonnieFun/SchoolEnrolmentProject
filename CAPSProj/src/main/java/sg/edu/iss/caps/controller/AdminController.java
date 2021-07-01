@@ -424,14 +424,16 @@ public class AdminController {
 			course1 = adservice.getCourseById(course.getCourseID());
 		}
 		if (course1.getUsers() != null) {
-			for (Users user : course1.getUsers()) {
-				leservice.removeCourseTaught(user, course1);
+			for (Users a : course1.getUsers()) {
+				leservice.removeCourseTaught(a.getUserID(), course1);
+				adservice.save(a);
 			}
 		}
 		adservice.savecourse(course);
 		if (course.getUsers() != null) {
-			for (Users user : course.getUsers()) {
-				leservice.addCourseTaught(user, course);
+			for (Users a : course.getUsers()) {
+				leservice.addCourseTaught(a.getUserID(), course);
+				adservice.save(a);
 			}
 		}
 		return "forward:/admin/courselist";
