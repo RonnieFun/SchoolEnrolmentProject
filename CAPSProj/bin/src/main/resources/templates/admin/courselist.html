@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>List of Courses</title>
-</head>
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <body>
+	<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
+
 	<h1>List of Courses</h1>
 	<h2>
 		<a th:href="@{/admin/addcourse/}">Add Course</a>
@@ -15,35 +13,51 @@
 	<h4 th:if="${SuccessMessage != null}" th:text="${SuccessMessage}"
 		style="color: MediumSeaGreen"></h4>
 
-	<table class="w3-container" th:if="${not #lists.isEmpty(courses)}">
-		<tr>
-			<th>Id</th>
-			<th>Course Name</th>
-			<th>Start Date</th>
-			<th>End Date</th>
-			<th>Capacity</th>
-			<th>Status</th>
-			<th>Credits</th>
-			<th>Course Description</th>
-			<th>Lecturers</th>
-			<th>Action</th>
-		</tr>
-		<tr>
-		<tr th:each="course:${courses}">
-			<td th:text=${course.courseID}></td>
-			<td th:text=${course.courseName}></td>
-			<td th:text=${course.courseStartDate}></td>
-			<td th:text=${course.courseEndDate}></td>
-			<td th:text=${course.courseCapacity}></td>
-			<td th:text=${course.courseStatus}></td>
-			<td th:text=${course.credits}></td>
-			<td th:text=${course.description}></td>
-			<td><p th:each="courselecturer : ${course.users}" th:utext="${courselecturer.firstName} + ' ' + ${courselecturer.lastName}"></p></td>
-			<td><a th:href="@{/admin/editcourse/}+${course.courseID}">Edit
-					Course</a></td>
-			<td><a th:href="@{/admin/deletecourse/}+${course.courseID}">Delete
-					Course </a></td>
-		</tr>
+<div class = "container">
+	<div class = "row">
+		<div class = "container">
+	<table id = "table_admincourselist" class="w3-container table table-striped table-bordered" th:if="${not #lists.isEmpty(courses)}">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Course Name</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Capacity</th>
+				<th>Status</th>
+				<th>Credits</th>
+				<th>Course Description</th>
+				<th>Lecturers</th>
+				<th>Action</th>
+				<th></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="course:${courses}">
+				<td th:text=${course.courseID}></td>
+				<td th:text=${course.courseName}></td>
+				<td th:text=${course.courseStartDate}></td>
+				<td th:text=${course.courseEndDate}></td>
+				<td th:text=${course.courseCapacity}></td>
+				<td th:text=${course.courseStatus}></td>
+				<td th:text=${course.credits}></td>
+				<td th:text=${course.description}></td>
+				<td><p th:each="courselecturer : ${course.users}" th:utext="${courselecturer.firstName} + ' ' + ${courselecturer.lastName}"></p></td>
+				<td><a th:href="@{/admin/editcourse/}+${course.courseID}">Edit
+						Course</a></td>
+				<td><a th:href="@{/admin/deletecourse/}+${course.courseID}">Delete
+						Course </a></td>
+			</tr>
+		</tbody>
 	</table>
+		</div>		
+	</div>
+</div>		
+	<script>
+	  $(document).ready( function () {
+    	$('#table_admincourselist').DataTable();
+		} );
+	</script>
 </body>
 </html>
