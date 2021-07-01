@@ -1,16 +1,20 @@
 package sg.edu.iss.caps;
-
-
+import java.io.FileReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
@@ -22,148 +26,155 @@ import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.repo.CoursesRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 import sg.edu.iss.caps.repo.UsersRepository;
+import sg.edu.iss.caps.service.LecturerInterface;
+import sg.edu.iss.caps.service.StudentInterface;
 
 @SpringBootApplication
 public class CapsProjApplication {
-	
+
 	@Autowired
 	UsersRepository urepo;
 
 	@Autowired
-	CoursesRepository coursesRepository;
-	
+	CoursesRepository cRepository;
+
 	@Autowired
 	StudentCourseDetailsRepository screpo;
-	
+
+	@Autowired
+	LecturerInterface leservice;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CapsProjApplication.class, args);
 	}
-	
+
 	@Bean
 	CommandLineRunner runner() {
-		return args -> { 
-//			Users user = new Users("test@gmail.com", "1234", Roles.STUDENT);
-//			urepo.save(user);
-
-			
-			List<StudentCourseDetails> scCollection = new ArrayList<StudentCourseDetails>();
-			List<Users> userCollection = new ArrayList<Users>();
-			
-			Courses cSharpProgramming = new Courses("C# Programming", LocalDate.of(2021, 6, 30), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 6, 10), 8, 50, "Nice Course", CourseStatus.ONGOING, 
-					scCollection, userCollection);
-			
-			Courses digitalProductManagement = new Courses("Digital Product Management", LocalDate.of(2021, 3, 15), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 8, 15), 4, 60, "Nice Course", CourseStatus.ONGOING, 
-					scCollection, userCollection);
-			
-			Courses javaProgramming = new Courses("Java Programming", LocalDate.of(2021, 6, 30), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 10, 22), 8, 40, "Very Nice Course", CourseStatus.ONGOING, 
-					scCollection, userCollection);
-			
-			Courses machineLearning = new Courses("Machine Learning", LocalDate.of(1999, 5, 2), 
-					LocalDate.of(2021, 8, 10), LocalDate.of(2021, 12, 30), 6, 100, "Very Nice Course", CourseStatus.ONGOING, 
-					scCollection, userCollection);
-			
-			coursesRepository.save(cSharpProgramming);
-			coursesRepository.save(digitalProductManagement);
-			coursesRepository.save(javaProgramming);
-			coursesRepository.save(machineLearning);
-
-			List<Courses> cSharpCourses = new ArrayList<Courses>();
-			cSharpCourses.add(cSharpProgramming);
-			
-			List<Courses> DPM = new ArrayList<Courses>();
-			DPM.add(digitalProductManagement);
-			
-			List<Courses> javaCourses = new ArrayList<Courses>();
-			javaCourses.add(javaProgramming);
-			
-			List<Courses> ML = new ArrayList<Courses>();
-			ML.add(machineLearning);
-			
-			Users student1 = new Users("Max", "Chen", "max@gmail.com", "abc", Roles.STUDENT, "999", 
-					"Blk 54 #12-123, Singapore 123456", LocalDate.of(1988, 1, 30), "Mr", scCollection, DPM);
-			urepo.save(student1);
-
-			Users student2 = new Users("Cher Wah", "Tan", "cherwah@gmail.com", "abcde", Roles.STUDENT, "425",
-					"Blk 123, #07-31, Singapore 564123", LocalDate.of(1993, 4, 25), "Mr", scCollection, cSharpCourses);
-			urepo.save(student2);
-			
-			Users student3 = new Users("Tri Tin", "Nguyen", "tin@gmail.com", "abcde", Roles.STUDENT, "123123",
-					"Blk 654, #12-34, Singapore 564101", LocalDate.of(2000, 5, 25), "Mr", scCollection, javaCourses);
-			urepo.save(student3);
-			
-			Users student4 = new Users("Yuen Kwan", "Chia", "chia@gmail.com", "abcde", Roles.STUDENT, "5454",
-					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 19), "Mr", scCollection, javaCourses);
-			urepo.save(student4);
-			
-			Users student5 = new Users("Kevin", "Goh", "chia@gmail.com", "abcde", Roles.STUDENT, "5454",
-					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 19), "Mr", scCollection, ML);
-			urepo.save(student5);
-			
-			Users student6 = new Users("Alfred", "Wang", "chia@gmail.com", "abcde", Roles.STUDENT, "5454",
-					"Blk 754, #11-12, Singapore 543532", LocalDate.of(2001, 6, 21), "Mr", scCollection, javaCourses);
-			urepo.save(student6);
-			
-			Users lecturer1 = new Users("Rurouni", "Kenshin", "Kenshin@gmail.com", "abewq", Roles.LECTURER, "1234",
-					"Blk 5467, #11-12, Singapore 543532", LocalDate.of(2000, 6, 19), "Mr", scCollection, ML);
-			urepo.save(lecturer1); 
-			
-			Users lecturer2 = new Users("Demon", "Slayer", "slayer@gmail.com", "abewq", Roles.LECTURER, "1234",
-					"Blk 123, #11-12, Singapore 543532", LocalDate.of(2020, 6, 15), "Mr", scCollection, javaCourses);
-			urepo.save(lecturer2);
-			
-			Users lecturer3 = new Users("Naught", "Jugger", "juggernaught@gmail.com", "abewq", Roles.LECTURER, "1234",
-					"Blk 854, #11-12, Singapore 5412332", LocalDate.of(2000, 6, 9), "Mr", scCollection, DPM);
-			urepo.save(lecturer3);
-			
-			Users lecturer4 = new Users("Blade", "Maiden", "blademaiden@gmail.com", "abewq", Roles.LECTURER, "1234",
-					"Blk 854, #11-12, Singapore 5412332", LocalDate.of(2000, 6, 9), "Mr", scCollection, cSharpCourses);
-			urepo.save(lecturer4);
-					
-			userCollection.add(student1);
-			userCollection.add(student2);
-			userCollection.add(student3);
-			userCollection.add(student4);
-			userCollection.add(student5);
-			userCollection.add(student6);
-			userCollection.add(lecturer1);
-			userCollection.add(lecturer2);
-			userCollection.add(lecturer3);
-			userCollection.add(lecturer4);
 		
-			StudentCourseDetails studentCourseDetail1 = new StudentCourseDetails(LocalDate.of(2021, 01, 19), "A+", 
-				EnrolmentStatus.ACCEPTED, student1, digitalProductManagement);
-		
-			StudentCourseDetails studentCourseDetail2 = new StudentCourseDetails(LocalDate.of(2021, 12, 10), "B", 
-					EnrolmentStatus.ACCEPTED, student2, cSharpProgramming);
-	
-			StudentCourseDetails studentCourseDetail3 = new StudentCourseDetails(LocalDate.of(2021, 01, 10), "D", 
-					EnrolmentStatus.ACCEPTED, student3, javaProgramming);
-			
-			StudentCourseDetails studentCourseDetail4 = new StudentCourseDetails(LocalDate.of(2021, 05, 21), "B+", 
-					EnrolmentStatus.ACCEPTED, student4, javaProgramming);
+		return args -> {
 
-			StudentCourseDetails studentCourseDetail5 = new StudentCourseDetails(LocalDate.of(2020, 03, 11), "B-", 
-					EnrolmentStatus.ACCEPTED, student5, machineLearning);
-		
-			StudentCourseDetails studentCourseDetail6 = new StudentCourseDetails(LocalDate.of(2019, 03, 12), "A-", 
-					EnrolmentStatus.ACCEPTED, student6, javaProgramming);
+			System.out.println("Adding Users");
+			System.out.println("Loading Users");
+			List<List<String>> userscsv = new ArrayList<List<String>>();
+			try (CSVReader csvReader = new CSVReaderBuilder(new FileReader("populatedata/populateusers.csv"))
+					.withSkipLines(1).build();) {
+				String[] values = null;
+				while ((values = csvReader.readNext()) != null) {
+					userscsv.add(Arrays.asList(values));
+				}
+				System.out.println("Loaded Users csv");
+			}
+
+			for (int i = 0; i < userscsv.size(); i++) {
+				Users user = new Users();
+
+				user.setFirstName(userscsv.get(i).get(0));
+				user.setLastName(userscsv.get(i).get(1));
+				user.setEmail(userscsv.get(i).get(2));
+				BCryptPasswordEncoder password = new BCryptPasswordEncoder();
+				user.setPassword(password.encode(userscsv.get(i).get(3)));
+				user.setRole(Roles.valueOf(userscsv.get(i).get(4)));
+				user.setPhoneNumber(userscsv.get(i).get(5));
+				user.setAddress(userscsv.get(i).get(6));
+				user.setBirthday(LocalDate.of(
+						Integer.parseInt(userscsv.get(i).get(7)),
+						Integer.parseInt(userscsv.get(i).get(8)), 
+						Integer.parseInt(userscsv.get(i).get(9))));
+				user.setEnabled(true);
+				user.setSalutation(userscsv.get(i).get(11));
+
+				urepo.save(user);
+
+			}
+			System.out.println("Users Added");
+
+			System.out.println("Adding Courses");
+			System.out.println("Loading Courses");
+			List<List<String>> coursescsv = new ArrayList<List<String>>();
+			try (CSVReader csvReader2 = new CSVReaderBuilder(new FileReader("populatedata/populatecoursesfinal.csv"))
+					.withSkipLines(2).build();) {
+				String[] values2 = null;
+				while ((values2 = csvReader2.readNext()) != null) {
+					coursescsv.add(Arrays.asList(values2));
+				}
+				System.out.println("Loaded Users csv");
+			}
+
+			for (int i = 0; i < coursescsv.size(); i++) {
+				Courses course = new Courses();
+
+				course.setCourseName(coursescsv.get(i).get(0));
+				course.setCourseStartDate(LocalDate.of(
+						Integer.parseInt(coursescsv.get(i).get(1)),
+						Integer.parseInt(coursescsv.get(i).get(2)), 
+						Integer.parseInt(coursescsv.get(i).get(3))));
+				course.setCourseEndDate(LocalDate.of(
+						Integer.parseInt(coursescsv.get(i).get(4)),
+						Integer.parseInt(coursescsv.get(i).get(5)), 
+						Integer.parseInt(coursescsv.get(i).get(6))));
+				course.setExamDate(LocalDate.of(
+						Integer.parseInt(coursescsv.get(i).get(7)),
+						Integer.parseInt(coursescsv.get(i).get(8)), 
+						Integer.parseInt(coursescsv.get(i).get(9))));
+				course.setCredits(Integer.parseInt(coursescsv.get(i).get(10)));
+				course.setCourseCapacity(Integer.parseInt(coursescsv.get(i).get(11)));
+				course.setDescription(coursescsv.get(i).get(12));
+				course.setCourseStatus(CourseStatus.valueOf(coursescsv.get(i).get(13)));
+
+				cRepository.save(course);
+			}
+			System.out.println("Courses Added");
+
+			System.out.println("Assigning Lecturer to Courses");
+			List<List<String>> lecturercsv = new ArrayList<List<String>>();
+			try (CSVReader csvReader3 = new CSVReaderBuilder(new FileReader("populatedata/assignlecturer.csv"))
+					.withSkipLines(1).build();) {
+				String[] values3 = null;
+				while ((values3 = csvReader3.readNext()) != null) {
+					lecturercsv.add(Arrays.asList(values3));
+				}
+				System.out.println("Loaded Lecturer csv");
+			}
+
+			for (int i = 0; i < lecturercsv.size(); i++) {
+
+				Courses course = new Courses();
+				course = cRepository.getById(Long.parseLong(lecturercsv.get(i).get(1)));
+
+				leservice.addCourseTaught(Long.parseLong(lecturercsv.get(i).get(0)), course);
+
+			}
+			System.out.println("Lecturers assigned to course");
+
+			System.out.println("Assigning Student to Courses");
+			List<List<String>> studentcsv = new ArrayList<List<String>>();
+			try (CSVReader csvReader4 = new CSVReaderBuilder(new FileReader("populatedata/assignstudents.csv"))
+					.withSkipLines(2).build();) {
+				String[] values4 = null;
+				while ((values4 = csvReader4.readNext()) != null) {
+					studentcsv.add(Arrays.asList(values4));
+				}
+				System.out.println("Loaded Student csv");
+			}System.out.println("Assigning Student to courses");
+
+			for (int i = 0; i < studentcsv.size(); i++) {
+				
+				StudentCourseDetails scdetails = new StudentCourseDetails();
+				scdetails.setDateOfEnrollment(LocalDate.of(
+						Integer.parseInt(studentcsv.get(i).get(0)),
+						Integer.parseInt(studentcsv.get(i).get(1)), 
+						Integer.parseInt(studentcsv.get(i).get(2))));
+				scdetails.setGrades(studentcsv.get(i).get(3));
+				scdetails.setEnrolmentStatus(EnrolmentStatus.valueOf(studentcsv.get(i).get(4)));
+				scdetails.setStudent(urepo.getById(Long.parseLong(studentcsv.get(i).get(5))));
+				scdetails.setCourse(cRepository.getById(Long.parseLong(studentcsv.get(i).get(6))));				
+				
+				screpo.save(scdetails);
+				
+			}System.out.println("Finished Assigning Student to courses");
 			
-			scCollection.add(studentCourseDetail1);
-			scCollection.add(studentCourseDetail2);
-			scCollection.add(studentCourseDetail3);
-			scCollection.add(studentCourseDetail4);
-			scCollection.add(studentCourseDetail5);
-			scCollection.add(studentCourseDetail6);
-			
-			screpo.save(studentCourseDetail1);
-			screpo.save(studentCourseDetail2);
-			screpo.save(studentCourseDetail3);
-			screpo.save(studentCourseDetail4);
-			screpo.save(studentCourseDetail5);
-			screpo.save(studentCourseDetail6);
+			System.out.println("App Ready");
+
 		};
 	}
 
