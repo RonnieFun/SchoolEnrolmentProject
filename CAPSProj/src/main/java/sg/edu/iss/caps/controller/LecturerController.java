@@ -1,7 +1,9 @@
 package sg.edu.iss.caps.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,87 +33,117 @@ public class LecturerController {
 
 	@Autowired
 	LecturerInterface lectservice;
-
+	
 	@Autowired
 	public void setLecturerInterface(LecturerInterface ls) {
-		this.lectservice = ls;
+		this.lectservice =ls;
 	}
-
+	
 	@GetMapping(value = "/lecturer/coursestaught")
-	public String showAllCourses(Model model) {
+	public String showAllCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
 		model.addAttribute("coursestaught", lectservice.getAllCourses());
-
+		
 		return "lecturer/coursestaught";
 	}
-
+	
 	@GetMapping(value = "/lecturer/coursestaught/{id}")
-	public String showLecturerCoursesById(@PathVariable Long id, Model model) {
-
+	public String showLecturerCoursesById(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+		
 		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, id));
-
+		
 		return "lecturer/coursestaught";
 	}
-
+	
 	@GetMapping(value = "lecturer/enrolment")
 	public String showCoursesByCourseNameCourseStart(Model model, String courseName,
-			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus) {
+			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus, 
+			@AuthenticationPrincipal MyUserDetails userDetails) {
 		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
+	
 		if (courseName != null && courseStartDate != null) {
-			model.addAttribute("users", lectservice.getAllUsersByRoleCourseNameStartDate(
+			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseNameStartDate(
 					Roles.STUDENT, 
 					EnrolmentStatus.ACCEPTED, 
 					courseName, 
 					courseStartDate));
+			
+			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseName(courseName));
 		} 		
 		model.addAttribute("coursestaught", lectservice.getAllCourses());
 		
 		return "lecturer/enrolment";
 	}
-
+		
+	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
-	public String showStudentGradesByStudentId(Long userID, Roles role, Model model) {
-
-		if (userID != null) {
-			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(userID, Roles.STUDENT));
+	public String showStudentGrades(Roles role, Long userID, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		 
+		if(userDetails == null) {
+			return "redirect:/login";	
 		}
+		
+		if(userID != null) {
+			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
+					userID,
+					Roles.STUDENT));
+			
+			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
+		} 
+		
+		int totalCredits = 0;
+		double cgpa = 0;
+		double sum = 0.0;
+		
+		Map<String, Double> gradepointsmap = new HashMap<String, Double>();
+		gradepointsmap.put("A+", 5.0);
+		gradepointsmap.put("A", 5.0);
+		gradepointsmap.put("A-", 4.5);
+		gradepointsmap.put("B+", 4.0);
+		gradepointsmap.put("B", 3.5);
+		gradepointsmap.put("B-", 3.0);
+		gradepointsmap.put("C+", 2.5);
+		gradepointsmap.put("C", 2.0);
+		gradepointsmap.put("D+", 1.5);
+		gradepointsmap.put("D", 1.0);
+		gradepointsmap.put("F", 0.0);
 
-		model.addAttribute("users", lectservice.getAllCourses());
+		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(userID, Roles.STUDENT);
+			
+		for(StudentCourseDetails e: studentSelected)
+		{
+			if (e.getGrades() == null)
+			{
+				sum += 0;
+				totalCredits += 0;
+				
+			}	else {				
+				sum +=  gradepointsmap.get(e.getGrades())  *  e.getCourse().getCredits();
+				totalCredits += e.getCourse().getCredits();
+			}
+		}	
+
+		if (totalCredits != 0) {
+			cgpa = sum / totalCredits;
+			cgpa = Math.round(cgpa * 100.0) / 100.0;
+		}
+		
+		model.addAttribute("totalCredits", totalCredits); 		
+		model.addAttribute("cgpa", cgpa);  
+		
 		return "lecturer/viewstudentgrades";
-	}
-
-	// COMMENT BY MAX: KIV the below mapping methods. Please do not delete them for now.
-	
-//	@GetMapping(value = "/lecturer/enrolment")
-//	public String showCoursesByCourseNameCourseStart(Model model, String courseName, 
-//			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role) {
-//		
-//		if (courseName != null && courseStartDate != null) {
-//			model.addAttribute("courses", lectservice.getByCourseNameCourseStart(courseName, courseStartDate));
-//		} else {
-//			model.addAttribute("courses", lectservice.getAllCourses());
-//		}
-//		
-//		return "lecturer/enrolment";
-//	}
-	
-//	@GetMapping(value = "/lecturer/enrolment/{id}") 
-//	public String showEnrolmentsByLecturerId(@PathVariable Long id, Model model) {
-//		
-//		model.addAttribute("enrolmentByLecturerId", lectservice.getAllCoursesByLecturerId(Roles.LECTURER, id));
-//		
-//		return "lecturer/enrolment";
-//	}
-//	
-	
-//	@GetMapping(value = "/lecturer/enrolment")
-//	public String showEnrolments(Model model) {
-//		
-//		model.addAttribute("allEnrolment", lectservice.getAllUsers());
-//		model.addAttribute("studentEnrolment", lectservice.getAllUsersByRole(Roles.STUDENT));
-//		model.addAttribute("lecturerEnrolment", lectservice.getAllUsersByRole(Roles.LECTURER));
-//		
-//		return "lecturer/enrolment";
-//	}
+	}	
 
 	@RequestMapping("/lecturer/gradecourse")
 	public String gradeCourse(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {

@@ -45,17 +45,12 @@ public class Courses {
 
 	private CourseStatus courseStatus;
 
-  @Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
+	@Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
 			+ "ON student_course_details.course_courseid = courses.courseid "
 			+ "WHERE student_course_details.enrolment_status = '1'"
 			+ "AND courses.course_name = course_name)")
 	private long currentEnrolment;
-	
-//	@Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
-//			+ "ON student_course_details.course_courseid = courses.courseid "
-//			+ "WHERE student_course_details.enrolment_status = '1' AND courses.course_name = course_name)")
-//	private long currentEnrolment;
-	
+
 	//Many to many relationship between StudentCoursedetails and Courses
 	@OneToMany(mappedBy = "course")
 	private Collection<StudentCourseDetails> studentCourseDetails;

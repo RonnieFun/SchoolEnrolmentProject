@@ -44,10 +44,11 @@ public class LecturerImplementation implements LecturerInterface {
 	@Transactional
 	public List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID) {
 
+
 		return coursesRepository.findCoursesByRoleAndId(role, userID);
 
-		// return coursesRepository.findByLecturerId(id);
-		// return null;
+		//return coursesRepository.findByLecturerId(id);
+		//return null;
 
 	}
 
@@ -56,7 +57,20 @@ public class LecturerImplementation implements LecturerInterface {
 
 		return coursesRepository.findByCourseSearch(courseName, courseStartDate);
 	}
-
+	
+	
+	@Transactional
+	public List<Courses> findCoursebyCourseName(String courseName) {
+		
+		return coursesRepository.findCoursebyCourseName(courseName);
+	}
+	
+	@Transactional
+	public List<Users> getAllUsersByUserID(Long userID) {
+		
+		return usersRepository.findByUserID(userID);
+	}
+	
 	@Transactional
 	public Users getUsersById(Long id) {
 
@@ -76,21 +90,14 @@ public class LecturerImplementation implements LecturerInterface {
 	}
 
 	@Transactional
-	public List<Users> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus,
-			String courseName, LocalDate courseStartDate) {
-
-		return usersRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseName, courseStartDate);
-	}
-
-	@Transactional
-	public List<Users> getStudentResults(Long userID, Roles role) {
+	public List<Users> findUsersByRoleAndId(Long userID, Roles role) {
 
 		return usersRepository.findUsersByRoleAndId(userID, role);
 	}
 
 	@Transactional
 	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
-		// TODO Auto-generated method stub
+		
 		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
 	}
 
@@ -109,29 +116,43 @@ public class LecturerImplementation implements LecturerInterface {
 		userCurrentTaughtCourses.remove(course);
 		user.setCourses(userCurrentTaughtCourses);
 	}
-
-	@Override
+	
+	@Transactional
+	public List<StudentCourseDetails> getAllStudentCourseDetails() {
+		
+		return studentCourseDetailsRepository.findAll();
+	}
+	
+	@Transactional
+	public List<StudentCourseDetails> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName,
+			LocalDate courseStartDate) {
+		
+		Long courseID = coursesRepository.findByCourseNameAndCourseStartDate(courseName, courseStartDate).getCourseID();
+		return studentCourseDetailsRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseID, courseStartDate);
+	}
+	
+	@Transactional
 	public List<Users> getStudentsByCourseID(Long courseID) {
 		return studentCourseDetailsRepository.getStudentsByCourseID(courseID);
 	}
 
-	@Override
+	@Transactional
 	public List<StudentCourseDetails> getStudentCourseDetailsByCourseID(Long courseID) {
 		return studentCourseDetailsRepository.getStudentCourseDetailsByCourseID(courseID);
 	}
 
-	@Override
+	@Transactional
 	public StudentCourseDetails getStudentCourseDetailsByStudentIDAndCourseID(long studentID, long courseID) {
 		return studentCourseDetailsRepository.getStudentCourseDetailsByStudentIDAndCourseID(studentID, courseID);
 	}
 
-	@Override
+	@Transactional
 	public void saveStudentCourseDetails(StudentCourseDetails studentCourseDetails) {
 		studentCourseDetailsRepository.save(studentCourseDetails);
 
 	}
 
-	@Override
+	@Transactional
 	public List<Courses> getAllCoursesByLecturerId(Long id) {
 		return coursesRepository.findCoursesByLecturerId(id);
 	}

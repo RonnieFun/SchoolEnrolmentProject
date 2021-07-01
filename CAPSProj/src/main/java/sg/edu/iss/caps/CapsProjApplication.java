@@ -1,5 +1,4 @@
 package sg.edu.iss.caps;
-
 import java.io.FileReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,12 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
-import sg.edu.iss.caps.model.EnrolmentStatus;
-import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
+import sg.edu.iss.caps.model.EnrolmentStatus;
+import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
+
 import sg.edu.iss.caps.repo.CoursesRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 import sg.edu.iss.caps.repo.UsersRepository;
@@ -179,3 +179,4 @@ public class CapsProjApplication {
 	}
 
 }
+
