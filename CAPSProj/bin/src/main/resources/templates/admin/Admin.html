@@ -76,7 +76,7 @@
 			<td th:text = ${user.phoneNumber}>Phone number</td>
 			<td th:text = ${user.email}>Email</td>
 			<td th:text = ${user.address}>Address</td>
-			<td sec:authorize="hasAnyAuthority('ADMIN')">
+			<td sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
 				<a th:href ="@{'/admin/edit/' + ${user.userID}}">Edit</a>
 <!-- 			</td> -->
 <!-- 			<td sec:authorize="hasAnyAuthority('ADMIN')"> -->
