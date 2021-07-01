@@ -1,5 +1,6 @@
 package sg.edu.iss.caps.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -174,6 +175,13 @@ public class AdminImplementation implements AdminInterface {
 	@Transactional
 	public Users save(Users user) {
 		return urepo.save(user);
+	}
+
+	@Override
+	public List<Courses> getCoursesByStuId(Long studentId) {
+		// TODO Auto-generated method stub
+		LocalDate currentDate = LocalDate.now();
+		return crepo.findCoursesByStuId(studentId,currentDate);
 	}
 
 }
