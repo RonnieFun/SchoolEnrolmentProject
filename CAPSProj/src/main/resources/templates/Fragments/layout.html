@@ -10,23 +10,32 @@
       <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
 		<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+		<link rel="stylesheet" th:href="@{/css/portalStyle.css}" />
 </head>
 
 <body>
 	<nav th:fragment="navigationBar" class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">CAPS</a>
+  <a class="navbar-brand" th:href = "@{/}">CAPS</a>
+  
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" th:href = "@{/index}">Home</a>
+        <a class="nav-link" th:href = "@{/}">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href = "@{/lecturer/enrolment}">View Student Enrollment</a>
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/enrolment}">View Student Enrollment</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href = "@{/admin/courselist}">Courses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href = "@{/admin/enrolment}">Enrolment</a>
       </li>
     </ul>
+		<a href="/logout"><button type="button" class="btn">Logout</button></a>
   </div>
 </nav>
 

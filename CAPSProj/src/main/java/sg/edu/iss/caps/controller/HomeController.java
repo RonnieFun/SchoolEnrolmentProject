@@ -10,7 +10,7 @@ import java.nio.file.StandardCopyOption;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sg.edu.iss.caps.model.Users;
 import sg.edu.iss.caps.service.AdminInterface;
 import sg.edu.iss.caps.service.HomeInterface;
+import sg.edu.iss.caps.service.MyUserDetails;
 
 @Controller
 @RequestMapping("/home")
@@ -58,9 +59,10 @@ public class HomeController {
 		return "403";
 	}
 	
-	@RequestMapping("/edituser/{id}")
-	public String showEditProfileForm(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("user", adservice.findById(id));
+	@RequestMapping("/edituser")
+	public String showEditProfileForm(Model model, 
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+		model.addAttribute("user", adservice.findById(userDetails.getUserID()));
 		return "userProfileForm";
 	}
 	
