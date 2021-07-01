@@ -9,6 +9,7 @@
 <h4 style="text-align:center;">
 <a th:href="@{/admin/addenrolment}"> Add Enrolment</a>
 </h4>
+
 <div class = "container">
 	<div class = "row">
 		<div class = "container">
@@ -46,7 +47,7 @@
 									<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
 								</td>
 								<td>
-									<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Reject </a>
+									<a th:href="@{/admin/rejectenrolment/}+${enrolment.id}" > Reject </a>
 								</td>
 								<td>
 									<a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>

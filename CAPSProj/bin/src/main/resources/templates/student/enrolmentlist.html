@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
-<h1 class="text-center">Enrolment List</h1>
+<h1>Enrolment List</h1>
 
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
 
@@ -57,13 +57,13 @@
 			</tbody>
 			
 		</table>
-		<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
-		<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
-		<button><a th:href="@{/student/mycourses}">View My Courses</a></button>
 		</div>
 	</div>
-</div>&nbsp;&nbsp;
-	
+</div>
+	<!-- temporarily view student of userID == 1 -->
+	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
+	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
+	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
 	<script>
 	  $(document).ready( function () {
     	$('#table_enrolmentlist').DataTable();

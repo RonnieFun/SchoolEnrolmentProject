@@ -10,6 +10,7 @@
 			<h2 class = "text-center" style = "color:black;"> Grades And GPA </h2>
 	</div>
 
+
 <div class = "container"> 
 	<div class = "row">
 		<div class = "container">
@@ -57,12 +58,17 @@
 	<span><a th:text=" 'CGPA:' + ${cgpa}" style = "color:black;">CGPA</a></span>
 </div>&nbsp;&nbsp;
 
+
 	<div>
 	<!-- temporarily view student of userID == 1 -->	
 	<button class="btn"><a th:href="@{/student/lecturercourses}"><span style="color:white">Enroll for a course</span></a></button>
 	<button class="btn"> <a th:href="@{/student/enrolmentlist}"><span style="color:white">View Enrolment List and Withdraw</span></a></button>
 	<button class="btn"> <a th:href="@{/student/mycourses}"><span style="color:white">View My Courses</span></a></button>
 	</div>
+		</div>
+	</div>
+</div>&nbsp;&nbsp;
+
 	<script>
 	  $(document).ready( function () {
     	$('#table_gradesgpa').DataTable();

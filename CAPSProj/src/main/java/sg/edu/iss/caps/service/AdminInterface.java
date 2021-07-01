@@ -44,4 +44,6 @@ public interface AdminInterface {
 	List<Long> getCoursesWithStudents();
 	void saveuser(Users user);
 	Optional<Courses> findCourseById(long courseID);
+
+	List<Courses> getCoursesByStuId(Long studentId);
 }
