@@ -3,13 +3,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Add Enrolment</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <style type="text/css">
 		label{
 			display: inline-block;
 			width: 200px;
 		}
-		input[type=text], input[type=date], select{display: inline-block; width:200px;}
+		input[type=text], input[type=date], select{display: inline-block; width:300px;}
 </style>
 
 </head>
@@ -17,14 +18,15 @@
 	<div align ="center">
 		<h1>Enrolment registration</h1>
 			<form action ="#" th:action="@{/admin/enrolment/create}" th:object = ${enrolment} method = "post">
+			<br><br>
 				<label>Student Name:</label>
-				<select th:field="*{student.userID}">
+				<select th:field="*{student.userID}"  id="mySelect" onchange="myFunction()">
             		<option th:each="p : ${studentList.entrySet()}" th:value="${p.key}" th:text="${p.key} +' | ' +${p.value}" />
         		</select>
 				<br><br>
 				<label>Course Name:</label>
-				<select th:field="*{course.courseID}">
-            		<option th:each="p : ${courseList.entrySet()}" th:value="${p.key}" th:text="${p.key} +' | ' +${p.value}" />
+				<select th:field="*{course.courseID}" id="courseId">
+            		<option th:each="p : ${courseList.entrySet()}" th:value="${p.key}" th:text="${p.key} +' | ' +${p.value}" /> 
         		</select>
         		<br><br>
 				<button type="submit">Create</button>
@@ -32,4 +34,45 @@
 	</div>
 	
 </body>
+<script>
+function myFunction() {
+	  var studentId = document.getElementById("mySelect").value;
+	  //document.getElementById("demo").innerHTML = "You selected: " + x;
+	  $.ajax({
+	        type: 'POST',
+	        url: "/admin/getCourses",
+	        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+	        data:{
+	        	studentId :studentId
+	        },
+	        success: function(response){
+	        	//console.log(response);
+	        	$('#courseId').empty();
+	        	var jason =$.parseJSON(response);
+	        	console.log(jason)
+	        	$.each(jason, function(key, value) {
+  					var $option = $("<option/>", {
+    					value: key,
+    					text: key + ' | '+value
+  						});
+  					$('#courseId').append($option);
+				});
+	        	/* for(var i in jason){
+	        		console.log(jason[i]);
+	        		//$('#courseId').append('<option th:value="'+jason[i] +'">'+ jason[i] +'</option>')
+	        		
+	        	} */
+	        	
+	        },
+	        error:function(xmlHttpRequest, textStatus, errorThrown){
+	        	console.log("error"+ errorThrown);
+	            alert("error");
+	        } 
+	    });
+	  
+	  
+	}
+</script> 
+<!-- <option th:each="p : ${courseList.entrySet()}" th:value="${p.key}" th:text="${p.key} +' | ' +${p.value}" /> -->
+
 </html>

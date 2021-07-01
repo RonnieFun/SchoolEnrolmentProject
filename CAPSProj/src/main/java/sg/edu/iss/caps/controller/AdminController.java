@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +24,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import sg.edu.iss.caps.model.CourseStatus;
 import sg.edu.iss.caps.model.Courses;
@@ -67,7 +74,6 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 		return "admin/enrolment";
 	}
@@ -79,35 +85,27 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = new StudentCourseDetails();
 		model.addAttribute("enrolment", enrolment);
-		// getting courseIDList
-		model.addAttribute("courseList", retrieveCourseList() );
-
 		// getting studentIDList
-		model.addAttribute("studentList",retrieveStudentList());
-		return "admin/addenrolment";
-	}
-
-	private Map<Long, String> retrieveStudentList() {
-		// TODO Auto-generated method stub
 		Map<Long, String> studentIDList= new HashMap<Long, String>();
+		Long studentId =null;
 		List<Users> studentList = adservice.getStudentList();
 		for (int i = 0; i < studentList.size(); i++) {
+			studentId = studentList.get(0).getUserID();
 			studentIDList.put(studentList.get(i).getUserID(),studentList.get(i).getFirstName()+' '+studentList.get(i).getLastName());
 		}
-		return studentIDList;
-	}
 
-	private Map<Long, String> retrieveCourseList() {
-		// TODO Auto-generated method stub
+		//get CourseIDList relate with first student
 		Map<Long, String> courseIDList= new HashMap<Long, String>();
-		List<Courses> courseList = adservice.getCourseList();
+		List<Courses> courseList = adservice.getCoursesByStuId(studentId);
 		for (int i = 0; i < courseList.size(); i++) {
 			courseIDList.put(courseList.get(i).getCourseID(),courseList.get(i).getCourseName());
 		}
-		return courseIDList;
+		
+		model.addAttribute("studentList",studentIDList);
+		model.addAttribute("courseList", courseIDList);
+		return "admin/addenrolment";
 	}
 
 	@GetMapping("/editenrolment/{id}")
@@ -116,7 +114,6 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		model.addAttribute("enrolment", adservice.getEnrolment(id));
 		return "admin/enrolmentform";
 	}
@@ -127,7 +124,6 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		// approve enrolment
 		enrolment.setEnrolmentStatus(EnrolmentStatus.ACCEPTED);
@@ -141,7 +137,6 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		// approve enrolment
 		enrolment.setEnrolmentStatus(EnrolmentStatus.REJECTED);
@@ -154,7 +149,6 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		adservice.deleteEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
@@ -171,7 +165,6 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 
 		LocalDate lt = LocalDate.now();
 		enrolment.setDateOfEnrollment(lt);
@@ -191,13 +184,34 @@ public class AdminController {
 			return "redirect:/login";	
 		}
 
-		long userid = userDetails.getUserID();
 		adservice.saveEnrolment(enrolment);
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 		return "admin/enrolment";
 	}
 	
-	
+	//ajax call
+		@RequestMapping(value= "/getCourses" , method = RequestMethod.POST)
+		@ResponseBody 
+		public String add(@RequestParam(value ="studentId") Long studentId)
+				throws Exception {
+
+			List<Courses> course = adservice.getCoursesByStuId(studentId);
+			Map<Long,String> courseList = new HashMap<Long, String>();
+			for(int i=0; i<course.size();i++) {
+				courseList.put(course.get(i).getCourseID(),course.get(i).getCourseName());
+			}
+			String jsSon=null;
+			ObjectMapper  mapper = new ObjectMapper();
+			if(!courseList.isEmpty()) {
+				try {
+					jsSon = mapper.writeValueAsString(courseList);
+				}
+				catch(JsonGenerationException e) {
+					e.printStackTrace();
+				}
+			}
+			return jsSon;
+		}
 
 	
 	//BRANDON AND ALE
