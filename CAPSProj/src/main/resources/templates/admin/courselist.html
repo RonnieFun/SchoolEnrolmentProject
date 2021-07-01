@@ -4,10 +4,10 @@
 <body>
 	<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
-	<h1>List of Courses</h1>
-	<h2>
+	<h1 style="text-align:center;">List of Courses</h1>
+	<h4  style="text-align:center;">
 		<a th:href="@{/admin/addcourse/}">Add Course</a>
-	</h2>
+	</h4>
 	<h4 th:if="${ErrorMessage != null}" th:text="${ErrorMessage}"
 		style="color: red"></h4>
 	<h4 th:if="${SuccessMessage != null}" th:text="${SuccessMessage}"
@@ -28,8 +28,8 @@
 				<th>Credits</th>
 				<th>Course Description</th>
 				<th>Lecturers</th>
-				<th>Action</th>
-				<th></th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 

@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.opencsv.CSVReader;
@@ -22,14 +22,13 @@ import sg.edu.iss.caps.model.EnrolmentStatus;
 import sg.edu.iss.caps.model.Roles;
 import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
-
 import sg.edu.iss.caps.repo.CoursesRepository;
 import sg.edu.iss.caps.repo.StudentCourseDetailsRepository;
 import sg.edu.iss.caps.repo.UsersRepository;
 import sg.edu.iss.caps.service.LecturerInterface;
-import sg.edu.iss.caps.service.StudentInterface;
 
 @SpringBootApplication
+@EnableAsync
 public class CapsProjApplication {
 
 	@Autowired

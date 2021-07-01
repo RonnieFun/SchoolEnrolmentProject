@@ -36,7 +36,7 @@ public interface LecturerInterface {
 	
 	List<StudentCourseDetails> findGradesByStudentIDLecturerID(Long userID, Long lecturerID);
 
-	public void addCourseTaught(Long id, Courses course);
+	void addCourseTaught(Long id, Courses course);
 
 	void removeCourseTaught(Long id, Courses course);
 

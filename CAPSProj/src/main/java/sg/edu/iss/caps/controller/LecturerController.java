@@ -98,14 +98,8 @@ public class LecturerController {
 			
 			model.addAttribute("studentCourseDetails2", lectservice.findGradesByStudentIDLecturerID(lecturerID, userID));
 			
-//			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
-//					userID,
-//					Roles.STUDENT));
-
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
-		
-		
 		
 		int totalCredits = 0;
 		double cgpa = 0;
