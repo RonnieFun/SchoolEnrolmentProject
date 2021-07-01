@@ -35,7 +35,7 @@ public interface StudentInterface {
 
 	List<StudentCourseDetails> findEnrolmentByCourseID(long courseid);
 
-	
+	void sendCourseEnrolmentConfirmation(Courses course, Users user);
 }
 
 

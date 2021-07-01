@@ -54,11 +54,6 @@ public class AdminImplementation implements AdminInterface {
 	}
 
 	@Override
-	public void saveuser(Users user) {
-		urepo.save(user);
-	}
-
-	@Override
 	public Optional<Courses> findCourseById(long courseID) {
 		return crepo.findById(courseID);
 	}

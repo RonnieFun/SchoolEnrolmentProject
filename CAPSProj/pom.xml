@@ -48,7 +48,13 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> branch 'ronnie' of https://github.com/ayephyusin/capsproj
 		<dependency>
+<<<<<<< HEAD
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>5.4</version>
@@ -65,6 +71,8 @@
 		</dependency>
 
 		<dependency>
+=======
+>>>>>>> branch 'ronnie' of https://github.com/ayephyusin/capsproj
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-java8time</artifactId>
 		</dependency>
@@ -85,7 +93,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
 	</dependencies>
+
 
 
 	<build>
