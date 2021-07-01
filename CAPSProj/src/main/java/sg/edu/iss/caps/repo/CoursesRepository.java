@@ -28,6 +28,8 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
 
 	@Query("SELECT c FROM Courses c JOIN c.users u where :lecturerId IN u.userID")
 	List<Courses> findCoursesByLecturerId(@Param("lecturerId") Long userID);
+	
+	Courses getById(Long id);
 
 	// COMMENT BY MAX: KIV the below @Query methods. Please do not delete them for
 	// now.

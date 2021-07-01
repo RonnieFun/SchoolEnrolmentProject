@@ -3,6 +3,8 @@ package sg.edu.iss.caps.service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.annotation.security.DeclareRoles;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -54,22 +56,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", "/home","/admin/list**").permitAll()
-			.antMatchers("/admin**").hasRole("ADMIN")
+			.antMatchers("/images/**","/css/**","/home**","/**").permitAll()
+			.antMatchers("/home").permitAll()
 			.anyRequest()
-			.permitAll()
-			//.authenticated()
+			//.permitAll()
+			.authenticated()
 			.and()
 			.formLogin().permitAll()
 			.and()
-			.logout().permitAll();
+			.logout().logoutSuccessUrl("/").permitAll()
+			.and()
+			.exceptionHandling().accessDeniedPage("/home/403");
+
 	}
-	
-	
-
-
-	
-	
-	
 
 }
