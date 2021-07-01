@@ -32,7 +32,7 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
 	
 	Courses findByCourseNameAndCourseStartDate(String courseName, LocalDate courseStartDate);
 	
-	@Query("SELECT c FROM Courses c WHERE c.courseName = :courseName")
+	@Query("SELECT DISTINCT c FROM Courses c WHERE c.courseName = :courseName")
 	List<Courses> findCoursebyCourseName(@Param("courseName") String courseName);	
 
 	Courses getById(Long id);
