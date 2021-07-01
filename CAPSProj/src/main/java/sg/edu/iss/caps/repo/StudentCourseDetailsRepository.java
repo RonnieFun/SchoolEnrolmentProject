@@ -25,7 +25,7 @@ public interface StudentCourseDetailsRepository extends JpaRepository<StudentCou
 	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.student u JOIN u.courses c WHERE u.role= :role "
 			+ "AND sc.enrolmentStatus = :enrolmentStatus "
 			+ "AND c.courseID = :courseID "
-			+ "AND c.courseStartDate = :courseStartDate ")
+			+ "AND c.courseStartDate = :courseStartDate AND c.courseID = sc.course")
 	List<StudentCourseDetails> findByCourseNameCourseStart(
 			@Param("role") Roles role,
 			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus,
