@@ -161,13 +161,14 @@ public class AdminController {
 		if(userDetails == null) {
 			return "redirect:/login";	
 		}
-
+		
 
 		LocalDate lt = LocalDate.now();
 		enrolment.setDateOfEnrollment(lt);
 		enrolment.setEnrolmentStatus(EnrolmentStatus.PENDING);
 		adservice.saveEnrolment(enrolment);
-		return "admin/enrolment";
+		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
+		return "redirect:/admin/enrolment";
 	}
 
 	@RequestMapping("/enrolment/update")
@@ -183,7 +184,7 @@ public class AdminController {
 
 		adservice.saveEnrolment(enrolment);
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
-		return "admin/enrolment";
+		return "redirect:/admin/enrolment";
 	}
 	
 	//ajax call
