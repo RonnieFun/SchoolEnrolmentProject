@@ -37,4 +37,7 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
 
 	Courses getById(Long id);
 
+	@Query("SELECT c FROM Courses c where c.courseID NOT IN(select sc.course.courseID FROM StudentCourseDetails sc where sc.student.userID=:studentId) and c.courseStartDate> :currentDate")
+	List<Courses> findCoursesByStuId(@Param("studentId") Long studentId, @Param("currentDate") LocalDate currentDate);
+
 }

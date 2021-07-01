@@ -5,9 +5,14 @@
 
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
-<h1>Enrolment Lists</h1>
-<a th:href="@{/admin/addenrolment}"> Add Enrolment</a>
+<div class = "text-center">
+	<h1>Enrolment Lists</h1>
+</div>
+<div>
 
+<a th:href="@{/admin/addenrolment}"> <button type="button">Add Enrolment</button> </a>
+</div>
+<br>
 <div class = "container">
 	<div class = "row">
 		<div class = "container">
@@ -45,7 +50,7 @@
 									<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Approve </a>
 								</td>
 								<td>
-									<a th:href="@{/admin/approveenrolment/}+${enrolment.id}" > Reject </a>
+									<a th:href="@{/admin/rejectenrolment/}+${enrolment.id}" > Reject </a>
 								</td>
 								<td>
 									<a th:href="@{/admin/deleteenrolment/}+${enrolment.id}" > Delete </a>
