@@ -97,8 +97,7 @@ public class LecturerController {
 		if(userID != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
 					userID,
-					Roles.STUDENT));
-			
+					Roles.STUDENT));			
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
 		

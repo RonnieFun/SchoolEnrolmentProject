@@ -34,7 +34,7 @@ public interface LecturerInterface {
 
 	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
 
-	public void addCourseTaught(Long id, Courses course);
+	void addCourseTaught(Long id, Courses course);
 
 	void removeCourseTaught(Long id, Courses course);
 
@@ -53,5 +53,4 @@ public interface LecturerInterface {
 	List<StudentCourseDetails> getAllStudentCourseDetails();
 	
 	List<Courses> findCoursebyCourseName(String courseName);
-
 }
