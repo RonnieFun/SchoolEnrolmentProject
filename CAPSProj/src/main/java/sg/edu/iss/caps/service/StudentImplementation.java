@@ -100,19 +100,4 @@ public class StudentImplementation implements StudentInterface {
 
 		return scdrepo.findEnrolmentByCourseID(courseid);
 	}
-
-	@Transactional
-	public void sendCourseEnrolmentConfirmation(Courses course, Users user) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("auto-confirm@Team2CapsProj.edu");
-		message.setTo(user.getEmail());
-		message.setSubject("Confirmation on Course Enrolment for " + course.getCourseName() + "starting on"
-				+ course.getCourseStartDate());
-		message.setText("Dear " + user.getFirstName() + ' ' + user.getLastName() + "\n\n Your enrolment for "
-				+ course.getCourseName() + "starting on " + course.getCourseStartDate() + " has been received. \n\n "
-				+ "<Insert customised message here. Or not. ¯\\_(ツ)_/¯> \n\nYours sincerely\nNUS ISS SA52 Team 2 \n\n "
-				+ "-------------------------------------- \n Please note: This email was sent from a notification-only address that can't accept incoming email. Please do not reply to this message.");
-		emailSender.send(message);
-	}
-
 }
