@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +52,7 @@ public class LecturerImplementation implements LecturerInterface {
 		//return null;
 
 	}
-
+	
 	@Transactional
 	public List<Courses> getByCourseNameCourseStart(String courseName, LocalDate courseStartDate) {
 
@@ -60,9 +61,10 @@ public class LecturerImplementation implements LecturerInterface {
 	
 	
 	@Transactional
-	public List<Courses> findCoursebyCourseName(String courseName) {
+	public List<Courses> findCoursebyCourseNameStartDateCourseID(String courseName, LocalDate courseStartDate) {
 		
-		return coursesRepository.findCoursebyCourseName(courseName);
+		Long courseID = coursesRepository.findByCourseNameAndCourseStartDate(courseName, courseStartDate).getCourseID();
+		return coursesRepository.findCoursebyCourseNameStartDateCourseID(courseName, courseStartDate, courseID);
 	}
 	
 	@Transactional
@@ -95,11 +97,11 @@ public class LecturerImplementation implements LecturerInterface {
 		return usersRepository.findUsersByRoleAndId(userID, role);
 	}
 
-	@Transactional
-	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
-		
-		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
-	}
+//	@Transactional
+//	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
+//		
+//		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
+//	}
 
 	@Transactional
 	public void addCourseTaught(Long id, Courses course) {
@@ -155,5 +157,10 @@ public class LecturerImplementation implements LecturerInterface {
 	@Transactional
 	public List<Courses> getAllCoursesByLecturerId(Long id) {
 		return coursesRepository.findCoursesByLecturerId(id);
+	}
+	
+	@Transactional
+	public List<StudentCourseDetails> findGradesByStudentIDLecturerID(Long lecturerID, Long userID) {
+		return studentCourseDetailsRepository.findGradesByStudentIDLecturerID(lecturerID, userID);
 	}
 }

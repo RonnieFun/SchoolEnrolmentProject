@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.iss.caps.model.Courses;
 import sg.edu.iss.caps.model.EnrolmentStatus;
@@ -39,26 +43,17 @@ public class LecturerController {
 		this.lectservice =ls;
 	}
 	
-	@GetMapping(value = "/lecturer/coursestaught")
-	public String showAllCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
-		
-		if(userDetails == null) {
-			return "redirect:/login";	
-		}
-		
-		model.addAttribute("coursestaught", lectservice.getAllCourses());
-		
-		return "lecturer/coursestaught";
-	}
 	
-	@GetMapping(value = "/lecturer/coursestaught/{id}")
-	public String showLecturerCoursesById(@PathVariable Long id, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+	@GetMapping(value = "/lecturer/coursestaught")
+	public String showLecturerCoursesById(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		
 		if(userDetails == null) {
 			return "redirect:/login";	
 		}
 		
-		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, id));
+		long userID = userDetails.getUserID();
+		
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByRoleAndId(Roles.LECTURER, userID));
 		
 		return "lecturer/coursestaught";
 	}
@@ -72,6 +67,8 @@ public class LecturerController {
 			return "redirect:/login";	
 		}
 	
+		long lecturerID = userDetails.getUserID();
+		
 		if (courseName != null && courseStartDate != null) {
 			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseNameStartDate(
 					Roles.STUDENT, 
@@ -79,25 +76,27 @@ public class LecturerController {
 					courseName, 
 					courseStartDate));
 			
-			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseName(courseName));
+			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseNameStartDateCourseID(courseName, courseStartDate));
 		} 		
-		model.addAttribute("coursestaught", lectservice.getAllCourses());
+		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(lecturerID));
 		
 		return "lecturer/enrolment";
 	}
 		
 	
 	@GetMapping(value = "/lecturer/viewstudentgrades")
-	public String showStudentGrades(Roles role, Long userID, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+	public String showStudentGrades(Roles role, Long userID, Model model, 
+			@AuthenticationPrincipal MyUserDetails userDetails) {
 		 
 		if(userDetails == null) {
 			return "redirect:/login";	
 		}
 		
+		long lecturerID = userDetails.getUserID();
+		
 		if(userID != null) {
-			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(
-					userID,
-					Roles.STUDENT));
+			
+			model.addAttribute("studentCourseDetails2", lectservice.findGradesByStudentIDLecturerID(lecturerID, userID));
 			
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
@@ -119,11 +118,13 @@ public class LecturerController {
 		gradepointsmap.put("D", 1.0);
 		gradepointsmap.put("F", 0.0);
 
-		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(userID, Roles.STUDENT);
+		List<StudentCourseDetails> studentSelected = lectservice.findGradesByStudentIDLecturerID(
+				lecturerID, userID);
 			
 		for(StudentCourseDetails e: studentSelected)
 		{
-			if (e.getGrades() == null)
+			String grades = e.getGrades();
+			if (e.getGrades() == null || grades.trim().isEmpty())
 			{
 				sum += 0;
 				totalCredits += 0;
@@ -175,5 +176,7 @@ public class LecturerController {
 		lectservice.saveStudentCourseDetails(scd);
 		return "forward:/lecturer/gradecourse2";
 	}
+		
+	
 
 }

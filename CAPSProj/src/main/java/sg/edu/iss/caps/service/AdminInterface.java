@@ -42,7 +42,6 @@ public interface AdminInterface {
 	void deleteCourse(Courses course);
 	void savecourse(Courses course);
 	List<Long> getCoursesWithStudents();
-	void saveuser(Users user);
 	Optional<Courses> findCourseById(long courseID);
 
 	List<Courses> getCoursesByStuId(Long studentId);
