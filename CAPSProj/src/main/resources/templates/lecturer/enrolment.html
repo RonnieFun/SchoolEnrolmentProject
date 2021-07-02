@@ -15,7 +15,7 @@
 
 						<div class = "form-group">
 							<label class = "ml-3 mb-3 mr-3"> Course Name: </label>
-								<select name = "courseID">
+								<select name = "courseID" onchange="this.form.submit()">
 									<option disabled selected>Select an Option</option>
 									<option 
 									th:each = "course: ${coursestaught}"
@@ -24,12 +24,7 @@
 									</option>
 								</select>
 						</div>
-						
-						<div class = "box-footer float-end mt-3 ml-3 mb-3">
-							<button type="submit" class = "btn btn-primary">
-								Submit
-							</button>
-						</div>
+	
 					</form>
 				</div>
 			</div>
@@ -37,10 +32,11 @@
 	</div>
 
 	<div class = "container">
-		<div class = "row justify-content-center">
+		<div class = "row justify-content-center mt-3">
 			<span th:each = "course : ${selectedCourseName}">
-				<h5 class = "text-center" th:text = "'Course Enrollment Details for: ' + ${course.courseName}"> </h5>
+				<h5 class = "text-center" th:text = "'Course Name: ' + ${course.courseName}"> </h5>
 				<h5 class = "text-center" th:text = "'Course ID: ' + ${course.courseID}"> </h5>
+				<h5 class = "text-center" th:text = "'Course Start Date: ' + ${course.courseStartDate}"></h5>
 			</span>
 		</div>
 
