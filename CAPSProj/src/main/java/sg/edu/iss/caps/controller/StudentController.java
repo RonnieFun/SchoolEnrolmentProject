@@ -41,21 +41,29 @@ public class StudentController {
 	EmailSendingInterface sendEmail;
 	
 	// find all courses that already assigned to lecturers
-	@GetMapping("/lecturercourses")
+	@GetMapping("/availablecourselist")
 	public String getAllLectuererCourses(Model model)
 	{
 		List<Courses>  lecturercourses= stuservice.findCoursesByRole(Roles.LECTURER);
+		List<Courses>  availablecourses = new ArrayList<>();
+		
+		for(Courses c : lecturercourses) {
+			if (c.getCourseStartDate().compareTo(LocalDate.now()) > 0 )
+				availablecourses.add(c);
+		}
+		
+		
 		Map<Long, Integer> currentEnrolmentMap= new HashMap<Long, Integer>();
 		
-		for(Courses c: lecturercourses) {		
+		for(Courses c: availablecourses) {		
 			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
 			currentEnrolmentMap.put(c.getCourseID(), enrolmentlist.size());	
 		}
 				
 		model.addAttribute("currentEnrolmentMap", currentEnrolmentMap);	
-		model.addAttribute("lecturercourses", lecturercourses);		
+		model.addAttribute("availablecourses", availablecourses);		
 		
-		return "/student/lecturercourses";
+		return "/student/availablecourselist";
 	}
 	
 	

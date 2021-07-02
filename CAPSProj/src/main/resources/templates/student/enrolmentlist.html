@@ -6,7 +6,7 @@
 
 <h1 class="text-center">Enrolment List</h1>
 
-<h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
+<h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}" style="color: red"></h4>
 
 <div class="container">
 	<div class="row">
@@ -57,7 +57,7 @@
 			</tbody>
 			
 		</table>
-		<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
+		<button><a th:href="@{/student/availablecourselist}">Enroll for a course</a></button>
 		<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
 		<button><a th:href="@{/student/mycourses}">View My Courses</a></button>
 		</div>
