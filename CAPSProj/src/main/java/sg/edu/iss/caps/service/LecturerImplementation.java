@@ -45,12 +45,7 @@ public class LecturerImplementation implements LecturerInterface {
 	@Transactional
 	public List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID) {
 
-
 		return coursesRepository.findCoursesByRoleAndId(role, userID);
-
-		//return coursesRepository.findByLecturerId(id);
-		//return null;
-
 	}
 	
 	@Transactional
@@ -65,6 +60,17 @@ public class LecturerImplementation implements LecturerInterface {
 		
 		Long courseID = coursesRepository.findByCourseNameAndCourseStartDate(courseName, courseStartDate).getCourseID();
 		return coursesRepository.findCoursebyCourseNameStartDateCourseID(courseName, courseStartDate, courseID);
+	}
+	
+	@Transactional
+	public List<Courses> getAllCoursesByLecturerId(Long id) {
+		return coursesRepository.findCoursesByLecturerId(id);
+	}
+	
+	@Transactional
+	public List<Courses> findCoursesByCourseId(Long courseID) {
+		
+		return coursesRepository.findCoursesByCourseId(courseID);
 	}
 	
 	@Transactional
@@ -95,6 +101,11 @@ public class LecturerImplementation implements LecturerInterface {
 	public List<Users> findUsersByRoleAndId(Long userID, Roles role) {
 
 		return usersRepository.findUsersByRoleAndId(userID, role);
+	}
+	
+	@Transactional
+	public List<Users> getStudentsByCourseID(Long courseID) {
+		return studentCourseDetailsRepository.getStudentsByCourseID(courseID);
 	}
 
 	@Transactional
@@ -132,17 +143,19 @@ public class LecturerImplementation implements LecturerInterface {
 		Long courseID = coursesRepository.findByCourseNameAndCourseStartDate(courseName, courseStartDate).getCourseID();
 		return studentCourseDetailsRepository.findByCourseNameCourseStart(role, enrolmentStatus, courseID, courseStartDate);
 	}
-	
-	@Transactional
-	public List<Users> getStudentsByCourseID(Long courseID) {
-		return studentCourseDetailsRepository.getStudentsByCourseID(courseID);
-	}
 
 	@Transactional
 	public List<StudentCourseDetails> getStudentCourseDetailsByCourseID(Long courseID) {
 		return studentCourseDetailsRepository.getStudentCourseDetailsByCourseID(courseID);
 	}
 
+	@Transactional
+	public List<StudentCourseDetails> getAllUsersByRoleCourseID(Roles role, EnrolmentStatus enrolmentStatus, 
+			Long courseID) {
+		
+		return studentCourseDetailsRepository.findByRoleEnrolementStatusCourseID(role, enrolmentStatus, courseID);
+	}
+	
 	@Transactional
 	public StudentCourseDetails getStudentCourseDetailsByStudentIDAndCourseID(long studentID, long courseID) {
 		return studentCourseDetailsRepository.getStudentCourseDetailsByStudentIDAndCourseID(studentID, courseID);
@@ -154,21 +167,4 @@ public class LecturerImplementation implements LecturerInterface {
 
 	}
 
-	@Transactional
-	public List<Courses> getAllCoursesByLecturerId(Long id) {
-		return coursesRepository.findCoursesByLecturerId(id);
-	}
-	
-	@Transactional
-	public List<Courses> findCoursesByCourseId(Long courseID) {
-		
-		return coursesRepository.findCoursesByCourseId(courseID);
-	}
-	
-	@Transactional
-	public List<StudentCourseDetails> getAllUsersByRoleCourseID(Roles role, EnrolmentStatus enrolmentStatus, 
-			Long courseID) {
-		
-		return studentCourseDetailsRepository.findByRoleEnrolementStatusCourseID(role, enrolmentStatus, courseID);
-	}
 }
