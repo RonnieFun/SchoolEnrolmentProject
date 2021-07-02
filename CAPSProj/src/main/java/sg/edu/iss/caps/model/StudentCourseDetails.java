@@ -25,7 +25,6 @@ public class StudentCourseDetails {
 
 	private String grades;
 	
-	private double gradepoint;
 	
 	private EnrolmentStatus enrolmentStatus;
 

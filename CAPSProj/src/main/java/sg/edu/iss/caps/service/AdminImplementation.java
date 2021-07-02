@@ -179,4 +179,13 @@ public class AdminImplementation implements AdminInterface {
 		return crepo.findCoursesByStuId(studentId,currentDate);
 	}
 
+	@Override
+	public Page<StudentCourseDetails> listAllEnrolment(int currentPage, String sortField, String sortDir) {
+		// TODO Auto-generated method stub
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(currentPage - 1, 10, sort);
+		return scdrepo.findAll(pageable);
+	}
+
 }

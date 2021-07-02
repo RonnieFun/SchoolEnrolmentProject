@@ -45,4 +45,6 @@ public interface AdminInterface {
 	Optional<Courses> findCourseById(long courseID);
 
 	List<Courses> getCoursesByStuId(Long studentId);
+
+	Page<StudentCourseDetails> listAllEnrolment(int currentPage, String sortField, String sortDir);
 }
