@@ -29,7 +29,18 @@ public interface StudentCourseDetailsRepository extends JpaRepository<StudentCou
 			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus,
 			@Param("courseID") Long courseID, 
 			@Param("courseStartDate") LocalDate courseStartDate);
-
+	
+	
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN sc.student u WHERE u.role= :role "
+			+ "AND sc.enrolmentStatus = :enrolmentStatus "
+			+ "AND c.courseID = :courseID "
+			+ "AND c.courseID = sc.course")
+	List<StudentCourseDetails> findByRoleEnrolementStatusCourseID(
+			@Param("role") Roles role,
+			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus,
+			@Param("courseID") Long courseID);
+	
+	
 	@Query("SELECT scd.course.courseID FROM StudentCourseDetails scd")
 	List<Long> getCourseIDsWithStudents();
 

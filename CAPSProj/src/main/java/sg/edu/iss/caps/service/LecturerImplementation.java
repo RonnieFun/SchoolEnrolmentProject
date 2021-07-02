@@ -159,4 +159,16 @@ public class LecturerImplementation implements LecturerInterface {
 		return coursesRepository.findCoursesByLecturerId(id);
 	}
 	
+	@Transactional
+	public List<Courses> findCoursesByCourseId(Long courseID) {
+		
+		return coursesRepository.findCoursesByCourseId(courseID);
+	}
+	
+	@Transactional
+	public List<StudentCourseDetails> getAllUsersByRoleCourseID(Roles role, EnrolmentStatus enrolmentStatus, 
+			Long courseID) {
+		
+		return studentCourseDetailsRepository.findByRoleEnrolementStatusCourseID(role, enrolmentStatus, courseID);
+	}
 }

@@ -15,19 +15,14 @@
 
 						<div class = "form-group">
 							<label class = "ml-3 mb-3 mr-3"> Course Name: </label>
-								<select name = "courseName">
+								<select name = "courseID">
 									<option disabled selected>Select an Option</option>
 									<option 
 									th:each = "course: ${coursestaught}"
-									th:value = "${course.courseName}"
-									th:text = "${course.courseName}">
+									th:value = "${course.courseID}"
+									th:text = "${course.courseID} + ' ' + ${course.courseName} + ' started on ' + ${course.courseStartDate}">
 									</option>
 								</select>
-						</div>
-
-						<div class = "form-group">
-							<label class = "ml-3 mb-3 mr-3"> Course Start Date: </label>
-							<input type = "date" name = "courseStartDate" class = "form-control" required>
 						</div>
 						
 						<div class = "box-footer float-end mt-3 ml-3 mb-3">

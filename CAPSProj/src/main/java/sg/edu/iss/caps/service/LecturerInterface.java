@@ -13,6 +13,9 @@ public interface LecturerInterface {
 
 	//To get list of all courses
 	List<Courses> getAllCourses();
+	
+	//To get list of all courses by Course ID
+	List<Courses> findCoursesByCourseId(Long courseID);
 		
 	//To get list of all courses by Lecturer's Id
 	List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID);
@@ -32,6 +35,8 @@ public interface LecturerInterface {
 	List<StudentCourseDetails> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);
 
+	List<StudentCourseDetails> getAllUsersByRoleCourseID(Roles role, EnrolmentStatus enrolmentStatus, Long courseID);
+		
 	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
 
 	void addCourseTaught(Long id, Courses course);
