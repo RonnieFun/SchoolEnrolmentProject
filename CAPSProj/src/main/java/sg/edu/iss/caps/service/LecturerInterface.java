@@ -32,7 +32,9 @@ public interface LecturerInterface {
 	List<StudentCourseDetails> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);
 
-	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
+//	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
+	
+	List<StudentCourseDetails> findGradesByStudentIDLecturerID(Long userID, Long lecturerID);
 
 	void addCourseTaught(Long id, Courses course);
 
@@ -52,5 +54,6 @@ public interface LecturerInterface {
 	
 	List<StudentCourseDetails> getAllStudentCourseDetails();
 	
-	List<Courses> findCoursebyCourseName(String courseName);
+	List<Courses> findCoursebyCourseNameStartDateCourseID(String courseName, LocalDate courseStartDate);
+
 }

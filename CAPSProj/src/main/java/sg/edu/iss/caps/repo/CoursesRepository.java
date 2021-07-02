@@ -18,7 +18,7 @@ import sg.edu.iss.caps.model.Roles;
 
 
 public interface CoursesRepository extends JpaRepository<Courses, Long> {
-
+	
 	
 	@Query("SELECT c from Courses c WHERE c.courseName = :courseName AND c.courseStartDate = :courseStartDate")
 	List<Courses> findByCourseSearch(@Param("courseName") String courseName,
@@ -32,12 +32,12 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
 	
 	Courses findByCourseNameAndCourseStartDate(String courseName, LocalDate courseStartDate);
 	
-	@Query("SELECT DISTINCT c FROM Courses c WHERE c.courseName = :courseName")
-	List<Courses> findCoursebyCourseName(@Param("courseName") String courseName);	
+	@Query("SELECT DISTINCT c FROM Courses c WHERE c.courseName = :courseName AND c.courseStartDate = :courseStartDate AND c.courseID = :courseID")
+	List<Courses> findCoursebyCourseNameStartDateCourseID(@Param("courseName") String courseName, @Param("courseStartDate") LocalDate courseStartDate, @Param("courseID") Long courseID);	
 
 	Courses getById(Long id);
 
 	@Query("SELECT c FROM Courses c where c.courseID NOT IN(select sc.course.courseID FROM StudentCourseDetails sc where sc.student.userID=:studentId) and c.courseStartDate> :currentDate")
 	List<Courses> findCoursesByStuId(@Param("studentId") Long studentId, @Param("currentDate") LocalDate currentDate);
-
+	
 }

@@ -15,16 +15,21 @@ import sg.edu.iss.caps.model.StudentCourseDetails;
 import sg.edu.iss.caps.model.Users;
 
 public interface StudentCourseDetailsRepository extends JpaRepository<StudentCourseDetails, Long> {
-
-	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN c.users u WHERE "
-			+ "u.userID = :userID AND u.role = :role AND c.courseID = sc.course AND u.userID = sc.student")
-	List<StudentCourseDetails> findGradesByStudentId(@Param("userID") Long userID, @Param("role") Roles role);
-
-	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.student u JOIN u.courses c WHERE u.role= :role "
-			+ "AND sc.enrolmentStatus = :enrolmentStatus " + "AND c.courseID = :courseID "
+	
+	@Query(value = "SELECT * FROM caps.student_course_details scd where scd.course_courseid "
+			+ "IN(SELECT c1.courseid from caps.courses c1 INNER JOIN caps.users_courses uc\r\n"
+			+ "	on c1.courseid = uc.courses_courseid where uc.users_userid =:lecturerID) "
+			+ "and scd.student_userid =:userID", nativeQuery = true)
+	List<StudentCourseDetails> findGradesByStudentIDLecturerID(@Param("lecturerID") Long lecturerID, @Param("userID") Long userID);
+	
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN sc.student u WHERE u.role= :role "
+			+ "AND sc.enrolmentStatus = :enrolmentStatus "
+			+ "AND c.courseID = :courseID "
 			+ "AND c.courseStartDate = :courseStartDate AND c.courseID = sc.course")
-	List<StudentCourseDetails> findByCourseNameCourseStart(@Param("role") Roles role,
-			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus, @Param("courseID") Long courseID,
+	List<StudentCourseDetails> findByCourseNameCourseStart(
+			@Param("role") Roles role,
+			@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus,
+			@Param("courseID") Long courseID, 
 			@Param("courseStartDate") LocalDate courseStartDate);
 
 	@Query("SELECT scd.course.courseID FROM StudentCourseDetails scd")
