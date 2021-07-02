@@ -34,6 +34,25 @@
       <li class="nav-item">
         <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href = "@{/admin/enrolment}">Enrolment</a>
       </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href = "@{/student/gradesandgpa}">Grades And GPA</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href = "@{/student/mycourses}">My Courses</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href = "@{/student/availablecourselist}">Enroll for a Course</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href = "@{/student/enrolmentlist}">Enrolment List and Withdraw</a>
+      </li>
+      
+      
+      
     </ul>
 		<a href="/logout"><button type="button" class="btn">Logout</button></a>
   </div>
