@@ -345,14 +345,15 @@ public class AdminController {
 
 		if (user.getPassword() == "") {
 			password = adservice.passwordGenerator();
+			model.addAttribute("password", password);
 			unhashedpassword = password;
+			//System.out.println(password);
 			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
 			user.setPassword(pass.encode(password));
 		} else {
-			password = user.getPassword();
+			model.addAttribute("password", null);
 		}
 
-		model.addAttribute("password", password);
 		adservice.updateUser(user);
 		
 		sendEmail.sendAccountCreatedEmail(user, unhashedpassword);
