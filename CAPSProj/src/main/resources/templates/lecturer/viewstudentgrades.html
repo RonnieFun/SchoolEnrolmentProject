@@ -16,7 +16,7 @@
 							<div class = "form-group">
 								<label class = "ml-3 mb-3 mr-3"> Student ID: </label>
 									<input type = "number" name = "userID" class = "form-control" 
-									min="1" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+									min="1" step="1" onkeydown="return event.keyCode !== 190" required>
 							</div>
 
 							<div class = "box-footer float-end ml-3">
