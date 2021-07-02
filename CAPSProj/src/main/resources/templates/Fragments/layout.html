@@ -51,19 +51,19 @@
     
 	  
 	  <li class="nav-item">
-        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/coursestaught}">Courses I'm Teaching</a>
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/coursestaught}">View Courses Taught</a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/enrolment}">View Student Enrollment</a>
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/enrolment}">View Course Enrolment</a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/gradecourse}">Grade Students</a>
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/gradecourse}">Grade a Course</a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/viewstudentgrades}">View Students' CGPA</a>
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/viewstudentgrades}">View a Student's Performance</a>
       </li>
 
 
