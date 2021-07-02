@@ -3,6 +3,7 @@ package sg.edu.iss.caps.controller;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +43,11 @@ public class StudentController {
 	
 	// find all courses that already assigned to lecturers
 	@GetMapping("/availablecourselist")
-	public String getAllLectuererCourses(Model model)
+	public String getAllLectuererCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails)
 	{
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
 		List<Courses>  lecturercourses= stuservice.findCoursesByRole(Roles.LECTURER);
 		List<Courses>  availablecourses = new ArrayList<>();
 		
@@ -59,7 +63,8 @@ public class StudentController {
 			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
 			currentEnrolmentMap.put(c.getCourseID(), enrolmentlist.size());	
 		}
-				
+		
+		model.addAttribute("firstName", userDetails.getFirstName());
 		model.addAttribute("currentEnrolmentMap", currentEnrolmentMap);	
 		model.addAttribute("availablecourses", availablecourses);		
 		
@@ -121,7 +126,8 @@ public class StudentController {
 		stuservice.addEnrolment(enrolment);
 		
 		sendEmail.sendCourseEnrolmentConfirmation(course, stuservice.findUserByUserID(userid));
-			
+		
+		model.addAttribute("firstName", userDetails.getFirstName());
 		return "redirect:/student/enrolmentlist";	
 	}
 		
@@ -135,6 +141,7 @@ public class StudentController {
 		
 		long userid = userDetails.getUserID();
 		
+		model.addAttribute("firstName", userDetails.getFirstName());
 		model.addAttribute("enrolmentlist", stuservice.findEnrolmentByUserID(userid));
 		
 		return "/student/enrolmentlist";
@@ -143,7 +150,11 @@ public class StudentController {
 	
 	// withdraw enrolment
 	@GetMapping("/withdrawenrolment/{enrolmentid}")
-	public String withdrawEnrolment(Model model, @PathVariable long enrolmentid) {
+	public String withdrawEnrolment(Model model, @PathVariable long enrolmentid, @AuthenticationPrincipal MyUserDetails userDetails) {
+		
+		if(userDetails == null) {
+			return "redirect:/login";	
+		}
 		
 		StudentCourseDetails enrolment = stuservice.findEnrolmentByEnrolmentID(enrolmentid);
 		
@@ -158,7 +169,7 @@ public class StudentController {
 			
 			stuservice.updateEnrolment(enrolment);
 		}
-		
+		model.addAttribute("firstName", userDetails.getFirstName());
 		return "redirect:/student/enrolmentlist";
 	}
 	
@@ -211,13 +222,14 @@ public class StudentController {
 			cgpa = sum / totalCredits;
 		}
 		
+		model.addAttribute("firstName", userDetails.getFirstName());
 		model.addAttribute("totalCredits", totalCredits); 		
 		model.addAttribute("cgpa", Math.round(cgpa * 100.0) / 100.0); 
 		return "/student/gradesandgpa";
 	}
 	
 	
-	// Users.Role=STUDENT?
+
 	// find all enrolment by UserID and enrolment status = ACCEPTED
 	@GetMapping("/mycourses")
 	public String showEnrolmentListAccepted2(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
@@ -228,6 +240,7 @@ public class StudentController {
 		
 		long userid = userDetails.getUserID();
 		
+		model.addAttribute("firstName", userDetails.getFirstName());
 		model.addAttribute("enrolmentsaccepted", stuservice.findEnrolmentByUserIDAndEnrolmentStatus(userid, EnrolmentStatus.ACCEPTED));
 		
 		return "/student/mycourses";

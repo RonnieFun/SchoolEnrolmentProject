@@ -4,7 +4,20 @@
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
-<h1 class="text-center">Course List</h1> 
+<h1 class="text-center">Enroll for Courses</h1> 
+&nbsp;
+<div class="text-center">
+	 <div sec:authorize="isAuthenticated()">
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 Welcome <b><span th:text =${firstName}>first name</span></b>
+		&nbsp;
+		<span sec:authentication="principal.role">Roles</span>
+		<br><br>
+		
+	</div>
+</div>	
+
+
 <h4 th:if="${CapacityFullErrorMsg != null}" th:text="${CapacityFullErrorMsg}" style="color: red"></h4>
 <h4 th:if="${ExistsErrorMsg != null}" th:text="${ExistsErrorMsg}" style="color: red"></h4>
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}" style="color: red"></h4>
@@ -53,12 +66,8 @@
 				</tr>	
 			</tbody>
 		</table>
-		<div>
-	
-		<button><a th:href="@{/student/enrolmentlist}">View Enrolment List and Withdraw</a></button>
-		<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
-		<button><a th:href="@{/student/mycourses}">View My Courses</a></button>
-		</div>
+		
+		
 		</div>
 	</div>
 </div>&nbsp;&nbsp;

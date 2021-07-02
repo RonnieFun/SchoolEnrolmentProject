@@ -4,7 +4,18 @@
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
-<h1 class="text-center">Enrolment List</h1>
+<h1 class="text-center">Enrolment List and Withdraw</h1>
+&nbsp;
+<div class="text-center">
+	 <div sec:authorize="isAuthenticated()">
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 Welcome <b><span th:text =${firstName}>first name</span></b>
+		&nbsp;
+		<span sec:authentication="principal.role">Roles</span>
+		<br><br>
+		
+	</div>
+</div>	
 
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}" style="color: red"></h4>
 
@@ -55,11 +66,9 @@
 					</span>
 				</tr>	
 			</tbody>
-			
 		</table>
-		<button><a th:href="@{/student/availablecourselist}">Enroll for a course</a></button>
-		<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
-		<button><a th:href="@{/student/mycourses}">View My Courses</a></button>
+
+		
 		</div>
 	</div>
 </div>&nbsp;&nbsp;
