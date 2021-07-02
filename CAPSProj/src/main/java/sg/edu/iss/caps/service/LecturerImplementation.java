@@ -97,11 +97,11 @@ public class LecturerImplementation implements LecturerInterface {
 		return usersRepository.findUsersByRoleAndId(userID, role);
 	}
 
-//	@Transactional
-//	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
-//		
-//		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
-//	}
+	@Transactional
+	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
+		
+		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
+	}
 
 	@Transactional
 	public void addCourseTaught(Long id, Courses course) {
@@ -159,8 +159,4 @@ public class LecturerImplementation implements LecturerInterface {
 		return coursesRepository.findCoursesByLecturerId(id);
 	}
 	
-	@Transactional
-	public List<StudentCourseDetails> findGradesByStudentIDLecturerID(Long lecturerID, Long userID) {
-		return studentCourseDetailsRepository.findGradesByStudentIDLecturerID(lecturerID, userID);
-	}
 }

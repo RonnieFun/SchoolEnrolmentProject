@@ -92,12 +92,9 @@ public class LecturerController {
 			return "redirect:/login";	
 		}
 		
-		long lecturerID = userDetails.getUserID();
-		
 		if(userID != null) {
 			
-			model.addAttribute("studentCourseDetails2", lectservice.findGradesByStudentIDLecturerID(lecturerID, userID));
-			
+			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(userID, Roles.STUDENT));
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
 		
@@ -118,8 +115,7 @@ public class LecturerController {
 		gradepointsmap.put("D", 1.0);
 		gradepointsmap.put("F", 0.0);
 
-		List<StudentCourseDetails> studentSelected = lectservice.findGradesByStudentIDLecturerID(
-				lecturerID, userID);
+		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(userID, Roles.STUDENT);
 			
 		for(StudentCourseDetails e: studentSelected)
 		{
