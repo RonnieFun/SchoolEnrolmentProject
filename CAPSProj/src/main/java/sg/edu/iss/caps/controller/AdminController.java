@@ -298,7 +298,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/user/save")
-	public String saveUserForm(@ModelAttribute("user") @Valid Users user, 
+	public String saveUserForm(@Valid @ModelAttribute("user") Users user, 
 			BindingResult bindingResult, 
 			Model model) {
 
@@ -306,7 +306,7 @@ public class AdminController {
 		String unhashedpassword = null;
 
 		if (bindingResult.hasErrors()) {
-			return "EditUser";
+			return "admin/EditUser";
 		}
 
 		if (user.getPassword() == "") {
