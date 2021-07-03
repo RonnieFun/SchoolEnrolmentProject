@@ -60,8 +60,16 @@ public class StudentController {
 		Map<Long, Integer> currentEnrolmentMap= new HashMap<Long, Integer>();
 		
 		for(Courses c: availablecourses) {		
-			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
-			currentEnrolmentMap.put(c.getCourseID(), enrolmentlist.size());	
+//			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
+			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseIDAndEnrolmentStatus(c.getCourseID(), EnrolmentStatus.ACCEPTED);
+			if (enrolmentlist == null)
+			{
+				currentEnrolmentMap.put(c.getCourseID(), 0);	
+			}
+			else
+			{
+				currentEnrolmentMap.put(c.getCourseID(), enrolmentlist.size());
+			}			
 		}
 		
 		model.addAttribute("firstName", userDetails.getFirstName());
@@ -86,13 +94,47 @@ public class StudentController {
 		// find enrolment by UserID and CourseID regardless of enrolmentStatus
 		List<StudentCourseDetails> enrolmentfound = stuservice.findEnrolmentByUserIDAndCourseID(userid, courseid);
 		
-		List<Courses>  lecturercourses= stuservice.findCoursesByRole(Roles.LECTURER);		
+		List<Courses>  lecturercourses= stuservice.findCoursesByRole(Roles.LECTURER);	
 		
-		// If the course capacity is fully occupied, then the student is unable to enroll
-		for(Courses c: lecturercourses) {		
+		List<Courses>  availablecourses = new ArrayList<>();
+		
+		for(Courses c : lecturercourses) {
+			if (c.getCourseStartDate().compareTo(LocalDate.now()) > 0 )
+				availablecourses.add(c);
+		}
+		
+		
+		Map<Long, Integer> currentEnrolmentMap= new HashMap<Long, Integer>();
+		
+		for(Courses c: availablecourses) {		
+//			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
+			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseIDAndEnrolmentStatus(c.getCourseID(), EnrolmentStatus.ACCEPTED);
+			if (enrolmentlist == null)
+			{
+			}
+			else
+			{
+				currentEnrolmentMap.put(c.getCourseID(), enrolmentlist.size());
+			}	
 			
-			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
-			if (enrolmentlist.size() == c.getCourseCapacity())
+		}
+		
+		
+		for(Courses c: availablecourses) {		
+			int size = 0;
+//			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
+			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseIDAndEnrolmentStatus(c.getCourseID(), EnrolmentStatus.ACCEPTED);
+			if (enrolmentlist == null)
+			{
+				size = 0;
+			}
+			else
+			{
+				size  = enrolmentlist.size();
+			}
+			
+			// if a course is fully occupied, then the student cannot enroll for it
+			if (size == c.getCourseCapacity())
 			{
 				model.addAttribute("CapacityFullErrorMsg", "The course capacity is fully occupied, no slot available. ");
 				return "forward:/student/lecturercourses";	
