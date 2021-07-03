@@ -332,7 +332,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/user/save")
-	public String saveUserForm(@ModelAttribute("user") @Valid Users user, 
+	public String saveUserForm(@Valid @ModelAttribute("user") Users user, 
 			BindingResult bindingResult, 
 			Model model) {
 
@@ -340,19 +340,20 @@ public class AdminController {
 		String unhashedpassword = null;
 
 		if (bindingResult.hasErrors()) {
-			return "EditUser";
+			return "admin/EditUser";
 		}
 
 		if (user.getPassword() == "") {
 			password = adservice.passwordGenerator();
+			model.addAttribute("password", password);
 			unhashedpassword = password;
+			//System.out.println(password);
 			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
 			user.setPassword(pass.encode(password));
 		} else {
-			password = user.getPassword();
+			model.addAttribute("password", null);
 		}
 
-		model.addAttribute("password", password);
 		adservice.updateUser(user);
 		
 		sendEmail.sendAccountCreatedEmail(user, unhashedpassword);
