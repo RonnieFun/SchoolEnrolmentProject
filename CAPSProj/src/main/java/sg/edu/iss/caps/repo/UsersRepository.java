@@ -25,7 +25,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	List<Users> findByUserID(@Param("userID") Long userID);
 	
 	
-	@Query("SELECT c FROM Courses c JOIN c.users u WHERE u.role = :role")
+	@Query("SELECT distinct c FROM Courses c JOIN c.users u WHERE u.role = :role")
 	List<Courses> findCoursesByRole(@Param("role") Roles role);
 
 	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE u.role= :role "
@@ -48,8 +48,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE "
 			+ "u.userID = :userID AND u.role = :role ")
 	List<Users> findUsersByStudentId( @Param("userID") Long userID,
-			@Param("role") Roles role);
-
-
+			@Param("role") Roles role);	
 
 }
