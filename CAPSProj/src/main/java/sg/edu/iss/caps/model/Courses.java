@@ -48,7 +48,7 @@ public class Courses {
 	@Formula("(SELECT COUNT(*) FROM student_course_details INNER JOIN courses "
 			+ "ON student_course_details.course_courseid = courses.courseid "
 			+ "WHERE student_course_details.enrolment_status = '1'"
-			+ "AND courses.course_name = course_name)")
+			+ "AND courses.courseid = courseid)")
 	private long currentEnrolment;
 
 	//Many to many relationship between StudentCoursedetails and Courses
