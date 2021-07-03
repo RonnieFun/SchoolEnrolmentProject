@@ -47,4 +47,7 @@ public interface AdminInterface {
 	List<Courses> getCoursesByStuId(Long studentId);
 
 	Page<StudentCourseDetails> listAllEnrolment(int currentPage, String sortField, String sortDir);
+	public void updateResetPasswordToken(String token, String email) throws UserNotFoundException;
+	public void updatePassword(Users user, String newPassword);
+	public Users get(String resetPasswordToken);
 }

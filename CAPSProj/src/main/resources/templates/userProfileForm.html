@@ -29,10 +29,10 @@
 				<label>Last name:</label>
 				<input type = "text" th:field="*{lastName}"/><br><br>
 				
-				<label> Password: </label>
-				<input type="password" th:field="*{password}" />
-				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
-				<br><br>
+<!-- 				<label> Password: </label> -->
+				<input type="hidden" th:field="*{password}" />
+<!-- 				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span> -->
+<!-- 				<br><br> -->
 				<input type = "hidden" th:field="*{userID}"/>
 				<input type = "hidden" th:field="*{enabled}"/>
 				<input type = "hidden" th:field="*{salutation}" th:value="${salutation}"/>
@@ -56,10 +56,10 @@
 				<p>
 				<label>Upload profile picture:</label>
 				<input type="file" name="fileImage" id="fileImage"
-				accept="image/png, image/jpeg"/> <br><br>
+				accept="image/png, image/jpeg" /> <br><br>
 				</p>
 				<p>
-					<img id="thumbnail" alt="display picture preview"/>
+					<img th:src="@{${user.getImagePath}}" id="thumbnail" alt="display picture preview"/>
 				</p>
 				<br>
 				<br>

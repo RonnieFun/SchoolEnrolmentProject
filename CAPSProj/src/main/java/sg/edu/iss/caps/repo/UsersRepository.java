@@ -49,6 +49,10 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 			+ "u.userID = :userID AND u.role = :role ")
 	List<Users> findUsersByStudentId( @Param("userID") Long userID,
 			@Param("role") Roles role);
+	
+	public Users findByResetPasswordToken(String token);
+	
+	public Users findByEmail(String email);
 
 
 
