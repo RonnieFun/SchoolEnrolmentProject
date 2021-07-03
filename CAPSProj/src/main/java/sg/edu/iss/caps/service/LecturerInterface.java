@@ -11,49 +11,44 @@ import sg.edu.iss.caps.model.Users;
 
 public interface LecturerInterface {
 
-	//To get list of all courses
 	List<Courses> getAllCourses();
+	
+	List<Courses> findCoursesByCourseId(Long courseID);
+	
+	List<Courses> getAllCoursesByLecturerId(Long id);
 		
-	//To get list of all courses by Lecturer's Id
 	List<Courses> getAllCoursesByRoleAndId(Roles role, Long userID);
+	
+	List<Courses> findCoursebyCourseNameStartDateCourseID(String courseName, LocalDate courseStartDate);
 		
-	//To get all student grades by student id
 	List<Users> findUsersByRoleAndId(Long userID, Roles role);
 			
-	//To get list of all users
+	List<Users> getStudentsByCourseID(Long courseID);
+	
 	List<Users> getAllUsers();
 
-	//To get list of users by Role
 	List<Users> getAllUsersByRole(Roles role);
 	
 	List<Users> getAllUsersByUserID(Long userID);
 	
-	//To get list of users by Role, Course Name and Course Start
+	List<StudentCourseDetails> getAllStudentCourseDetails();
+	
+	List<StudentCourseDetails> getStudentCourseDetailsByCourseID(Long courseID);
+	
 	List<StudentCourseDetails> getAllUsersByRoleCourseNameStartDate(Roles role, EnrolmentStatus enrolmentStatus, String courseName, 
 			LocalDate courseStartDate);
 
-//	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
-	
-	List<StudentCourseDetails> findGradesByStudentIDLecturerID(Long userID, Long lecturerID);
+	List<StudentCourseDetails> getAllUsersByRoleCourseID(Roles role, EnrolmentStatus enrolmentStatus, Long courseID);
+		
+	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
 
 	void addCourseTaught(Long id, Courses course);
 
 	void removeCourseTaught(Long id, Courses course);
 
-	List<Users> getStudentsByCourseID(Long courseID);
-
-	List<StudentCourseDetails> getStudentCourseDetailsByCourseID(Long courseID);
-
 	StudentCourseDetails getStudentCourseDetailsByStudentIDAndCourseID(long parseLong, long parseLong2);
 
 	void saveStudentCourseDetails(StudentCourseDetails studentCourseDetails);
 
-	List<Courses> getAllCoursesByLecturerId(Long id);
-
 	Courses getCoursesById(Long id);
-	
-	List<StudentCourseDetails> getAllStudentCourseDetails();
-	
-	List<Courses> findCoursebyCourseNameStartDateCourseID(String courseName, LocalDate courseStartDate);
-
 }

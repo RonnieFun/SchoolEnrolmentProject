@@ -9,7 +9,7 @@
 <h4 style="text-align:center;">
 <a th:href="@{/admin/addenrolment}"> Add Enrolment</a>
 </h4>
-
+<div align="center">
 <div class = "container-fluid">
 	<div class = "row">
 		<div class = "container">
@@ -17,11 +17,23 @@
 				<thead>
 				<tr>
 					<th>No</th>
-					<th>Enrolment ID</th>
+					<th>
+						<a th:href="@{'/admin/enrolpage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+							Enrolment ID
+						</a>
+					</th>
 					<th>Student Name</th>
 					<th>Student Email</th>
-					<th>Date of Enrollment</th>
-					<th>Grades</th>
+					<th>
+						<a th:href="@{'/admin/enrolpage/' + ${currentPage} + '?sortField=dateOfEnrollment&sortDir=' + ${reverseSortDir}}">
+							Date of Enrollment
+						</a>
+					</th>
+					<th>
+						<a th:href="@{'/admin/enrolpage/' + ${currentPage} + '?sortField=grades&sortDir=' + ${reverseSortDir}}">
+							Grades
+						</a>
+					</th>
 					<th>Enrolment Status</th>
 					<th>Course</th>
 					<th>Action</th>
@@ -40,7 +52,7 @@
 					<td th:text = "${enrolment.grades}"></td>
 					<td th:text = "${enrolment.enrolmentStatus}"></td>
 					<td th:text = "${enrolment.course.courseName}"></td>
-					<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED} ">
+						<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED} ">
 						<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}
 									or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED}">
 							<a th:if="${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
@@ -80,10 +92,37 @@
 		</div>
 	</div>
 </div>
-<script>
-	  $(document).ready( function () {
-    	$('#table_adminenrolment').DataTable();
-		} );
-	</script>
+ <div>&nbsp;</div>
+	<div>
+		Total Items: [[${totalItems}]] - Page[[${currentPage}]] of [[${totalPages}]]
+		&nbsp; - &nbsp;
+		
+		<a th:if="${currentPage > 1}" th:href="@{'/admin/enrolpage/1?sortField=' 
+		+ ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+		<span th:unless="${currentPage > 1}">First</span>
+		&nbsp;&nbsp;
+		<a th:if="${currentPage > 1}" th:href="@{'/admin/enrolpage/' + ${currentPage - 1} 
+		+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+		<span th:unless="${currentPage  > 1}">Previous</span> &nbsp;&nbsp;
+		
+		
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			<a th:if="${i != currentPage}" th:href="@{'/admin/enrolpage/' + ${i}} 
+			+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
+			<span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;&nbsp;
+		</span>
+		
+		<a th:if="${currentPage < totalPages}" th:href="@{'/admin/enrolpage/' + ${currentPage + 1} 
+		+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">Next</a>
+		<span th:unless="${currentPage < totalPages}">Next</span> &nbsp;&nbsp;
+		 
+		<a th:if="${currentPage < totalPages}" th:href="@{'/admin/enrolpage/' + ${totalPages} 
+		+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+		<span th:unless="${currentPage < totalPages}">Last</span> &nbsp;&nbsp;
+		<br>
+		<br>
+		
+	</div> 
+	</div>
 </body>
 </html>

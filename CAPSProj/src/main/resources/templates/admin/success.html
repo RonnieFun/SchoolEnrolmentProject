@@ -26,13 +26,17 @@
 		<span>Email: </span><span th:text="${user.email}"></span>
 		<br><br>
 		<span>Address: </span><span th:text="${user.address}"></span>
-		<br><br>
-		<p>*Please change the default password within 7 days.</p>
-		<span>Password: </span><span th:text="${password}"></span>
-		<br><br>
-		<br><br>
-		<a href="/admin/list"><button>Exit</button></a>
+		<br>
+		<br> 
+		<span th:if="${password != null}"> Please change the default password within 7 days.</span>
+		<br>
+		<br> 
+		<span th:if="${password != null}" th:text="|Password: ${password}|"></span>
+	    <br>
+		<br> <br>
+		<br> <a href="/admin/list"><button>Exit</button></a>
 	</div>
+
 
 </body>
 </html>

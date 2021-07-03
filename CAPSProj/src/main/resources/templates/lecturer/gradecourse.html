@@ -13,24 +13,25 @@
 		<form action="#" th:action="@{/lecturer/gradecourse2}">
 			<table>
 				<tr>
-					<td>Course <select class = "mb-4" name="courseID"
-						onchange="this.form.submit()">
-							<option th:if="${previousselectedcourse == null}" disabled
-								selected>Select an Option</option>
-							<option th:if="${previousselectedcourse == null}"
-								th:each="coursetaught : ${coursestaught}"
+					<td>Course <select class="mb-4" name="courseID" onchange="this.form.submit()">
+							<option th:if="${previousselectedcourse == null}" disabled selected>Select an Option
+							</option>
+							<option th:if="${previousselectedcourse == null}" th:each="coursetaught : ${coursestaught}"
 								th:value="${coursetaught.courseID}"
-								th:text="${coursetaught.courseName} + ' started on ' + ${coursetaught.courseStartDate}"></option>
-							<option th:if="${previousselectedcourse != null}"
-								th:each="coursetaught : ${coursestaught}"
+								th:text="${coursetaught.courseName} + ' started on ' + ${coursetaught.courseStartDate}">
+							</option>
+							<option th:if="${previousselectedcourse != null}" disabled selected>Select an Option
+							</option>
+							<option th:if="${previousselectedcourse != null}" th:each="coursetaught : ${coursestaught}"
 								th:selected="(${coursetaught.courseID} == ${previousselectedcourse.courseID})"
 								th:value="${coursetaught.courseID}"
-								th:text="${coursetaught.courseName} + ' started on ' + ${coursetaught.courseStartDate}"></option>
-					</select>
+								th:text="${coursetaught.courseName} + ' started on ' + ${coursetaught.courseStartDate}">
+							</option>
+						</select>
 				</tr>
 			</table>
 		</form>
-		<table id = "table_gradecourse" class="table table-striped table-bordered">
+		<table id="table_gradecourse" class="table table-striped table-bordered">
 
 			<thead>
 				<tr>
@@ -47,39 +48,38 @@
 					<td th:text="${student.userID}"></td>
 					<td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>
 					<th:block th:each="studentdetail: ${studentdetails}">
-						<th:block
-							th:if="${student.userID} == ${studentdetail.student.userID}">
+						<th:block th:if="${student.userID} == ${studentdetail.student.userID}">
 							<td th:text="${studentdetail.grades}"></td>
 							<td>
 								<form action="#" th:action="@{/lecturer/savegrade}">
-									<input type="hidden" name="studentID"
-										th:value="${student.userID}"> <input type="hidden"
-										name="courseID" th:value="${studentdetail.course.courseID}">
+									<input type="hidden" name="studentID" th:value="${student.userID}"> <input
+										type="hidden" name="courseID" th:value="${studentdetail.course.courseID}">
 									<select name="grade" onchange="this.form.submit()">
-										<option value=""></option>
-										<option value="A+">A+</option>
-										<option value="A">A</option>
-										<option value="A-">A-</option>
-										<option value="B+">B+</option>
-										<option value="B">B</option>
-										<option value="B-">B-</option>
-										<option value="C+">C+</option>
-										<option value="C">C</option>
-										<option value="D+">D+</option>
-										<option value="D">D</option>
-										<option value="F">F</option>
+										<option value="" th:selected="${studentdetail.grades} == ''"></option>
+										<option value="A+" th:selected="${studentdetail.grades} == 'A+'">A+</option>
+										<option value="A" th:selected="${studentdetail.grades} == 'A'">A</option>
+										<option value="A-" th:selected="${studentdetail.grades} == 'A-'">A-</option>
+										<option value="B+" th:selected="${studentdetail.grades} == 'B+'">B+</option>
+										<option value="B" th:selected="${studentdetail.grades} == 'B'">B</option>
+										<option value="B-" th:selected="${studentdetail.grades} == 'B-'">B-</option>
+										<option value="C+" th:selected="${studentdetail.grades} == 'C+'">C+</option>
+										<option value="C" th:selected="${studentdetail.grades} == 'C'">C</option>
+										<option value="D+" th:selected="${studentdetail.grades} == 'D+'">D+</option>
+										<option value="D" th:selected="${studentdetail.grades} == 'D'">D</option>
+										<option value="F" th:selected="${studentdetail.grades} == 'F'">F</option>
 									</select>
 								</form>
 							</td>
 						</th:block>
+					</th:block>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<script>
-	  $(document).ready( function () {
-    	$('#table_gradecourse').DataTable();
-		} );
+		$(document).ready(function () {
+			$('#table_gradecourse').DataTable({stateSave: true});
+		});
 	</script>
 </body>
 

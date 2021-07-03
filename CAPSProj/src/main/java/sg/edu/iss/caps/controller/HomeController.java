@@ -67,10 +67,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/profile/save")
-	public String saveProfile(@ModelAttribute("user") @Valid Users user, 
+	public String saveProfile(@Valid @ModelAttribute("user") Users user, 
 			BindingResult bindingResult, Model model,
 			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
 			
+		if (bindingResult.hasErrors()) {
+			return "userProfileForm";
+		}
+		
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			user.setProfilePicture(fileName);
 			

@@ -26,16 +26,14 @@
         <a class="nav-link" th:href = "@{/}">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/enrolment}">View Student Enrollment</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href = "@{/admin/courselist}">Courses</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href = "@{/admin/enrolment}">Enrolment</a>
-      </li>
-      
-      <li class="nav-item">
+	  </li>
+
+
+	   <li class="nav-item">
         <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href = "@{/student/gradesandgpa}">Grades And GPA</a>
       </li>
       
@@ -49,42 +47,29 @@
       
       <li class="nav-item">
         <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href = "@{/student/enrolmentlist}">Enrolment List and Withdraw</a>
+    </li>
+    
+	  
+	  <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/coursestaught}">View Courses Taught</a>
       </li>
       
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/enrolment}">View Course Enrolment</a>
+      </li>
       
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/gradecourse}">Grade a Course</a>
+      </li>
       
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_LECTURER')" th:href = "@{/lecturer/viewstudentgrades}">View a Student's Performance</a>
+      </li>
+
     </ul>
 		<a href="/logout"><button type="button" class="btn">Logout</button></a>
   </div>
 </nav>
-
-	<div class = "container">
-		<div class = "row">
-			<h2 class = "text-center"> Courses Taught </h2>
-		</div>
-
-	<table id = "table_coursestaught" class="table table-striped">
-		<thead>
-			<tr>
-				<th>S/N</th>
-				<th>Course Id</th>
-				<th>Course Name</th>
-				<th>Maximum Intake</th>
-				<th>Current Enrollment</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr th:each = "coursetaught,iterator: ${coursestaught}">
-				<td th:text = "${iterator.index + 1}"></td>
-				<td th:text = "${coursetaught.courseID}"></td>
-				<td th:text = "${coursetaught.courseName}"></td>
-				<td th:text = "${coursetaught.courseCapacity}"></td>
-				<td th:text = "${coursetaught.currentEnrolment}"></td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
 		<script>
 	  $(document).ready( function () {
     	$('#table_name').DataTable();

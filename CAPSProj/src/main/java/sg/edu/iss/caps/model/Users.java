@@ -3,8 +3,6 @@ package sg.edu.iss.caps.model;
 import java.time.LocalDate;
 import java.util.Collection;
 
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,10 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.Past;
 
-import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.util.Collection;
 
 @Entity
 public class Users {
@@ -62,6 +59,7 @@ public class Users {
 	}
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past (message = "Birthday should not be in the future.")
 	private LocalDate birthday;
 	
 	private String salutation;
