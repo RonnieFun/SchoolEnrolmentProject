@@ -59,4 +59,9 @@ public interface StudentCourseDetailsRepository extends JpaRepository<StudentCou
 
 	@Query("Select scd from StudentCourseDetails scd where scd.course.courseID=:courseID and scd.student.userID=:studentID")
 	StudentCourseDetails getStudentCourseDetailsByStudentIDAndCourseID(long studentID, long courseID);
+	
+	@Query("SELECT scd FROM StudentCourseDetails scd " + "WHERE scd.course.courseID = :id "
+			+ "AND scd.enrolmentStatus=:enrolmentStatus")
+	List<StudentCourseDetails> findEnrolmentByCourseIDAndEnrolmentStatus(@Param("id") long courseid,
+			@Param("enrolmentStatus") EnrolmentStatus enrolmentstatus);
 }

@@ -34,6 +34,8 @@ public interface StudentInterface {
 	void updateEnrolment(StudentCourseDetails enrolment);
 
 	List<StudentCourseDetails> findEnrolmentByCourseID(long courseid);
+
+	List<StudentCourseDetails> findEnrolmentByCourseIDAndEnrolmentStatus(long courseID, EnrolmentStatus enrolmentstatus);
 }
 
 
