@@ -59,7 +59,7 @@ public class LecturerController {
 	}
 	
 	@GetMapping(value = "lecturer/enrolment")
-	public String showCoursesByCourseNameCourseStart(Model model, String courseName,
+	public String showCoursesByCourseNameCourseStart(Long courseID, Model model, String courseName,
 			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus, 
 			@AuthenticationPrincipal MyUserDetails userDetails) {
 		
@@ -69,14 +69,13 @@ public class LecturerController {
 	
 		long lecturerID = userDetails.getUserID();
 		
-		if (courseName != null && courseStartDate != null) {
-			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseNameStartDate(
+		if (courseID != null) {
+			model.addAttribute("studentCourseDetails", lectservice.getAllUsersByRoleCourseID(
 					Roles.STUDENT, 
 					EnrolmentStatus.ACCEPTED, 
-					courseName, 
-					courseStartDate));
+					courseID));
 			
-			model.addAttribute("selectedCourseName", lectservice.findCoursebyCourseNameStartDateCourseID(courseName, courseStartDate));
+			model.addAttribute("selectedCourseName", lectservice.findCoursesByCourseId(courseID));
 		} 		
 		model.addAttribute("coursestaught", lectservice.getAllCoursesByLecturerId(lecturerID));
 		
@@ -92,12 +91,9 @@ public class LecturerController {
 			return "redirect:/login";	
 		}
 		
-		long lecturerID = userDetails.getUserID();
-		
 		if(userID != null) {
 			
-			model.addAttribute("studentCourseDetails2", lectservice.findGradesByStudentIDLecturerID(lecturerID, userID));
-			
+			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(userID, Roles.STUDENT));
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
 		
@@ -118,8 +114,7 @@ public class LecturerController {
 		gradepointsmap.put("D", 1.0);
 		gradepointsmap.put("F", 0.0);
 
-		List<StudentCourseDetails> studentSelected = lectservice.findGradesByStudentIDLecturerID(
-				lecturerID, userID);
+		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(userID, Roles.STUDENT);
 			
 		for(StudentCourseDetails e: studentSelected)
 		{

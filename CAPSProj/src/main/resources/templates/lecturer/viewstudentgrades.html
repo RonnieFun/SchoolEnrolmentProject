@@ -15,7 +15,8 @@
 		
 							<div class = "form-group">
 								<label class = "ml-3 mb-3 mr-3"> Student ID: </label>
-									<input type = "number" name = "userID" class = "form-control" required>
+									<input type = "number" name = "userID" class = "form-control" 
+									min="1" step="1" onkeydown="return event.keyCode !== 190" required>
 							</div>
 
 							<div class = "box-footer float-end ml-3">
@@ -31,12 +32,11 @@
 	</div>
 
 	<div class = "container">
-		<div class = "row justify-content-center mt-4">
+		<div class = "row justify-content-center mt-2">
 			<span th:each = "user : ${users}">
 				<a th:if="${user.role == T(sg.edu.iss.caps.model.Roles).STUDENT}">
-					<h5 class = "text-center">Grades For: </h5>
+					<h5 class = "text-center" th:text = "'Grades For: ' + ${user.firstName} + ' ' + ${user.lastName}"></h5>
 					<div class = "text-center">
-					<p th:text = "'Student Name: ' + ${user.firstName} + ' ' + ${user.lastName}"></p>
 					<p th:text = "'Student ID: ' + ${user.userID}"> </p>
 					</div>
 				</a>	
@@ -47,6 +47,7 @@
 		<thead>
 			<tr>
 				<th>S/N</th>
+				<th>Course ID</th>
 				<th>Course Name</th>
 				<th>Exam Date</th>
 				<th>Credits</th>
@@ -55,9 +56,10 @@
 		</thead>
 				
 		<tbody>
-			<tr th:each = "scd,iterator: ${studentCourseDetails2}">
+			<tr th:each = "scd,iterator: ${studentCourseDetails}">
 				<td th:text = "${iterator.index + 1}"></td>
 				<span th:each = "courses: ${scd.course}">
+					<td th:text = "${courses.courseID}"></td>
 					<td th:text = "${courses.courseName}"></td>
 					<td th:text = "${courses.examDate}"></td>
 					<td th:text = "${courses.credits}"></td>
@@ -69,7 +71,7 @@
 </div>
 	
 	<div class = "container">
-		<div class = "row justify-content-center mt-5">
+		<div class = "row justify-content-center mt-2">
 		<h5><a th:text=" 'Total Credits Earned: ' + ${totalCredits}">CGPA</a></h5>
 		</div> 
 
