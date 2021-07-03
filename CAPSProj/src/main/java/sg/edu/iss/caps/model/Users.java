@@ -12,7 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +31,7 @@ public class Users {
 	
 	private String email;
 	
+	@NotBlank
 	private String password;
 	
 	@Enumerated(EnumType.STRING)

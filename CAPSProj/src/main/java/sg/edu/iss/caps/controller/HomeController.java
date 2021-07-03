@@ -101,7 +101,6 @@ public class HomeController {
 			
 			throw new IOException("Could not save uploaded file: " + fileName);
 		}
-		
 		return "updateSuccess";
 	}
 }
