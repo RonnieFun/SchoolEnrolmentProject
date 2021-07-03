@@ -55,6 +55,9 @@
 				<br>
 				<br>
 				<button type="submit">Submit</button>
+				<div th:if="${#fields.hasErrors('global')}">
+    					<p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+				</div>	
 			</form>
 			</div>
 			

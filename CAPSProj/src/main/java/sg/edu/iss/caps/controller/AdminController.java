@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ import sg.edu.iss.caps.service.AdminInterface;
 import sg.edu.iss.caps.service.EmailSendingInterface;
 import sg.edu.iss.caps.service.LecturerInterface;
 import sg.edu.iss.caps.service.MyUserDetails;
+import sg.edu.iss.caps.service.UserValidationService;
 
 @Controller
 @RequestMapping("/admin")
@@ -48,6 +50,9 @@ public class AdminController {
 	
 	@Autowired
 	LecturerInterface leservice;
+	
+	@Autowired
+	UserValidationService validservice;
 	
 	@Autowired
 	EmailSendingInterface sendEmail;
@@ -302,20 +307,20 @@ public class AdminController {
 		return "admin/Admin";
 	}
 
-	@RequestMapping("/listfilter")
-	public String listRoleAll(@RequestParam(value = "role", required = false) String role, 
-			Model model) {
-		if (role != null) {
-			List<Users> ulist = adservice.listByRole(Roles.valueOf(role));
-			model.addAttribute("ulist", ulist);
-		} else {
-			List<Users> ulist = adservice.listUsers();
-			model.addAttribute("ulist", ulist);
-			model.addAttribute("RoleType", "All Users");
-		}
-
-		return "admin/Admin";
-	}
+//	@RequestMapping("/listfilter")
+//	public String listRoleAll(@RequestParam(value = "role", required = false) String role, 
+//			Model model) {
+//		if (role != null) {
+//			List<Users> ulist = adservice.listByRole(Roles.valueOf(role));
+//			model.addAttribute("ulist", ulist);
+//		} else {
+//			List<Users> ulist = adservice.listUsers();
+//			model.addAttribute("ulist", ulist);
+//			model.addAttribute("RoleType", "All Users");
+//		}
+//
+//		return "admin/Admin";
+//	}
 
 	@RequestMapping("/deleteuser")
 	public String DeleteUser(@RequestParam(name = "id", required = true) long id) {
@@ -335,13 +340,21 @@ public class AdminController {
 	public String saveUserForm(@Valid @ModelAttribute("user") Users user, 
 			BindingResult bindingResult, 
 			Model model) {
+		
+		String err = validservice.validateUserEmail(user);
+		
+		List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
+		model.addAttribute("salutationList", salutationList);
+		
+	    if (!err.isEmpty()) {
+	        ObjectError error = new ObjectError("globalError", err);
+	        bindingResult.addError(error);
+	    }
+		
 
+		
 		String password = null;
 		String unhashedpassword = null;
-
-		if (bindingResult.hasErrors()) {
-			return "admin/EditUser";
-		}
 
 		if (user.getPassword() == "") {
 			password = adservice.passwordGenerator();
@@ -352,6 +365,11 @@ public class AdminController {
 			user.setPassword(pass.encode(password));
 		} else {
 			model.addAttribute("password", null);
+		}
+		
+		if (bindingResult.hasErrors()) {
+			user.setPassword(null);
+			return "admin/EditUser";
 		}
 
 		adservice.updateUser(user);

@@ -188,4 +188,10 @@ public class AdminImplementation implements AdminInterface {
 		return scdrepo.findAll(pageable);
 	}
 
+	@Override
+	public Users findByEmail(String email) {
+
+		return urepo.getUserByEmail(email);
+	}
+
 }

@@ -36,6 +36,7 @@ public interface AdminInterface {
 	public String passwordGenerator();
 	public Page<Users> listRoleUsers(int pageNumber, String sortField, String sortDir, Roles role);
 	public Users save(Users user);
+	public Users findByEmail(String email);
 
 	List<Courses> getCourses();
 	Courses getCourseById(long courseID);
