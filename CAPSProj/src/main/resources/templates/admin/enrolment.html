@@ -34,7 +34,11 @@
 							Grades
 						</a>
 					</th>
-					<th>Enrolment Status</th>
+					<th>
+						<a th:href="@{'/admin/enrolpage/' + ${currentPage} + '?sortField=enrolmentStatus&sortDir=' + ${reverseSortDir}}">
+							Enrolment Status
+						</a>
+					</th>
 					<th>Course</th>
 					<th>Action</th>
 					<th>Action</th>
