@@ -41,6 +41,8 @@
 				
 				<label>Date of birth: </label>
 				<input type = "date" th:field="*{birthday}"/><br><br>
+							<p th:if="${#fields.hasErrors('birthday')}"
+				th:errors="*{birthday}" style="color: red"></p>
 				
 				<p>
 				<label>Upload profile picture:</label>

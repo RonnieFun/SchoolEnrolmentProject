@@ -64,16 +64,50 @@ public class AdminController {
 		return "admin/courselist";
 	}
 
-	// retrieve enrolment list
-	@GetMapping("/enrolment")
-	public String showEnrolments(Model model,@AuthenticationPrincipal MyUserDetails userDetails) {
-		if(userDetails == null) {
-			return "redirect:/login";	
-		}
+//	// retrieve enrolment list
+//	@GetMapping("/enrolment")
+//	public String showEnrolments(Model model,@AuthenticationPrincipal MyUserDetails userDetails) {
+//		if(userDetails == null) {
+//			return "redirect:/login";	
+//		}
+//
+//		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
+//		return "admin/enrolment";
+//	}
+	
+	@RequestMapping(value = "/enrolment")
+	public String showEnrolments(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		return listEnrolmentByPage(model, 1, "id", "asc", userDetails);
+	}
 
-		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
+	@GetMapping("/enrolpage/{pageNumber}")
+	public String listEnrolmentByPage(Model model, 
+			@PathVariable("pageNumber") int currentPage,
+			@Param("sortField") String sortField, 
+			@Param("sortDir") String sortDir,
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+
+		List<StudentCourseDetails> clist;
+		Page<StudentCourseDetails> page;
+
+		page = adservice.listAllEnrolment(currentPage, sortField, sortDir);
+
+		long totalItems = page.getTotalElements();
+		int totalPages = page.getTotalPages();
+		clist = page.getContent();
+		model.addAttribute("enrolmentlist", clist);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("totalItems", totalItems);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		model.addAttribute("reverseSortDir", reverseSortDir);
+
 		return "admin/enrolment";
 	}
+
 
 	// show enrolment form
 	@GetMapping("/addenrolment")
@@ -298,7 +332,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/user/save")
-	public String saveUserForm(@ModelAttribute("user") @Valid Users user, 
+	public String saveUserForm(@Valid @ModelAttribute("user") Users user, 
 			BindingResult bindingResult, 
 			Model model) {
 
@@ -306,19 +340,20 @@ public class AdminController {
 		String unhashedpassword = null;
 
 		if (bindingResult.hasErrors()) {
-			return "EditUser";
+			return "admin/EditUser";
 		}
 
 		if (user.getPassword() == "") {
 			password = adservice.passwordGenerator();
+			model.addAttribute("password", password);
 			unhashedpassword = password;
+			//System.out.println(password);
 			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
 			user.setPassword(pass.encode(password));
 		} else {
-			password = user.getPassword();
+			model.addAttribute("password", null);
 		}
 
-		model.addAttribute("password", password);
 		adservice.updateUser(user);
 		
 		sendEmail.sendAccountCreatedEmail(user, unhashedpassword);
