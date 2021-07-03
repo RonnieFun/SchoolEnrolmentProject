@@ -104,6 +104,6 @@ public class StudentImplementation implements StudentInterface {
 	@Transactional
 	public List<StudentCourseDetails> findEnrolmentByCourseIDAndEnrolmentStatus(long courseID,
 			EnrolmentStatus enrolmentstatus) {
-		return null;
+		return scdrepo.findEnrolmentByCourseIDAndEnrolmentStatus(courseID, enrolmentstatus);
 	}
 }
