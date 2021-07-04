@@ -82,15 +82,15 @@ public class ForgotPasswordController {
 		mailSender.send(message);
 	}
 	
-	@RequestMapping("/reset_password")
+	@GetMapping("/reset_password")
 	public String showResetPasswordForm(@Param(value = "token")String token, Model model) {
 		
 		Users user = adservice.get(token);
-//		if(user ==null) {
-//			model.addAttribute("title","Reset your password");
-//			model.addAttribute("message", "Invalid Token");
-//			return "message";
-//		}
+		if(user ==null) {
+			model.addAttribute("title","Reset your password");
+			model.addAttribute("message", "Invalid Token");
+			return "message";
+		}
 		
 		model.addAttribute("token", token);
 		model.addAttribute("pageTitle","Reset your password");
@@ -98,7 +98,7 @@ public class ForgotPasswordController {
 		
 	}
 	
-	@RequestMapping("/rest_password")
+	@RequestMapping("/reset_password")
 	public String processRestPassword(HttpServletRequest request, Model model) {
 		String token = request.getParameter("token");
 		String password = request.getParameter("password");

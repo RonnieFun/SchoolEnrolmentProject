@@ -12,12 +12,12 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
 	<div>
 		<img th:src="@{/images/schoolLogo.png}" /><br><br>
 	</div>
-<!-- 	<div th:if="${param.error}"> -->
-<!-- 		<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p> -->
-<!-- 	</div> -->
-<!-- 	<div th:if="${param.Logout}"> -->
-<!-- 		<p class="text-warning">You have been logged out</p> -->
-<!-- 	</div> -->
+	<div th:if="${param.error}">
+		<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+	</div>
+	<div th:if="${param.Logout}">
+		<p class="text-warning">You have been logged out</p>
+	</div>
 	<form th:action="@{/login}" method="post" style="max-width:350px; margin: 0 auto;">
 		<div class = "border border-secondary p-3 rounded">
 			<p>Access to CAPS portal</p>
