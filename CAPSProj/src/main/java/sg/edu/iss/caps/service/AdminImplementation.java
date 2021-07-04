@@ -214,4 +214,10 @@ public class AdminImplementation implements AdminInterface {
 		urepo.save(user);
 	}
 
+	@Override
+	public Users findByEmail(String email) {
+
+		return urepo.getUserByEmail(email);
+	}
+
 }

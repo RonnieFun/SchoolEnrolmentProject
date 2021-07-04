@@ -31,7 +31,7 @@ public class Users {
 	
 	private String email;
 	
-	@NotBlank
+	//@NotBlank
 	private String password;
 	
 	@Enumerated(EnumType.STRING)

@@ -43,7 +43,7 @@ public class StudentController {
 	
 	// find all courses that already assigned to lecturers
 	@GetMapping("/availablecourselist")
-	public String getAllLectuererCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails)
+	public String availableCourses(Model model, @AuthenticationPrincipal MyUserDetails userDetails)
 	{
 		if(userDetails == null) {
 			return "redirect:/login";	
