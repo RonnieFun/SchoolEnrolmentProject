@@ -60,7 +60,6 @@ public class StudentController {
 		Map<Long, Integer> currentEnrolmentMap= new HashMap<Long, Integer>();
 		
 		for(Courses c: availablecourses) {		
-//			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
 			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseIDAndEnrolmentStatus(c.getCourseID(), EnrolmentStatus.ACCEPTED);
 			if (enrolmentlist == null)
 			{
@@ -80,6 +79,7 @@ public class StudentController {
 	}
 	
 	
+	//add enrolment with course id
 	@GetMapping("/addenrolment/{courseid}")
 	public String addEnrolment( Model model, @PathVariable long courseid, @AuthenticationPrincipal MyUserDetails userDetails) {		
 		
@@ -107,7 +107,6 @@ public class StudentController {
 		Map<Long, Integer> currentEnrolmentMap= new HashMap<Long, Integer>();
 		
 		for(Courses c: availablecourses) {		
-//			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
 			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseIDAndEnrolmentStatus(c.getCourseID(), EnrolmentStatus.ACCEPTED);
 			if (enrolmentlist == null)
 			{
@@ -122,7 +121,6 @@ public class StudentController {
 		
 		for(Courses c: availablecourses) {		
 			int size = 0;
-//			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseID(c.getCourseID());
 			List<StudentCourseDetails>  enrolmentlist = stuservice.findEnrolmentByCourseIDAndEnrolmentStatus(c.getCourseID(), EnrolmentStatus.ACCEPTED);
 			if (enrolmentlist == null)
 			{

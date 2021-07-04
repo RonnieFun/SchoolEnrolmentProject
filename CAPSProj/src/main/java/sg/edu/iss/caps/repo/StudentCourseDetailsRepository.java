@@ -75,14 +75,6 @@ public interface StudentCourseDetailsRepository extends JpaRepository<StudentCou
 			+ "AND scd.enrolmentStatus=:enrolmentStatus")
 	List<StudentCourseDetails> findEnrolmentByCourseIDAndEnrolmentStatus(@Param("id") long courseid,
 			@Param("enrolmentStatus") EnrolmentStatus enrolmentstatus);
-
-	
-	//Code to display CGPA based on a particular logged in lecturer. KIV for now. 
-//	@Query(value = "SELECT * FROM caps.student_course_details scd where scd.course_courseid "
-//			+ "IN(SELECT c1.courseid from caps.courses c1 INNER JOIN caps.users_courses uc\r\n"
-//			+ "	on c1.courseid = uc.courses_courseid where uc.users_userid =:lecturerID) "
-//			+ "and scd.student_userid =:userID", nativeQuery = true)
-//	List<StudentCourseDetails> findGradesByStudentIDLecturerID(@Param("lecturerID") Long lecturerID, @Param("userID") Long userID);
 }
 
 

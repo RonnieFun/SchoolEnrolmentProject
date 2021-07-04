@@ -30,12 +30,14 @@ public class ForgotPasswordController {
 	@Autowired
 	JavaMailSender mailSender;
 	
+	//display forget password form
 	@GetMapping("/forgot_password")
 	public String showForgotPasswordForm(Model model) {
 		model.addAttribute("pageTitle", "Forgot Password");
 		return"forgot_password_form";
 	}
 	
+	//update password
 	@PostMapping("/forgot_password")
 	public String processForgotPasswordForm(HttpServletRequest request, Model model) {
 		String email = request.getParameter("email");
@@ -63,6 +65,7 @@ public class ForgotPasswordController {
 		return"forgot_password_form";
 	}
 	
+	//email send function
 	private void sendEmail(String email, String resetPasswordLink) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -82,6 +85,7 @@ public class ForgotPasswordController {
 		mailSender.send(message);
 	}
 	
+	//reset password
 	@GetMapping("/reset_password")
 	public String showResetPasswordForm(@Param(value = "token")String token, Model model) {
 		

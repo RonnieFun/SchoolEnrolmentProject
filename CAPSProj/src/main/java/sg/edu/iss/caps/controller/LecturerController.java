@@ -43,7 +43,7 @@ public class LecturerController {
 		this.lectservice =ls;
 	}
 	
-	
+	// display course that lecturer taught
 	@GetMapping(value = "/lecturer/coursestaught")
 	public String showLecturerCoursesById(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		
@@ -58,6 +58,7 @@ public class LecturerController {
 		return "lecturer/coursestaught";
 	}
 	
+	// display enrolment
 	@GetMapping(value = "lecturer/enrolment")
 	public String showCoursesByCourseNameCourseStart(Long courseID, Model model, String courseName,
 			@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate courseStartDate, Roles role, EnrolmentStatus enrolmentStatus, 
@@ -82,7 +83,7 @@ public class LecturerController {
 		return "lecturer/enrolment";
 	}
 		
-	
+	//view student grade and cpa
 	@GetMapping(value = "/lecturer/viewstudentgrades")
 	public String showStudentGrades(Roles role, Long userID, Model model, 
 			@AuthenticationPrincipal MyUserDetails userDetails) {
@@ -141,6 +142,7 @@ public class LecturerController {
 		return "lecturer/viewstudentgrades";
 	}	
 
+	//make a grade course
 	@RequestMapping("/lecturer/gradecourse")
 	public String gradeCourse(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 
@@ -149,6 +151,7 @@ public class LecturerController {
 		return "lecturer/gradecourse";
 	}
 
+	
 	@RequestMapping("/lecturer/gradecourse2")
 	public String gradeCertainCourse(Model model, HttpServletRequest request, @RequestParam String courseID, @AuthenticationPrincipal MyUserDetails userDetails) {
 
@@ -163,6 +166,7 @@ public class LecturerController {
 		return "lecturer/gradecourse";
 	}
 
+	//save grade course
 	@RequestMapping("/lecturer/savegrade")
 	public String saveGrade(@RequestParam String studentID, @RequestParam String grade, @RequestParam String courseID) {
 		StudentCourseDetails scd = lectservice.getStudentCourseDetailsByStudentIDAndCourseID(Long.parseLong(studentID),

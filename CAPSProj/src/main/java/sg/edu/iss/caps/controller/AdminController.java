@@ -57,11 +57,6 @@ public class AdminController {
 	@Autowired
 	EmailSendingInterface sendEmail;
 
-//	@Autowired
-//	public void setAdminInterface(AdminInterface ads) {
-//		this.adservice = ads;
-//	}
-
 	// display course list
 	@RequestMapping("/courselist")
 	public String courseList(Model model) {
@@ -69,22 +64,13 @@ public class AdminController {
 		return "admin/courselist";
 	}
 
-//	// retrieve enrolment list
-//	@GetMapping("/enrolment")
-//	public String showEnrolments(Model model,@AuthenticationPrincipal MyUserDetails userDetails) {
-//		if(userDetails == null) {
-//			return "redirect:/login";	
-//		}
-//
-//		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
-//		return "admin/enrolment";
-//	}
-
+	//display enrolment list
 	@RequestMapping(value = "/enrolment")
 	public String showEnrolments(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		return listEnrolmentByPage(model, 1, "id", "asc", userDetails);
 	}
 
+	//pagination for enrolment
 	@GetMapping("/enrolpage/{pageNumber}")
 	public String listEnrolmentByPage(Model model, @PathVariable("pageNumber") int currentPage,
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
@@ -142,6 +128,7 @@ public class AdminController {
 		return "admin/addenrolment";
 	}
 
+	//edit enrolment 
 	@GetMapping("/editenrolment/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id,
 			@AuthenticationPrincipal MyUserDetails userDetails) {
@@ -153,6 +140,7 @@ public class AdminController {
 		return "admin/enrolmentform";
 	}
 
+	//approve enrolment
 	@GetMapping("/approveenrolment/{id}")
 	public String approveEnrolment(Model model, @PathVariable("id") Long id,
 			@AuthenticationPrincipal MyUserDetails userDetails) {
@@ -167,6 +155,7 @@ public class AdminController {
 		return "redirect:/admin/enrolment";
 	}
 
+	//reject enrolment
 	@GetMapping("/rejectenrolment/{id}")
 	public String rejectEnrolment(Model model, @PathVariable("id") Long id,
 			@AuthenticationPrincipal MyUserDetails userDetails) {
@@ -181,6 +170,7 @@ public class AdminController {
 		return "redirect:/admin/enrolment";
 	}
 
+	//delete enrolment
 	@GetMapping("/deleteenrolment/{id}")
 	public String deleteMethod(Model model, @PathVariable("id") Long id,
 			@AuthenticationPrincipal MyUserDetails userDetails) {
@@ -193,6 +183,7 @@ public class AdminController {
 		return "redirect:/admin/enrolment";
 	}
 
+	//create enrolment
 	@RequestMapping("/enrolment/create")
 	public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
 			BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
@@ -212,6 +203,7 @@ public class AdminController {
 		return "redirect:/admin/enrolment";
 	}
 
+	//update enrolment
 	@RequestMapping("/enrolment/update")
 	public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
 			BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
@@ -251,11 +243,13 @@ public class AdminController {
 	}
 
 	// BRANDON AND ALE
+	//display user list
 	@RequestMapping(value = "list")
 	public String listUser(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		return listByPage(model, 1, "lastName", "asc", "all", userDetails);
 	}
 
+	//pagination for user
 	@GetMapping("/page/{pageNumber}")
 	public String listByPage(Model model, @PathVariable("pageNumber") int currentPage,
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
@@ -274,13 +268,11 @@ public class AdminController {
 			model.addAttribute("lastName", lastName);
 			model.addAttribute("roleTag", roletag);
 		}
-		// System.out.println(firstName); // for debuggging
 
 		List<Users> ulist;
 		Page<Users> page;
 
 		if (!role.equals("all")) {
-			// ulist = adservice.listByRole(Roles.valueOf(role));
 			page = adservice.listRoleUsers(currentPage, sortField, sortDir, Roles.valueOf(role));
 			model.addAttribute("RoleType", role);
 		} else {
@@ -304,27 +296,14 @@ public class AdminController {
 		return "admin/Admin";
 	}
 
-//	@RequestMapping("/listfilter")
-//	public String listRoleAll(@RequestParam(value = "role", required = false) String role, 
-//			Model model) {
-//		if (role != null) {
-//			List<Users> ulist = adservice.listByRole(Roles.valueOf(role));
-//			model.addAttribute("ulist", ulist);
-//		} else {
-//			List<Users> ulist = adservice.listUsers();
-//			model.addAttribute("ulist", ulist);
-//			model.addAttribute("RoleType", "All Users");
-//		}
-//
-//		return "admin/Admin";
-//	}
-
+	//delete user
 	@RequestMapping("/deleteuser")
 	public String DeleteUser(@RequestParam(name = "id", required = true) long id) {
 		adservice.deleteUser(id);
 		return "redirect:/admin/page/1?sortField=userID&sortDir=asc";
 	}
 
+	//edit user
 	@RequestMapping("/edit/{id}")
 	public String ShowEditUserForm(Model model, @PathVariable("id") Long id) {
 		List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
@@ -333,6 +312,7 @@ public class AdminController {
 		return "admin/EditUser";
 	}
 
+	//save user
 	@RequestMapping("/user/save")
 	public String saveUserForm(@Valid @ModelAttribute("user") Users user, BindingResult bindingResult, Model model) {
 
@@ -373,6 +353,7 @@ public class AdminController {
 		return "admin/success";
 	}
 
+	//create user
 	@RequestMapping("/user/create")
 	public String createUser(Model model) {
 		Users user = new Users();

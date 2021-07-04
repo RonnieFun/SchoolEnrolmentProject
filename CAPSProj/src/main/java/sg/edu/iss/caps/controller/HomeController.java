@@ -50,6 +50,7 @@ public class HomeController {
 		this.hservice = hs;
 	}
 
+	//display login
 	@RequestMapping("/login")
 	public String login(Model model) { 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,11 +61,13 @@ public class HomeController {
 		
 	}
 	
+	// 403 customize page
 	@RequestMapping("/403")
 	public String ForbiddenError() {
 		return "403";
 	}
 	
+	//edit user profile
 	@RequestMapping("/edituser")
 	public String showEditProfileForm(Model model, 
 			@AuthenticationPrincipal MyUserDetails userDetails) {
@@ -72,6 +75,7 @@ public class HomeController {
 		return "userProfileForm";
 	}
 	
+	//save user profile
 	@RequestMapping("/profile/save")
 	public String saveProfile(@Valid @ModelAttribute("user") Users user, 
 			BindingResult bindingResult, Model model,
@@ -86,11 +90,6 @@ public class HomeController {
 			user.setProfilePicture(fileName);
 			if(user.getProfilePicture().contains("png") || user.getProfilePicture().contains("jpeg") ||
 					user.getProfilePicture().contains("jpg")) {
-//			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
-//			user.setPassword(pass.encode(user.getPassword()));
-//			String password = user.getPassword();
-
-//		model.addAttribute("password", password);
 		Users savedUser = adservice.save(user);
 		
 		String uploadDir = "./profile-pic/" + savedUser.getUserID();
