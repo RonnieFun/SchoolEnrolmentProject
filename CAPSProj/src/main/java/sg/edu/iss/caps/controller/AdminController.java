@@ -47,13 +47,13 @@ public class AdminController {
 
 	@Autowired
 	AdminInterface adservice;
-	
+
 	@Autowired
 	LecturerInterface leservice;
-	
+
 	@Autowired
 	UserValidationService validservice;
-	
+
 	@Autowired
 	EmailSendingInterface sendEmail;
 
@@ -79,17 +79,15 @@ public class AdminController {
 //		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 //		return "admin/enrolment";
 //	}
-	
+
 	@RequestMapping(value = "/enrolment")
 	public String showEnrolments(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		return listEnrolmentByPage(model, 1, "id", "asc", userDetails);
 	}
 
 	@GetMapping("/enrolpage/{pageNumber}")
-	public String listEnrolmentByPage(Model model, 
-			@PathVariable("pageNumber") int currentPage,
-			@Param("sortField") String sortField, 
-			@Param("sortDir") String sortDir,
+	public String listEnrolmentByPage(Model model, @PathVariable("pageNumber") int currentPage,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
 			@AuthenticationPrincipal MyUserDetails userDetails) {
 
 		List<StudentCourseDetails> clist;
@@ -113,41 +111,42 @@ public class AdminController {
 		return "admin/enrolment";
 	}
 
-
 	// show enrolment form
 	@GetMapping("/addenrolment")
-	public String showEnrolmentForm(Model model,@AuthenticationPrincipal MyUserDetails userDetails) {
-		if(userDetails == null) {
-			return "redirect:/login";	
+	public String showEnrolmentForm(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
 
 		StudentCourseDetails enrolment = new StudentCourseDetails();
 		model.addAttribute("enrolment", enrolment);
 		// getting studentIDList
-		Map<Long, String> studentIDList= new HashMap<Long, String>();
-		Long studentId =null;
+		Map<Long, String> studentIDList = new HashMap<Long, String>();
+		Long studentId = null;
 		List<Users> studentList = adservice.getStudentList();
 		for (int i = 0; i < studentList.size(); i++) {
 			studentId = studentList.get(0).getUserID();
-			studentIDList.put(studentList.get(i).getUserID(),studentList.get(i).getFirstName()+' '+studentList.get(i).getLastName());
+			studentIDList.put(studentList.get(i).getUserID(),
+					studentList.get(i).getFirstName() + ' ' + studentList.get(i).getLastName());
 		}
 
-		//get CourseIDList relate with first student
-		Map<Long, String> courseIDList= new HashMap<Long, String>();
+		// get CourseIDList relate with first student
+		Map<Long, String> courseIDList = new HashMap<Long, String>();
 		List<Courses> courseList = adservice.getCoursesByStuId(studentId);
 		for (int i = 0; i < courseList.size(); i++) {
-			courseIDList.put(courseList.get(i).getCourseID(),courseList.get(i).getCourseName());
+			courseIDList.put(courseList.get(i).getCourseID(), courseList.get(i).getCourseName());
 		}
-		
-		model.addAttribute("studentList",studentIDList);
+
+		model.addAttribute("studentList", studentIDList);
 		model.addAttribute("courseList", courseIDList);
 		return "admin/addenrolment";
 	}
 
 	@GetMapping("/editenrolment/{id}")
-	public String showEditForm(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
-		if(userDetails == null) {
-			return "redirect:/login";	
+	public String showEditForm(Model model, @PathVariable("id") Long id,
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
 
 		model.addAttribute("enrolment", adservice.getEnrolment(id));
@@ -155,9 +154,10 @@ public class AdminController {
 	}
 
 	@GetMapping("/approveenrolment/{id}")
-	public String approveEnrolment(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
-		if(userDetails == null) {
-			return "redirect:/login";	
+	public String approveEnrolment(Model model, @PathVariable("id") Long id,
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
 
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
@@ -166,11 +166,12 @@ public class AdminController {
 		adservice.updateEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
 	}
-	
+
 	@GetMapping("/rejectenrolment/{id}")
-	public String rejectEnrolment(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
-		if(userDetails == null) {
-			return "redirect:/login";	
+	public String rejectEnrolment(Model model, @PathVariable("id") Long id,
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
 
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
@@ -179,17 +180,19 @@ public class AdminController {
 		adservice.updateEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
 	}
+
 	@GetMapping("/deleteenrolment/{id}")
-	public String deleteMethod(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal MyUserDetails userDetails) {
-		if(userDetails == null) {
-			return "redirect:/login";	
+	public String deleteMethod(Model model, @PathVariable("id") Long id,
+			@AuthenticationPrincipal MyUserDetails userDetails) {
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
 
 		StudentCourseDetails enrolment = adservice.getEnrolment(id);
 		adservice.deleteEnrolment(enrolment);
 		return "redirect:/admin/enrolment";
 	}
-	
+
 	@RequestMapping("/enrolment/create")
 	public String saveEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
 			BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
@@ -197,10 +200,9 @@ public class AdminController {
 		if (bindingResult.hasErrors()) {
 			return "enrolmentform";
 		}
-		if(userDetails == null) {
-			return "redirect:/login";	
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
-		
 
 		LocalDate lt = LocalDate.now();
 		enrolment.setDateOfEnrollment(lt);
@@ -212,56 +214,51 @@ public class AdminController {
 
 	@RequestMapping("/enrolment/update")
 	public String updateEnrolmentForm(@ModelAttribute("enrolment") @Valid StudentCourseDetails enrolment,
-			BindingResult bindingResult, Model model , @AuthenticationPrincipal MyUserDetails userDetails) {
+			BindingResult bindingResult, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 
 		if (bindingResult.hasErrors()) {
 			return "enrolmentform";
 		}
-		if(userDetails == null) {
-			return "redirect:/login";	
+		if (userDetails == null) {
+			return "redirect:/login";
 		}
 
 		adservice.saveEnrolment(enrolment);
 		model.addAttribute("enrolmentlist", adservice.getAllEnrolment());
 		return "redirect:/admin/enrolment";
 	}
-	
-	//ajax call
-		@RequestMapping(value= "/getCourses" , method = RequestMethod.POST)
-		@ResponseBody 
-		public String add(@RequestParam(value ="studentId") Long studentId)
-				throws Exception {
 
-			List<Courses> course = adservice.getCoursesByStuId(studentId);
-			Map<Long,String> courseList = new HashMap<Long, String>();
-			for(int i=0; i<course.size();i++) {
-				courseList.put(course.get(i).getCourseID(),course.get(i).getCourseName());
-			}
-			String jsSon=null;
-			ObjectMapper  mapper = new ObjectMapper();
-			if(!courseList.isEmpty()) {
-				try {
-					jsSon = mapper.writeValueAsString(courseList);
-				}
-				catch(JsonGenerationException e) {
-					e.printStackTrace();
-				}
-			}
-			return jsSon;
+	// ajax call
+	@RequestMapping(value = "/getCourses", method = RequestMethod.POST)
+	@ResponseBody
+	public String add(@RequestParam(value = "studentId") Long studentId) throws Exception {
+
+		List<Courses> course = adservice.getCoursesByStuId(studentId);
+		Map<Long, String> courseList = new HashMap<Long, String>();
+		for (int i = 0; i < course.size(); i++) {
+			courseList.put(course.get(i).getCourseID(), course.get(i).getCourseName());
 		}
+		String jsSon = null;
+		ObjectMapper mapper = new ObjectMapper();
+		if (!courseList.isEmpty()) {
+			try {
+				jsSon = mapper.writeValueAsString(courseList);
+			} catch (JsonGenerationException e) {
+				e.printStackTrace();
+			}
+		}
+		return jsSon;
+	}
 
-	
-	//BRANDON AND ALE
+	// BRANDON AND ALE
 	@RequestMapping(value = "list")
 	public String listUser(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
 		return listByPage(model, 1, "lastName", "asc", "all", userDetails);
 	}
 
 	@GetMapping("/page/{pageNumber}")
-	public String listByPage(Model model, 
-			@PathVariable("pageNumber") int currentPage,
-			@Param("sortField") String sortField, 
-			@Param("sortDir") String sortDir,
+	public String listByPage(Model model, @PathVariable("pageNumber") int currentPage,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
 			@RequestParam(value = "role", required = false, defaultValue = "all") String role,
 			@AuthenticationPrincipal MyUserDetails userDetails) {
 
@@ -272,12 +269,12 @@ public class AdminController {
 		if (userDetails != null) {
 			firstName = userDetails.getFirstName();
 			lastName = userDetails.getLastName();
-			roletag=userDetails.getRole().toString();
+			roletag = userDetails.getRole().toString();
 			model.addAttribute("firstName", firstName);
 			model.addAttribute("lastName", lastName);
 			model.addAttribute("roleTag", roletag);
 		}
-		//System.out.println(firstName); // for debuggging
+		// System.out.println(firstName); // for debuggging
 
 		List<Users> ulist;
 		Page<Users> page;
@@ -337,22 +334,18 @@ public class AdminController {
 	}
 
 	@RequestMapping("/user/save")
-	public String saveUserForm(@Valid @ModelAttribute("user") Users user, 
-			BindingResult bindingResult, 
-			Model model) {
-		
+	public String saveUserForm(@Valid @ModelAttribute("user") Users user, BindingResult bindingResult, Model model) {
+
 		String err = validservice.validateUserEmail(user);
-		
+
 		List<String> salutationList = Arrays.asList("Mr", "Ms", "Mrs");
 		model.addAttribute("salutationList", salutationList);
-		
-	    if (!err.isEmpty()) {
-	        ObjectError error = new ObjectError("globalError", err);
-	        bindingResult.addError(error);
-	    }
-		
 
-		
+		if (!err.isEmpty()) {
+			ObjectError error = new ObjectError("globalError", err);
+			bindingResult.addError(error);
+		}
+
 		String password = null;
 		String unhashedpassword = null;
 
@@ -360,22 +353,23 @@ public class AdminController {
 			password = adservice.passwordGenerator();
 			model.addAttribute("password", password);
 			unhashedpassword = password;
-			//System.out.println(password);
+			// System.out.println(password);
 			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
 			user.setPassword(pass.encode(password));
 		} else {
 			model.addAttribute("password", null);
 		}
-		
+
 		if (bindingResult.hasErrors()) {
-			user.setPassword(null);
+			if (unhashedpassword != null)
+				user.setPassword(null);
 			return "admin/EditUser";
 		}
 
 		adservice.updateUser(user);
-		
+
 		sendEmail.sendAccountCreatedEmail(user, unhashedpassword);
-		
+
 		return "admin/success";
 	}
 
@@ -502,10 +496,7 @@ public class AdminController {
 			}
 		}
 		return "forward:/admin/courselist";
-		
-		
+
 	}
-	
-	
-	
+
 }
