@@ -63,14 +63,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticated()
 			.and()
 			.formLogin()
-				.loginPage("/login")
+				.loginPage("/home/login")
 				.usernameParameter("email")
+				.failureUrl("/home/login?error")
 				.permitAll()
 			.and()
 			.csrf().disable().cors().and()
-			.logout().logoutSuccessUrl("/").permitAll()
-			.and()
-			.exceptionHandling().accessDeniedPage("/home/403");
+			.logout().logoutSuccessUrl("/").permitAll();
+//			.and()
+//			.exceptionHandling().accessDeniedPage("/home/403");
+
 
 	}
 
