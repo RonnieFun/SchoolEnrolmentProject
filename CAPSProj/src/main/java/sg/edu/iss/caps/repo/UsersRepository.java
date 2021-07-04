@@ -47,7 +47,12 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	
 	@Query("SELECT u FROM Users u JOIN u.studentCourseDetail sc JOIN sc.course c WHERE "
 			+ "u.userID = :userID AND u.role = :role ")
-	List<Users> findUsersByStudentId( @Param("userID") Long userID,
-			@Param("role") Roles role);	
+	List<Users> findUsersByStudentId( @Param("userID") Long userID,	@Param("role") Roles role);
+	
+	public Users findByResetPasswordToken(String token);
+	
+	public Users findByEmail(String email);
+
+
 
 }

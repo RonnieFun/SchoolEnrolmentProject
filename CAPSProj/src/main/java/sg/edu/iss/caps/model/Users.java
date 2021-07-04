@@ -68,6 +68,8 @@ public class Users {
 	
 	private String salutation;
 	
+	private String resetPasswordToken;
+	
 	// One to Many relationship between Users and StudentCourseDetails
 	@OneToMany(mappedBy = "student")
 	//, cascade=CascadeType.REMOVE, orphanRemoval = true)
@@ -225,6 +227,16 @@ public class Users {
 		this.courses = courses;
 	}
 	
+	
+	
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
 	@Transient
 	public String getImagePath() {
 		System.out.println("/profile-pic/" + userID + "/" + profilePicture);

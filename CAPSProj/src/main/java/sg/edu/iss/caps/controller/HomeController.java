@@ -10,7 +10,10 @@ import java.nio.file.StandardCopyOption;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,10 +51,13 @@ public class HomeController {
 	}
 
 	@RequestMapping("/login")
-	public String login(Model model) {
-		Users u = new Users();
-		model.addAttribute("user", u);
-		return "login";
+	public String login(Model model) { 
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null|| authentication instanceof AnonymousAuthenticationToken) {
+			return"login";
+		}
+		return "redirect:/index";
+		
 	}
 	
 	@RequestMapping("/403")
@@ -75,14 +81,16 @@ public class HomeController {
 			return "userProfileForm";
 		}
 		
+	
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			user.setProfilePicture(fileName);
-			
-			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
-			user.setPassword(pass.encode(user.getPassword()));
-			String password = user.getPassword();
+			if(user.getProfilePicture().contains("png") || user.getProfilePicture().contains("jpeg") ||
+					user.getProfilePicture().contains("jpg")) {
+//			BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+//			user.setPassword(pass.encode(user.getPassword()));
+//			String password = user.getPassword();
 
-		model.addAttribute("password", password);
+//		model.addAttribute("password", password);
 		Users savedUser = adservice.save(user);
 		
 		String uploadDir = "./profile-pic/" + savedUser.getUserID();
@@ -101,6 +109,9 @@ public class HomeController {
 			
 			throw new IOException("Could not save uploaded file: " + fileName);
 		}
+		return "updateSuccess";
+	}
+	     adservice.save(user);
 		return "updateSuccess";
 	}
 }

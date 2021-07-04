@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -186,6 +187,31 @@ public class AdminImplementation implements AdminInterface {
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 		Pageable pageable = PageRequest.of(currentPage - 1, 10, sort);
 		return scdrepo.findAll(pageable);
+	}
+	
+	public void updateResetPasswordToken(String token, String email) throws UserNotFoundException {
+		Users user = urepo.findByEmail(email);
+		
+		if(user != null) {
+			user.setResetPasswordToken(token);
+			urepo.save(user);
+		} else {
+			throw new UserNotFoundException("Could not find any user with email " + email);
+		}
+	}
+	
+	public Users get(String resetPasswordToken) {
+		return urepo.findByResetPasswordToken(resetPasswordToken);
+	}
+	
+	public void updatePassword(Users user, String newPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(newPassword);
+		
+		user.setPassword(encodedPassword);
+		user.setResetPasswordToken(null);
+		
+		urepo.save(user);
 	}
 
 	@Override
