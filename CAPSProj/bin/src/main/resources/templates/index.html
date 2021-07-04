@@ -39,25 +39,25 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
 		            Services
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="/student/gradesandgpa">Students</a></li>
-		            <li><a class="dropdown-item" href="/lecturer/coursestaught">Lecturers</a></li>
-		            <li><a class="dropdown-item" href="/admin/list">Admin</a></li>
+		            <li sec:authorize="hasAnyAuthority('ROLE_STUDENT')"><a class="dropdown-item" href="/student/gradesandgpa">Students</a></li>
+		            <li  sec:authorize="hasAnyAuthority('ROLE_LECTURER')"><a class="dropdown-item" href="/lecturer/coursestaught">Lecturers</a></li>
+		            <li  sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="dropdown-item" href="/admin/list">Admin</a></li>
 		            <li><hr class="dropdown-divider"></li>
-		            <li><a class="dropdown-item" href="#">Contact IT</a></li>
+		            <li><a class="dropdown-item" href="mailto: nusissit@example.com">Contact IT</a></li>
 		          </ul>
 		        </li>
 		       	
 		       	<li class="nav-item">
 		          <a class="nav-link" href="#feature">Feature</a>
 		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Contact us</a>
+		        <li class="nav-item" sec:authorize="isAuthenticated()">
+		          <a class="nav-link" th:href ="@{home/edituser}">Update Profile</a>
 		        </li>
 		       	
 		      </ul>
 		      <form class="d-flex">
 		        <div sec:authorize="isAnonymous()">
-					<a href="/login"><button type="button" class="btn">Login</button></a>
+					<a href="/home/login"><button type="button" class="btn">Login</button></a>
 				</div>
 				 </form>
 				<div sec:authorize="isAuthenticated()">

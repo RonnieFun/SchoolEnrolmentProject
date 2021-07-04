@@ -40,7 +40,7 @@ public interface LecturerInterface {
 
 	List<StudentCourseDetails> getAllUsersByRoleCourseID(Roles role, EnrolmentStatus enrolmentStatus, Long courseID);
 		
-	List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role);
+	List<StudentCourseDetails> getGradesByStudentId(EnrolmentStatus enrolmentStatus, Long userID, Roles role);
 
 	void addCourseTaught(Long id, Courses course);
 

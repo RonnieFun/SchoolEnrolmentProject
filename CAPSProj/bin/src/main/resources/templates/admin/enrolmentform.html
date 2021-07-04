@@ -24,7 +24,7 @@
  		<input type="text" th:field="*{course.courseName}" disabled="disabled"/>
         <br><br>
 		<label>Grades:</label>
-        <input type="text" th:field="*{grades}" disabled="disabled"/><br><br>
+        <input type="text" th:field="*{grades}" readonly/><br><br>
  
         <label>Enrolment Status:</label>
         <select th:field="*{enrolmentStatus}">
@@ -36,7 +36,8 @@
         <input type = "hidden" th:field="*{course.courseID}"/><br>
         <input type = "hidden" th:field="*{student.userID}"/><br>
  
-        <button type="submit">Save</button>    
+        <button type="submit">Save</button>
+        <input type = "hidden" th:field="*{dateOfEnrollment}"/><br>    
     </form>
 </div>
 </body>

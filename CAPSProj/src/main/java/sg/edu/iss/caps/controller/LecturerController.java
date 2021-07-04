@@ -93,7 +93,7 @@ public class LecturerController {
 		
 		if(userID != null) {
 			
-			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(userID, Roles.STUDENT));
+			model.addAttribute("studentCourseDetails", lectservice.getGradesByStudentId(EnrolmentStatus.ACCEPTED, userID, Roles.STUDENT));
 			model.addAttribute("users", lectservice.getAllUsersByUserID(userID));
 		} 
 		
@@ -114,7 +114,7 @@ public class LecturerController {
 		gradepointsmap.put("D", 1.0);
 		gradepointsmap.put("F", 0.0);
 
-		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(userID, Roles.STUDENT);
+		List<StudentCourseDetails> studentSelected = lectservice.getGradesByStudentId(EnrolmentStatus.ACCEPTED, userID, Roles.STUDENT);
 			
 		for(StudentCourseDetails e: studentSelected)
 		{

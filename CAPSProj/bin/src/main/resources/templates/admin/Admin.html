@@ -1,21 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymelead-extras-springsecurity5">
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
 <head>
-<meta charset="ISO-8859-1">
-<title>User page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<link rel="stylesheet" th:href="@{/css/portalStyle.css}" />
+<title>Home Page</title>
 </head>
+
 <body>
-<div align="center">
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
+<!-- 	<div class="header-background"> -->
+<!-- 	<div id="nav" class="sticky-nav"> -->
+	
+<!-- 		<nav th:fragment="navigationBar" class="navbar navbar-expand-lg navbar-light bg-light"> -->
+<!--   <a class="navbar-brand" th:href = "@{/}">CAPS</a> -->
+  
+<!--   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> -->
+<!--     <span class="navbar-toggler-icon"></span> -->
+<!--   </button> -->
+<!--   <div class="collapse navbar-collapse" id="navbarNav"> -->
+<!--     <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+<!--       <li class="nav-item active"> -->
+<!--         <a class="nav-link" th:href = "@{/}">Home</a> -->
+<!--       </li> -->
+<!--        <li class="nav-item active"> -->
+<!--         <a class="nav-link" th:href = "@{/admin/courselist}">Course</a> -->
+<!--       </li> -->
+<!--        <li class="nav-item active"> -->
+<!--         <a class="nav-link" th:href = "@{/}">Enrolment</a> -->
+<!--       </li> -->
+<!--  I gave up.      -->
+
+<br><br>
+<div align="left">
 	 <div sec:authorize="isAuthenticated()">
-		Welcome <b><span th:text = ${firstName}>first name</span></b>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 Welcome <b><span th:text =${firstName}>first name</span></b>
 		&nbsp;
-		<span sec:authentication="principal.role">Roles </span>
+		<span sec:authentication="principal.role">Roles</span>
 		<br><br>
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Logout"/>
-		</form>
 	</div>
+</div>
+	<div align="center">
 	<h1>User listing</h1>
 	<div>
 	<form th:action="@{list}">
@@ -30,7 +63,7 @@
   </form>
 	</div>
 <div>
-	<table>
+	<table class="table table-striped table-bordered">
 		<tr>
 			<th>
 				<a th:href="@{'/admin/page/' + ${currentPage} + '?sortField=userID&sortDir=' + ${reverseSortDir} + '&role=' + ${RoleType}}">
@@ -65,6 +98,7 @@
 			<th>Phone number</th>
 			<th>Email</th>
 			<th>Address</th>
+			<th>Action</th>
 		</tr>
 		<tr th:each="user:${ulist}">
 			<td th:text = ${user.userID}>UserID</td>

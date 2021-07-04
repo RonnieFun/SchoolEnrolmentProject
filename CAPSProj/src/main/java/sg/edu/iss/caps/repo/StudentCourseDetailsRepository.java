@@ -17,8 +17,10 @@ import sg.edu.iss.caps.model.Users;
 public interface StudentCourseDetailsRepository extends JpaRepository<StudentCourseDetails, Long> {
 	
 //	Code for displaying all the students' course grades without filtering based on lecturer id
-	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN sc.student u WHERE u.userID = :userID AND u.role = :role")
-	  List<StudentCourseDetails> findGradesByStudentId(@Param("userID") Long userID, @Param("role") Roles role);
+	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN sc.student u "
+			+ "WHERE sc.enrolmentStatus = :enrolmentStatus AND u.userID = :userID AND u.role = :role")
+	  List<StudentCourseDetails> findGradesByStudentId(@Param("enrolmentStatus") EnrolmentStatus enrolmentStatus, 
+			  @Param("userID") Long userID, @Param("role") Roles role);
 	
 	@Query("SELECT sc FROM StudentCourseDetails sc JOIN sc.course c JOIN sc.student u WHERE u.role= :role "
 			+ "AND sc.enrolmentStatus = :enrolmentStatus "

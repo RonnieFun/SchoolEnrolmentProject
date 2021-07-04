@@ -4,9 +4,20 @@
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
-<h1>Enrolment List</h1>
+<h1 class="text-center">Enrolment List and Withdraw</h1>
+&nbsp;
+<div class="text-center">
+	 <div sec:authorize="isAuthenticated()">
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 Welcome <b><span th:text =${firstName}>first name</span></b>
+		&nbsp;
+		<span sec:authentication="principal.role">Roles</span>
+		<br><br>
+		
+	</div>
+</div>	
 
-<h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
+<h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}" style="color: red"></h4>
 
 <div class="container">
 	<div class="row">
@@ -55,15 +66,13 @@
 					</span>
 				</tr>	
 			</tbody>
-			
 		</table>
+
+		
 		</div>
 	</div>
-</div>
-	<!-- temporarily view student of userID == 1 -->
-	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
-	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
-	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
+</div>&nbsp;&nbsp;
+	
 	<script>
 	  $(document).ready( function () {
     	$('#table_enrolmentlist').DataTable();

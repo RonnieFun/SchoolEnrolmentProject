@@ -49,7 +49,7 @@ public class StudentCourseDetailsTests {
 			List<StudentCourseDetails> list = new ArrayList<StudentCourseDetails>();
 			
 			//when
-			list = screpo.findGradesByStudentId(100L, Roles.STUDENT);
+			list = screpo.findGradesByStudentId(EnrolmentStatus.ACCEPTED, 100L, Roles.STUDENT);
 			
 			//then
 			assertTrue(list.size() > 0);

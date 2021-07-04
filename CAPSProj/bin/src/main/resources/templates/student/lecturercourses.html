@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
 
-<h1>Course List</h1> <h3>(courses that have lecturers)</h3>
+<h1 class="text-center">Course List</h1> 
 <h4 th:if="${CapacityFullErrorMsg != null}" th:text="${CapacityFullErrorMsg}"></h4>
 <h4 th:if="${ExistsErrorMsg != null}" th:text="${ExistsErrorMsg} "></h4>
 <h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
@@ -40,12 +40,8 @@
 					<p th:each="user: ${lc.users}">
 						<span th:if= "${user.role == T(sg.edu.iss.caps.model.Roles).LECTURER}" th:text="${user.firstName} + ' ' + ${user.lastName}"> Lecturer Name </span>
 					</p>
-				
-				</td>
+					</td>
 
-					<!-- <span th:each="lecturer: ${lc.users}">	
-						<td th:text="${lecturer.firstName} + ' ' + ${lecturer.lastName}">Lecturer Name</td>
-					</span>		 -->
 					<td th:text="${lc.courseCapacity}">Course Capacity</td>		
 					
 					<td th:if="${currentEnrolmentMap.containsKey(lc.courseID)}" 
@@ -57,16 +53,16 @@
 				</tr>	
 			</tbody>
 		</table>
+		<div>
+	
+		<button><a th:href="@{/student/enrolmentlist}">View Enrolment List and Withdraw</a></button>
+		<button><a th:href="@{/student/gradesandgpa}">View Grades & GPA</a></button>
+		<button><a th:href="@{/student/mycourses}">View My Courses</a></button>
+		</div>
 		</div>
 	</div>
-</div>
-<div>
-	<!-- temporarily view student of userID == 1 -->
-	
-	<button><a th:href="@{/student/enrolmentlist/1}">View Enrolment List and Withdraw</a></button>
-	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
-	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
-</div>
+</div>&nbsp;&nbsp;
+
 <script>
 	  $(document).ready( function () {
     	$('#table_lecturercourses').DataTable();

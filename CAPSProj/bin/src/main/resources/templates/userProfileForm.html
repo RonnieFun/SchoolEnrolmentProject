@@ -10,12 +10,17 @@
 			width: 200px;
 		}
 		input[type=text], input[type=date], select{display: inline-block; width:200px;}
+		
+		span {
+			color: red;
+			font-style:italic;
+			}
 </style>
 
 </head>
 <body>
 <div align ="center">
-		<h1>User registration</h1>
+		<h1>Profile update</h1>
 			<form action ="#" th:action="@{/home/profile/save}" th:object = ${user} method = "post"
 			enctype="multipart/form-data">
 				<label>First name:</label>
@@ -24,10 +29,14 @@
 				<label>Last name:</label>
 				<input type = "text" th:field="*{lastName}"/><br><br>
 				
-				<label> Password: </label>
-				<input type = "password" th:field="*{password}"/><br><br>
+<!-- 				<label> Password: </label> -->
+				<input type="hidden" th:field="*{password}" />
+<!-- 				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span> -->
+<!-- 				<br><br> -->
 				<input type = "hidden" th:field="*{userID}"/>
 				<input type = "hidden" th:field="*{enabled}"/>
+				<input type = "hidden" th:field="*{salutation}" th:value="${salutation}"/>
+				<input type = "hidden" th:field="*{role}"/>
 				
 				<label>Email:</label>
 				<input type = "text" th:field="*{email}"/><br><br>
@@ -41,14 +50,16 @@
 				
 				<label>Date of birth: </label>
 				<input type = "date" th:field="*{birthday}"/><br><br>
+							<p th:if="${#fields.hasErrors('birthday')}"
+				th:errors="*{birthday}" style="color: red"></p>
 				
 				<p>
 				<label>Upload profile picture:</label>
 				<input type="file" name="fileImage" id="fileImage"
-				accept="image/png, image/jpeg"/> <br><br>
+				accept="image/png, image/jpeg" /> <br><br>
 				</p>
 				<p>
-					<img id="thumbnail" alt="display picture preview"/>
+					<img th:src="@{${user.getImagePath}}" id="thumbnail" alt="display picture preview"/>
 				</p>
 				<br>
 				<br>
