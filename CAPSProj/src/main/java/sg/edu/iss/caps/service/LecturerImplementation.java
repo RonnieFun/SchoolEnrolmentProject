@@ -109,9 +109,9 @@ public class LecturerImplementation implements LecturerInterface {
 	}
 
 	@Transactional
-	public List<StudentCourseDetails> getGradesByStudentId(Long userID, Roles role) {
+	public List<StudentCourseDetails> getGradesByStudentId(EnrolmentStatus enrolmentStatus, Long userID, Roles role) {
 		
-		return studentCourseDetailsRepository.findGradesByStudentId(userID, role);
+		return studentCourseDetailsRepository.findGradesByStudentId(enrolmentStatus, userID, role);
 	}
 
 	@Transactional
