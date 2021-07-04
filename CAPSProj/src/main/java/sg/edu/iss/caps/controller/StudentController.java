@@ -135,7 +135,7 @@ public class StudentController {
 			if (size == c.getCourseCapacity())
 			{
 				model.addAttribute("CapacityFullErrorMsg", "The course capacity is fully occupied, no slot available. ");
-				return "forward:/student/lecturercourses";	
+				return "forward:/student/availablecourselist";	
 			}
 		}
 		
@@ -143,7 +143,7 @@ public class StudentController {
 		if (enrolmentfound.size() != 0)
 		{
 			model.addAttribute("ExistsErrorMsg", "Enrolment for this course already exists in your enrolment list.");
-			return "forward:/student/lecturercourses";	
+			return "forward:/student/availablecourselist";	
 		}
 
 		// If the  course is already started, then the student is unable to enroll
@@ -151,7 +151,7 @@ public class StudentController {
 		{
 			if (course.getCourseStartDate().compareTo(LocalDate.now()) < 0) {
 				model.addAttribute("CourseAlreadyStartedErrorMsg", "Course has already started, you can't enrol for it now.");
-				return "forward:/student/lecturercourses";	
+				return "forward:/student/availablecourselist";	
 			}
 		}
 
