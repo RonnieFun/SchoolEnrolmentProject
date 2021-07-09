@@ -2,7 +2,9 @@
 
 ## Overview
 
-CAPS is a Team CA Project undertaken for a Java module at NUS ISS Systems Analysis graduate diploma course. The objective is to create a school enrolment/grading management system.
+CAPS is a Team CA Project undertaken for a Java module at NUS ISS Systems Analysis graduate diploma course. 
+
+The objective is to create a school enrolment/grading management system.
 
 
 ## Users and use cases implemented
