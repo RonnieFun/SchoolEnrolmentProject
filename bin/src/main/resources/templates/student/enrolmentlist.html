@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head th:replace="Fragments/layout.html :: headerfiles"> </head>
+<body>
+<nav th:replace="Fragments/layout.html :: navigationBar"> </nav>
+
+<h1>Enrolment List</h1>
+
+<h4 th:if="${CourseAlreadyStartedErrorMsg != null}" th:text="${CourseAlreadyStartedErrorMsg}"></h4>
+
+<div class="container">
+	<div class="row">
+		<div class = "container">
+		<table id = "table_enrolmentlist" class="table table-striped table-bordered">
+
+			<thead>
+				<tr>
+					<th>NO</th>
+					<th>EnrolmentID</th>
+					<th>Date of Enrolment</th>
+					<th>Course ID</th>
+					<th>Course Name</th>
+					<th>Credits</th>	
+					<th>courseStartDate</th>
+					<th>courseEndDate</th>
+					<th>Enrolment Status</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="enrolment,iterator: ${enrolmentlist}">	
+					<td th:text = "${iterator.index + 1}">NO</td>	
+					<td th:text="${enrolment.id}">EnrolmentID</td>
+					<td th:text="${#temporals.format(enrolment.dateOfEnrollment, 'yyyy-MM-dd')}">DateOfEnrolment</td>
+					<td th:text="${enrolment.course.courseID}">Course ID</td>
+					<td th:text="${enrolment.course.courseName}">Course Name</td>
+					<td th:text="${enrolment.course.credits}">Credits</td>
+					<td th:text="${#temporals.format(enrolment.course.courseStartDate, 'yyyy-MM-dd')}">courseStartDate</td>
+					<td th:text="${#temporals.format(enrolment.course.courseEndDate, 'yyyy-MM-dd')}">courseEndDate</td>	
+				
+					
+					<td th:text="${enrolment.enrolmentStatus}">Enrolment Status</td>	
+									
+					<!-- The withdraw button can only show when the enrolment status is PENDING or ACCEPTED -->
+					<span th:if= "${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).ACCEPTED} or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).PENDING}">
+						<td> 
+							<button><a th:href="@{/student/withdrawenrolment/} + ${enrolment.id}">Withdraw</a></button> 
+						</td>
+					</span> 
+					<span th:if= "${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).WITHDRAWN} 
+					or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).REJECTED}
+						or ${enrolment.enrolmentStatus == T(sg.edu.iss.caps.model.EnrolmentStatus).EXPELLED}">
+						<td>-</td>
+					</span>
+				</tr>	
+			</tbody>
+			
+		</table>
+		</div>
+	</div>
+</div>
+	<!-- temporarily view student of userID == 1 -->
+	<button><a th:href="@{/student/lecturercourses}">Enroll for a course</a></button>
+	<button><a th:href="@{/student/gradesandgpa/1}">View Grades & GPA</a></button>
+	<button><a th:href="@{/student/mycourses/1}">View My Courses</a></button>
+	<script>
+	  $(document).ready( function () {
+    	$('#table_enrolmentlist').DataTable();
+		} );
+	</script>	
+</body>
+</html>
+	
